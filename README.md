@@ -11,4 +11,4 @@ and reference the required JavaScript files.
 
 ## sketch.elm
 This file is for getting a feel for the graphical elements of our page.  To view without compiling,
-paste its contents into the editor at [share-elm.com]() and view full screen.
+paste its contents into the editor at [share-elm](share-elm.com) and view full screen.
