@@ -4,8 +4,8 @@ import Window
 (field,content) = Input.field "type here"
 
 main = (\n-> flow down <~ (combine n)) [
- appArea 
- , notes <~ Window.dimensions]
+ appArea
+ ] -- , notes <~ Window.dimensions] --could put "about" section here.
   
 
 appArea = (\n-> flow right <~ (combine n)) [
@@ -56,7 +56,9 @@ adList records =
 -- mapArea is where the map with markers is displayed
 mapArea (w,h) = 
  let 
-  w' = (round <| (toFloat w) * 0.6)
+  wideScreen = w > h
+  xform amt = (round <| (toFloat w) * amt)
+  w' = if wideScreen then xform 0.75 else xform 0.5
   h' = (round <| (toFloat h) * 0.6)
  in container w' h' middle (plainText "Map Goes Here")
  
