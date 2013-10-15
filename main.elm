@@ -74,12 +74,12 @@ notes (w,h) =
 
 ## Key Features (get these working first):
 * Display nearby ads
-* as a list
-* on a map
+    * as a list
+    * on a map
 * Create ad
-* user-entered text description
-* user's coordinates
-* coordinates and description published for all to see
+    * user-entered text description
+    * user's coordinates
+    * coordinates and description published for all to see
 
 ## Secondary Features:
 * Log in as guest or with CAS
@@ -89,5 +89,5 @@ notes (w,h) =
 * Ability to contact people from within the app
 * Option to add contact details to the app
 * Other users will not see your email address unless you reply to them.
-|]
+  |]
  in words w1
