@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Local-Liquidator</title>
+    <script src="resources/elm-runtime.js"></script>
+    <script src="build/ElmStuff.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/mystyle.css">
+  </head>
+  
+  <body>
+    
+    <div id="myElmDiv"></div>
+    
+  </body>
+  <script>
+    
+    var div = document.getElementById("myElmDiv");	// reference to Elm program
+    var mbed = Elm.embed(Elm.ElmStuff, div);	// establishes channel for Elm i/o
+    
+  </script>
+</html>
