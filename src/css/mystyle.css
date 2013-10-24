@@ -3,6 +3,10 @@
   height: 400
 }
 
+h1{
+  color: #a00
+}
+
 body{
-  color: ddd
+  background-color: #ddd
 }

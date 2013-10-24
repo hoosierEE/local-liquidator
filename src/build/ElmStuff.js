@@ -23,11 +23,45 @@ Elm.ElmStuff.make = function (elm)
                       var Color = Elm.Color.make(elm);
                       var Graphics = Graphics || {};
                       Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                      var JavaScript = Elm.JavaScript.make(elm);
+                      var Window = Elm.Window.make(elm);
+                      var Mouse = Elm.Mouse.make(elm);
+                      var resets = Signal.constant(JavaScript.fromInt(42));
+                      document.addEventListener("reset_" + elm.id,
+                                                function (e)
+                                                {
+                                                  elm.notify(resets.id,e.value);
+                                                });
                       var _op = {};
-                      var main = A3(Graphics.Element.container,
-                                    280,
-                                    280,
-                                    Graphics.Element.middle)(Text.asText("Hello from inside a <div>!"));
-                      elm.ElmStuff.values = {_op: _op, main: main};
+                      var resets = Signal.constant(JavaScript.fromInt(42));
+                      var main = Graphics.Element.color(Color.green)(A3(Graphics.Element.container,
+                                                                        280,
+                                                                        280,
+                                                                        Graphics.Element.middle)(Text.asText("Hello from inside a <div>!")));
+                      var events = A2(Signal.merge,
+                                      A2(Signal._op["<~"],
+                                         Maybe.Just,
+                                         A2(Signal.sampleOn,Mouse.clicks,Mouse.position)),
+                                      A2(Signal.sampleOn,resets,Signal.constant(Maybe.Nothing)));
+                      var clickLocations = function ()
+                                           {
+                                             var update = F2(function (event,locations)
+                                                             {
+                                                               return function ()
+                                                                      {
+                                                                        switch (event.ctor)
+                                                                        {case
+                                                                         "Just" :
+                                                                           return {ctor: "::", _0: event._0, _1: locations};
+                                                                         case
+                                                                         "Nothing" :
+                                                                           return _J.toList([]);}
+                                                                        _E.Case($moduleName,
+                                                                                "between lines 15 and 18");
+                                                                      }();
+                                                             });
+                                             return A3(Signal.foldp,update,_J.toList([]),events);
+                                           }();
+                      elm.ElmStuff.values = {_op: _op, events: events, clickLocations: clickLocations, main: main};
                       return elm.ElmStuff.values;
                     };
