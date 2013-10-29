@@ -1,30 +1,9 @@
-                                                                     
-                                                                     
-                                                                     
-                                             
-<html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      #map-canvas {
-        width:600px;
-        height:400px;
-      }
-    </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtDJ77Ntq4nl1sIKu9XirSOVXQme4z5pg&sensor=false">
-    </script>
-
-    <script type="text/javascript">
-
 //Javascript code centers the map on the user's location, 
 // and inserts 4 markers (hard coded array) into the map.
 var x = 39.169153;  //-34.397;
 var y = -86.51470; //150.644;
-
 var locations= new Array();
 var titles = new Array();
-
 locations[0] = new google.maps.LatLng(39.169153,-86.51492);
 titles[0] = "uni";
 locations[1] = new google.maps.LatLng (39.169007,-86.5151);
@@ -38,7 +17,9 @@ if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(showPosition);
 }
 else {
-  document.write("Geolocation is not supported by this browser.");
+  // document.write("Geolocation is not supported by this browser.");
+  // Maybe something a little more subtle than document.write()
+  document.getElementById('map-canvas').innerHTML = "This app is much cooler with geolocation enabled.";
 }
   
 function showPosition(position) {	
@@ -49,7 +30,7 @@ function showPosition(position) {
 function initialize() {
   // set up our default map options
   var mapOptions = {
-    center: new google.maps.LatLng(x,y ),
+    center: new google.maps.LatLng(x,y),
     zoom: 18,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   };
@@ -78,10 +59,3 @@ function initialize() {
   });
 
 } 
-    </script>
-
-  </head>
-  <body>
-    <div id="map-canvas"/>
-  </body>
-</html>
