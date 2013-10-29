@@ -1,12 +1,12 @@
 #myElmDiv{
-  width: 400
-  height: 400
+  width: 400px;
+  height: 400px;
 }
 
 h1{
-  color: #a00
+  color: #a00;
 }
 
 body{
-  background-color: #ddd
+  background-color: #ddd;
 }

@@ -1,0 +1,95 @@
+                                                                     
+                                                                     
+                                                                     
+                                             
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 100% }
+    </style>
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtDJ77Ntq4nl1sIKu9XirSOVXQme4z5pg&sensor=false">
+    </script>
+
+    <script type="text/javascript">
+var x=39.169153;//-34.397;
+var y =-86.51470; //150.644;
+
+var locations= new Array();
+var titles = new Array();
+
+locations[0] = new google.maps.LatLng(39.169153,-86.51492 );
+titles[0] = "uni";
+locations[1] = new google.maps.LatLng (39.169007,-86.5151);
+titles[1]="street 1";
+locations[2] = new google.maps.LatLng (39.169107,-86.514591);
+titles[2]="street 2";
+locations[3] = new google.maps.LatLng (39.168891,-86.514548);
+titles[3]="building";
+
+
+
+if (navigator.geolocation)
+    {
+    navigator.geolocation.getCurrentPosition(showPosition);
+    }
+  else{document.write("Geolocation is not supported by this browser.");
+}
+  
+
+
+      function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(x,y ),
+          zoom: 18,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"),
+            mapOptions);
+
+
+for (i=0;i<locations.length;i++)
+  {
+
+var marker = new google.maps.Marker({
+    position:locations[i],
+    map: map,
+    title: titles[i]
+  });
+}
+
+
+ var image = "https://www.firstpct.org/images/user.png";
+
+var marker = new google.maps.Marker({
+    position: map.getCenter(),
+    map: map,
+    title: "you",
+    icon: image
+  });
+
+alert("here");
+      } 
+
+
+function showPosition(position)
+  {	
+//x= position.coords.latitude;
+//        y=position.coords.longitude;
+
+       initialize();
+
+  }
+
+
+   //   google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+
+  </head>
+  <body>
+    <div id="map-canvas"/>
+  </body>
+</html>
