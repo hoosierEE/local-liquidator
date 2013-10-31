@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            SimpleGui
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.Main = Elm.Main || {};
+Elm.Main.make = function (elm)
+                {
+                  elm.Main = elm.Main || {};
+                  if (elm.Main.values)
+                  return elm.Main.values;
+                  var N = Elm.Native,
+                      _N = N.Utils.make(elm),
+                      _L = N.List.make(elm),
+                      _E = N.Error.make(elm),
+                      _J = N.JavaScript.make(elm),
+                      $moduleName = "Main";
+                  var Text = Elm.Text.make(elm);
+                  var Text = Elm.Text.make(elm);
+                  var Basics = Elm.Basics.make(elm);
+                  var Signal = Elm.Signal.make(elm);
+                  var List = Elm.List.make(elm);
+                  var Maybe = Elm.Maybe.make(elm);
+                  var Time = Elm.Time.make(elm);
+                  var Prelude = Elm.Prelude.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Element = Elm.Graphics.Element.make(elm);
+                  var Color = Elm.Color.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                  var Window = Elm.Window.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Input = Elm.Graphics.Input.make(elm);
+                  var Keyboard = Elm.Keyboard.make(elm);
+                  var _op = {};
+                  var todoWidth = 300;
+                  var taskField = Graphics.Input.fields(Graphics.Input.emptyFieldState);
+                  var leftPadding = 10;
+                  var inputHeight = 48;
+                  var inputColor = Color.white;
+                  var inputBar = function (fieldState)
+                                 {
+                                   return Graphics.Element.color(inputColor)(A3(Graphics.Element.container,
+                                                                                todoWidth,
+                                                                                inputHeight - 2,
+                                                                                Graphics.Element.midRight)(Graphics.Element.color(inputColor)(A2(Graphics.Element.size,
+                                                                                                                                                 todoWidth - leftPadding,
+                                                                                                                                                 inputHeight)(A3(taskField.field,
+                                                                                                                                                                 Basics.id,
+                                                                                                                                                                 "What needs to be done?",
+                                                                                                                                                                 fieldState)))));
+                                 };
+                  var entered = A3(Signal.keepIf,Basics.id,true,Keyboard.enter);
+                  var fieldState = A2(Signal.merge,
+                                      taskField.events,
+                                      A2(Signal.sampleOn,
+                                         entered,
+                                         Signal.constant(Graphics.Input.emptyFieldState)));
+                  var display = F2(function (arg1,fieldState)
+                                   {
+                                     return function ()
+                                            {
+                                              switch (arg1.ctor)
+                                              {case
+                                               "_Tuple2" :
+                                                 return function ()
+                                                        {
+                                                          var pos = A2(Graphics.Element.midTopAt,
+                                                                       Graphics.Element.relative(0.5),
+                                                                       Graphics.Element.absolute(40));
+                                                          return Graphics.Element.layers(_J.toList([A3(Graphics.Element.fittedImage,
+                                                                                                       arg1._0,
+                                                                                                       arg1._1,
+                                                                                                       "/images/shells.jpg"),
+                                                                                                    A3(Graphics.Element.container,
+                                                                                                       arg1._0,
+                                                                                                       arg1._1,
+                                                                                                       pos)(A2(Graphics.Element.flow,
+                                                                                                               Graphics.Element.down,
+                                                                                                               _J.toList([inputBar(fieldState)])))]));
+                                                        }();}
+                                              _E.Case($moduleName,"between lines 25 and 26");
+                                            }();
+                                   });
+                  var main = A2(Signal._op["~"],
+                                A2(Signal._op["<~"],display,Window.dimensions),
+                                fieldState);
+                  elm.Main.values = {_op: _op, inputColor: inputColor, todoWidth: todoWidth, leftPadding: leftPadding, inputHeight: inputHeight, entered: entered, taskField: taskField, fieldState: fieldState, inputBar: inputBar, display: display, main: main};
+                  return elm.Main.values;
+                };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.Main)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>
