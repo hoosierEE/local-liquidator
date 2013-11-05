@@ -63,7 +63,7 @@ Elm.Main.make = function (elm)
                                                    case
                                                    "Nothing" :
                                                      return Maybe.Nothing;}
-                                                  _E.Case($moduleName,"between lines 48 and 51");
+                                                  _E.Case($moduleName,"between lines 50 and 53");
                                                 }();
                                        };
                   var resizedInput = F2(function (i,w)
@@ -97,7 +97,7 @@ Elm.Main.make = function (elm)
                                              case
                                              true :
                                                return Maybe.Just(s);}
-                                            _E.Case($moduleName,"between lines 24 and 29");
+                                            _E.Case($moduleName,"between lines 26 and 31");
                                           }();
                                  });
                   var md = function (w)
@@ -124,7 +124,6 @@ Elm.Main.make = function (elm)
                                                     return function ()
                                                            {
                                                              var w$ = Basics.round(Basics.toFloat(arg1._0) / 2);
-                                                             var h$ = arg1._1 - 300;
                                                              return A2(Graphics.Element.flow,
                                                                        Graphics.Element.down,
                                                                        _J.toList([A2(Graphics.Element.width,
@@ -132,13 +131,16 @@ Elm.Main.make = function (elm)
                                                                                      x),
                                                                                   md(arg1._0)]));
                                                            }();}
-                                                 _E.Case($moduleName,"between lines 76 and 79");
+                                                 _E.Case($moduleName,"between lines 78 and 80");
                                                }();
                                       });
                   var entered = A3(Signal.keepIf,Basics.id,true,Keyboard.enter);
                   var convert = function (a)
                                 {
-                                  return Graphics.Element.width(800)(Text.plainText(Prelude.show(stringToRecord(a))));
+                                  return A2(Graphics.Element.flow,
+                                            Graphics.Element.right,
+                                            _J.toList([A2(Graphics.Element.spacer,20,20),
+                                                       Graphics.Element.width(600)(Text.plainText(Prelude.show(stringToRecord(a))))]));
                                 };
                   var display = function (response)
                                 {
@@ -154,7 +156,7 @@ Elm.Main.make = function (elm)
                                             case
                                             "Waiting" :
                                               return Text.asText("waiting");}
-                                           _E.Case($moduleName,"between lines 55 and 58");
+                                           _E.Case($moduleName,"between lines 57 and 60");
                                          }();
                                 };
                   var boxContainer = F2(function (box,msg)
@@ -176,11 +178,11 @@ Elm.Main.make = function (elm)
                                                                        true :
                                                                          return "  relative URL lookup";}
                                                                       _E.Case($moduleName,
-                                                                              "between lines 70 and 73");
+                                                                              "between lines 72 and 75");
                                                                     }();
                                                    return A2(Graphics.Element.flow,
                                                              Graphics.Element.right,
-                                                             _J.toList([Text.plainText("Check box for localhost or real webpage:   "),
+                                                             _J.toList([Text.plainText("URL or ISBN lookup:   "),
                                                                         prettyBox,
                                                                         Text.plainText(msgDescrip)]));
                                                  }();
