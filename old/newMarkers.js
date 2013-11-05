@@ -1,17 +1,3 @@
-<html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    <style type="text/css">
-      html { height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 100% }
-    </style>
-    <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtDJ77Ntq4nl1sIKu9XirSOVXQme4z5pg&sensor=false">
-    </script>
-
-    <script type="text/javascript">
-
 var x=39.773845;//-34.397;
 var y =-86.176210; //150.644;
 
@@ -101,11 +87,7 @@ function addInfoWindow(marker,i) {
 
 
 function showPosition(position)
-<<<<<<< HEAD
-  {        
-=======
   {	
->>>>>>> 84da374a88e61b35d6b514c268eafe8ea298fbe8
 //x= position.coords.latitude;
 //        y=position.coords.longitude;
 
@@ -116,14 +98,3 @@ function showPosition(position)
 
 
    //   google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-
-  </head>
-  <body>
-    <div id="map-canvas"/>
-  </body>
-<<<<<<< HEAD
-</html>
-=======
-</html>
->>>>>>> 84da374a88e61b35d6b514c268eafe8ea298fbe8
