@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            JsonTest
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.Main = Elm.Main || {};
+Elm.Main.make = function (elm)
+                {
+                  elm.Main = elm.Main || {};
+                  if (elm.Main.values)
+                  return elm.Main.values;
+                  var N = Elm.Native,
+                      _N = N.Utils.make(elm),
+                      _L = N.List.make(elm),
+                      _E = N.Error.make(elm),
+                      _J = N.JavaScript.make(elm),
+                      $moduleName = "Main";
+                  var Text = Elm.Text.make(elm);
+                  var Text = Elm.Text.make(elm);
+                  var Basics = Elm.Basics.make(elm);
+                  var Signal = Elm.Signal.make(elm);
+                  var List = Elm.List.make(elm);
+                  var Maybe = Elm.Maybe.make(elm);
+                  var Time = Elm.Time.make(elm);
+                  var Prelude = Elm.Prelude.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Element = Elm.Graphics.Element.make(elm);
+                  var Color = Elm.Color.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                  var Char = Elm.Char.make(elm);
+                  var String = Elm.String.make(elm);
+                  var Maybe = Elm.Maybe.make(elm);
+                  var Http = Elm.Http.make(elm);
+                  var Json = Elm.Json.make(elm);
+                  var JavaScript = JavaScript || {};
+                  JavaScript.Experimental = Elm.JavaScript.Experimental.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Input = Elm.Graphics.Input.make(elm);
+                  var Window = Elm.Window.make(elm);
+                  var _op = {};
+                  var stringToRecord = function (str)
+                                       {
+                                         return function ()
+                                                {
+                                                  var _case0 = Json.fromString(str);
+                                                  switch (_case0.ctor)
+                                                  {case
+                                                   "Just" :
+                                                     return _J.toList([JavaScript.Experimental.toRecord(Json.toJSObject(_case0._0)).Title,
+                                                                       JavaScript.Experimental.toRecord(Json.toJSObject(_case0._0)).imageURL]);
+                                                   case
+                                                   "Nothing" :
+                                                     return _J.toList([Maybe.Nothing]);}
+                                                  _E.Case($moduleName,"between lines 40 and 42");
+                                                }();
+                                       };
+                  var resizedInput = F2(function (i,w)
+                                        {
+                                          return function ()
+                                                 {
+                                                   var w$ = w / 2 | 0;
+                                                   return A3(Graphics.Element.size,w$,28,i);
+                                                 }();
+                                        });
+                  var remoteString = "/checkISBN.php?isbn=";
+                  var md = function (w)
+                           {
+                             return A2(Graphics.Element.width,
+                                       w,
+                                       Text.text("<div style=\"height:0;width:0;\">&nbsp;</div><h2 id=\"what-is-this\">What is this?</h2>\n<p>To test with provided JSON data, type &quot;/path/to/file/ReturnedData.html&quot; in the text box, and make sure the check box is set to &quot;local&quot;.</p>\n<p>This lets you type any relative path in the box and will do an HTTP GET request each time the input changes. (check browser console for details)</p>\n<p>To test with an ISBN number, set the check box to &quot;hosted&quot; and type an ISBN number in the check box. This sends a GET request only when you type 10 or 13 digits.</p><div style=\"height:0;width:0;\">&nbsp;</div>"));
+                           };
+                  var localString = "";
+                  var toUrl = F2(function (s,isChecked)
+                                 {
+                                   return function ()
+                                          {
+                                            switch (isChecked)
+                                            {case
+                                             false :
+                                               return (_N.eq(String.length(s),
+                                                             10) || _N.eq(String.length(s),
+                                                                          13)) && A2(String.all,
+                                                                                     Char.isDigit,
+                                                                                     s) ? Maybe.Just(_L.append(remoteString,
+                                                                                                               s)) : Maybe.Nothing;
+                                             case
+                                             true :
+                                               return Maybe.Just(_L.append(localString,s));}
+                                            _E.Case($moduleName,"between lines 23 and 28");
+                                          }();
+                                 });
+                  var everything = F2(function (arg1,x)
+                                      {
+                                        return function ()
+                                               {
+                                                 switch (arg1.ctor)
+                                                 {case
+                                                  "_Tuple2" :
+                                                    return function ()
+                                                           {
+                                                             var w$ = arg1._0 / 2 | 0;
+                                                             var h$ = arg1._1 - 300;
+                                                             return A2(Graphics.Element.flow,
+                                                                       Graphics.Element.down,
+                                                                       _J.toList([A4(Graphics.Element.container,
+                                                                                     arg1._0,
+                                                                                     h$,
+                                                                                     Graphics.Element.middle,
+                                                                                     x),
+                                                                                  md(arg1._0)]));
+                                                           }();}
+                                                 _E.Case($moduleName,"between lines 65 and 68");
+                                               }();
+                                      });
+                  var convert = function (a)
+                                {
+                                  return Graphics.Element.width(200)(Text.plainText(Prelude.show(stringToRecord(a))));
+                                };
+                  var display = function (response)
+                                {
+                                  return function ()
+                                         {
+                                           switch (response.ctor)
+                                           {case
+                                            "Failure" :
+                                              return Text.asText(response);
+                                            case
+                                            "Success" :
+                                              return convert(response._0);
+                                            case
+                                            "Waiting" :
+                                              return Text.asText("waiting");}
+                                           _E.Case($moduleName,"between lines 46 and 49");
+                                         }();
+                                };
+                  var boxContainer = F2(function (box,msg)
+                                        {
+                                          return function ()
+                                                 {
+                                                   var prettyBox = Graphics.Element.color(Color.lightBlue)(A4(Graphics.Element.container,
+                                                                                                              30,
+                                                                                                              16,
+                                                                                                              Graphics.Element.middle,
+                                                                                                              box));
+                                                   var msgDescrip = function ()
+                                                                    {
+                                                                      switch (msg)
+                                                                      {case
+                                                                       false :
+                                                                         return "  hosted";
+                                                                       case
+                                                                       true :
+                                                                         return "  local";}
+                                                                      _E.Case($moduleName,
+                                                                              "between lines 61 and 64");
+                                                                    }();
+                                                   return A2(Graphics.Element.flow,
+                                                             Graphics.Element.right,
+                                                             _J.toList([Text.plainText("Check box for localhost or real webpage:   "),
+                                                                        prettyBox,
+                                                                        Text.plainText(msgDescrip)]));
+                                                 }();
+                                        });
+                  var $ = Graphics.Input.field("Enter ISBN (hosted) or /path/file (local)"),
+                      field = $._0,
+                      rawInput = $._1;
+                  var inputBar = A2(Signal._op["~"],
+                                    A2(Signal._op["<~"],resizedInput,field),
+                                    Window.width);
+                  var $ = Graphics.Input.checkbox(false),box = $._0,checked = $._1;
+                  var prettyBox = A2(Signal._op["~"],
+                                     A2(Signal._op["<~"],boxContainer,box),
+                                     checked);
+                  var realInput = A2(Signal._op["~"],
+                                     A2(Signal._op["<~"],toUrl,rawInput),
+                                     checked);
+                  var responses = Http.sendGet(A2(Signal.lift,
+                                                  A2(Maybe.maybe,"",Basics.id),
+                                                  realInput));
+                  var message = function ()
+                                {
+                                  var msg = Text.plainText("Enter the ISBN number of your book to see its information.");
+                                  var output = F2(function (inp,rsp)
+                                                  {
+                                                    return A3(Maybe.maybe,
+                                                              msg,
+                                                              function (arg0)
+                                                              {
+                                                                return function ()
+                                                                       {
+                                                                         return display(rsp);
+                                                                       }();
+                                                              },
+                                                              inp);
+                                                  });
+                                  return A3(Signal.lift2,output,realInput,responses);
+                                }();
+                  var main = A2(Signal._op["~"],
+                                A2(Signal._op["<~"],everything,Window.dimensions),
+                                function (n)
+                                {
+                                  return A2(Signal._op["<~"],
+                                            Graphics.Element.flow(Graphics.Element.down),
+                                            Signal.combine(n));
+                                }(_J.toList([inputBar,message,prettyBox])));
+                  elm.Main.values = {_op: _op, field: field, rawInput: rawInput, box: box, checked: checked, remoteString: remoteString, localString: localString, toUrl: toUrl, realInput: realInput, responses: responses, convert: convert, stringToRecord: stringToRecord, display: display, message: message, boxContainer: boxContainer, everything: everything, resizedInput: resizedInput, inputBar: inputBar, prettyBox: prettyBox, md: md, main: main};
+                  return elm.Main.values;
+                };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.Main)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>

@@ -28,7 +28,7 @@ inputBar = combiner right [txField <~ txbox ~ W.width, constant btn]
 -- View
 layout (w,h) a = 
  let 
-  background = fittedImage w h "images/shells.jpg"
+  background = fittedImage w h "shells.jpg"
  in
   flow outward [background, container w (h `div` 2) middle a]
 

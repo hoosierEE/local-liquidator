@@ -1,16 +1,4 @@
-<!DOCTYPE HTML>
-
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>
-            Isbn
-        </title>
-        <script type="text/javascript" src="/elm-runtime.js">
-            
-        </script>
-        <script type="text/javascript">
-            Elm.Main = Elm.Main || {};
+Elm.Main = Elm.Main || {};
 Elm.Main.make = function (elm)
                 {
                   elm.Main = elm.Main || {};
@@ -44,11 +32,7 @@ Elm.Main.make = function (elm)
                   var _op = {};
                   var toUrl = function (s)
                               {
-                                return (_N.eq(String.length(s),10) || _N.eq(String.length(s),
-                                                                            13)) && A2(String.all,
-                                                                                       Char.isDigit,
-                                                                                       s) ? Maybe.Just(_L.append("http://www.local-liquidator.com/checkISBN.php?isbn=",
-                                                                                                                 s)) : Maybe.Nothing;
+                                return Maybe.Just(s);
                               };
                   var display = function (response)
                                 {
@@ -63,11 +47,11 @@ Elm.Main.make = function (elm)
                                               return Text.text(Text.monospace(Text.toText(response._0)));
                                             case
                                             "Waiting" :
-                                              return A3(Graphics.Element.image,
-                                                        16,
-                                                        16,
-                                                        "/images/shells.jpg");}
-                                           _E.Case($moduleName,"between lines 22 and 25");
+                                              return A3(Graphics.Element.fittedImage,
+                                                        100,
+                                                        100,
+                                                        "/shells.jpg");}
+                                           _E.Case($moduleName,"between lines 25 and 28");
                                          }();
                                 };
                   var $ = Graphics.Input.field("ISBN number"),
@@ -99,14 +83,3 @@ Elm.Main.make = function (elm)
                   elm.Main.values = {_op: _op, field: field, rawInput: rawInput, toUrl: toUrl, realInput: realInput, responses: responses, display: display, message: message, main: main};
                   return elm.Main.values;
                 };
-        </script>
-    </head>
-    <body>
-        <script type="text/javascript">
-            Elm.fullscreen(Elm.Main)
-        </script>
-        <noscript>
-            
-        </noscript>
-    </body>
-</html>

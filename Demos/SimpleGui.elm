@@ -23,6 +23,6 @@ inputBar fieldState =
 
 display (w,h) fieldState =
  let pos = midTopAt (relative 0.5) (absolute 40) in
- layers [ fittedImage w h "/images/shells.jpg", container w h pos <| flow down [inputBar fieldState] ]
+ layers [ fittedImage w h "shells.jpg", container w h pos <| flow down [inputBar fieldState] ]
 
 main = display <~ W.dimensions ~ fieldState
