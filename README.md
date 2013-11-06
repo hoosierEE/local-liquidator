@@ -1,22 +1,8 @@
-Local Liquidator
-================
+# [Local Liquidator](http://www.local-liquidator.com")
 
-Local Liquidator is a webapp for reselling textbooks locally, as in within walking distance.
+Local Liquidator is a webapp for reselling textbooks very locally, as in within walking distance.
 ***
-
-## JavaScript
-
-This is where we store pure JavaScript files, which will be referenced by our Elm program.
-
-## HTML
-
-The files in here are the result after compiling the Elm code.
-
-## welcome.html
-
-This is a mock-up of the basic visual elements in our program.  Also demonstrates dynamic layout (portrait, landscape)
-and text that updates as you type, which are pretty easy in Elm and much more cumbersome in JavaScript.
 
 ## To Do
 
-Verify JS-Elm integration
+UI/UX, Google Maps integration, user pages
