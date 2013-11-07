@@ -82,10 +82,15 @@ displayTask task =
                   ]
 display (w,h) fieldState tasks =
     let pos = midTopAt (relative 0.5) (absolute 40) in
-    layers [ container w h pos <| flow down [ inputBar fieldState
-                                             , flow down (map displayTask tasks)
-                                             ]
-           ]
+    layers [ 
+      container w h pos <| 
+      flow down [ 
+         -- header
+         inputBar fieldState
+        , flow down (map displayTask tasks)
+        , flow down (map asText tasks)
+      ]
+    ]
 -- The Application (main) --       
 currentState = foldp update initialState actions
 main = display <~ Window.dimensions ~ fieldState ~ lift .tasks currentState
