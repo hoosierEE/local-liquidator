@@ -2,9 +2,18 @@ import Graphics.Input as Input
 import Keyboard
 import Window
 
+{- 
+    AdWriter.elm is an Elm program which takes textbox input and turns it into a list of stings,
+    where each string corresponds to one aspect of an 'Ad'.  These aspects could include:
+     Price, 
+     Title, 
+     Condition, 
+     Description, 
+     ISBN, 
+     etc.
+-}
 
-
--- Model
+-- Model --
 -- All of the information needed to represent a Task
 type Task = { done:Bool, description:String, id:Int }
 -- The state of the application is a list of tasks and an
@@ -16,7 +25,7 @@ initialState = { tasks=[], uid=0 }
 data Action = Add String | Remove Int
 
 
--- Update
+-- Update --
 update action state =
     case action of
       -- ignore if the user tries to add an empty task
@@ -34,7 +43,7 @@ update action state =
           }
 
 
--- Inputs
+-- Inputs --
 entered = keepIf id True Keyboard.enter
 taskField = Input.fields Input.emptyFieldState
 fieldState = merge taskField.events
@@ -46,7 +55,7 @@ actions = merge (Add <~ sampleOn entered (.string <~ taskField.events))
 
 
 
--- Display
+-- Display --
 todoWidth   = 500
 leftPadding = 60
 buttonWidth = 30
@@ -77,6 +86,6 @@ display (w,h) fieldState tasks =
                                              , flow down (map displayTask tasks)
                                              ]
            ]
-           
+-- The Application (main) --       
 currentState = foldp update initialState actions
 main = display <~ Window.dimensions ~ fieldState ~ lift .tasks currentState
