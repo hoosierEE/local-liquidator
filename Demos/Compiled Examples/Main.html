@@ -1,0 +1,518 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Main
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.Main = Elm.Main || {};
+Elm.Main.make = function (elm)
+                {
+                  elm.Main = elm.Main || {};
+                  if (elm.Main.values)
+                  return elm.Main.values;
+                  var N = Elm.Native,
+                      _N = N.Utils.make(elm),
+                      _L = N.List.make(elm),
+                      _E = N.Error.make(elm),
+                      _J = N.JavaScript.make(elm),
+                      $moduleName = "Main";
+                  var Text = Elm.Text.make(elm);
+                  var Text = Elm.Text.make(elm);
+                  var Basics = Elm.Basics.make(elm);
+                  var Signal = Elm.Signal.make(elm);
+                  var List = Elm.List.make(elm);
+                  var Maybe = Elm.Maybe.make(elm);
+                  var Time = Elm.Time.make(elm);
+                  var Prelude = Elm.Prelude.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Element = Elm.Graphics.Element.make(elm);
+                  var Color = Elm.Color.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                  var Mouse = Elm.Mouse.make(elm);
+                  var Window = Elm.Window.make(elm);
+                  var AdMaker = Elm.AdMaker.make(elm);
+                  var MapMaker = Elm.MapMaker.make(elm);
+                  var Header = Elm.Header.make(elm);
+                  var _op = {};
+                  var sigFlow = F2(function (dir,args)
+                                   {
+                                     return A2(Signal._op["<~"],
+                                               Graphics.Element.flow(dir),
+                                               Signal.combine(args));
+                                   });
+                  var mapSize = F3(function (arg2,w$,h$)
+                                   {
+                                     return function ()
+                                            {
+                                              switch (arg2.ctor)
+                                              {case
+                                               "_Tuple2" :
+                                                 return {ctor: "_Tuple2", _0: arg2._0 - w$, _1: arg2._1 - h$};}
+                                              _E.Case($moduleName,"on line 8, column 24 to 38");
+                                            }();
+                                   });
+                  var mapCoords = A2(Signal._op["~"],
+                                     A2(Signal._op["~"],
+                                        A2(Signal._op["<~"],mapSize,Window.dimensions),
+                                        A2(Signal._op["<~"],
+                                           Graphics.Element.widthOf,
+                                           AdMaker.adArea)),
+                                     A2(Signal._op["<~"],
+                                        Graphics.Element.heightOf,
+                                        A2(Signal._op["<~"],Header.header,Window.dimensions)));
+                  var centerOffset = F2(function (arg1,arg0)
+                                        {
+                                          return function ()
+                                                 {
+                                                   switch (arg0.ctor)
+                                                   {case
+                                                    "_Tuple2" :
+                                                      return function ()
+                                                             {
+                                                               switch (arg1.ctor)
+                                                               {case
+                                                                "_Tuple2" :
+                                                                  return {ctor: "_Tuple2", _0: Basics.toFloat(arg1._0) - Basics.toFloat(arg0._0) / 2, _1: Basics.toFloat(arg0._1) / 2 - Basics.toFloat(arg1._1)};}
+                                                               _E.Case($moduleName,
+                                                                       "on line 14, column 29 to 81");
+                                                             }();}
+                                                   _E.Case($moduleName,
+                                                           "on line 14, column 29 to 81");
+                                                 }();
+                                        });
+                  var mouseCoords = A2(Signal._op["~"],
+                                       A2(Signal._op["<~"],centerOffset,Mouse.position),
+                                       mapCoords);
+                  var main = A2(sigFlow,
+                                Graphics.Element.down,
+                                _J.toList([A2(Signal._op["<~"],Header.header,Window.dimensions),
+                                           A2(sigFlow,
+                                              Graphics.Element.right,
+                                              _J.toList([AdMaker.adArea,
+                                                         A2(Signal._op["~"],
+                                                            A2(Signal._op["<~"],
+                                                               MapMaker.mapArea,
+                                                               mouseCoords),
+                                                            mapCoords)]))]));
+                  elm.Main.values = {_op: _op, mapSize: mapSize, mapCoords: mapCoords, centerOffset: centerOffset, mouseCoords: mouseCoords, sigFlow: sigFlow, main: main};
+                  return elm.Main.values;
+                };Elm.AdMaker = Elm.AdMaker || {};
+Elm.AdMaker.make = function (elm)
+                   {
+                     elm.AdMaker = elm.AdMaker || {};
+                     if (elm.AdMaker.values)
+                     return elm.AdMaker.values;
+                     var N = Elm.Native,
+                         _N = N.Utils.make(elm),
+                         _L = N.List.make(elm),
+                         _E = N.Error.make(elm),
+                         _J = N.JavaScript.make(elm),
+                         $moduleName = "AdMaker";
+                     var Text = Elm.Text.make(elm);
+                     var Text = Elm.Text.make(elm);
+                     var Basics = Elm.Basics.make(elm);
+                     var Signal = Elm.Signal.make(elm);
+                     var List = Elm.List.make(elm);
+                     var Maybe = Elm.Maybe.make(elm);
+                     var Time = Elm.Time.make(elm);
+                     var Prelude = Elm.Prelude.make(elm);
+                     var Graphics = Graphics || {};
+                     Graphics.Element = Elm.Graphics.Element.make(elm);
+                     var Color = Elm.Color.make(elm);
+                     var Graphics = Graphics || {};
+                     Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                     var Graphics = Graphics || {};
+                     Graphics.Input = Elm.Graphics.Input.make(elm);
+                     var Char = Elm.Char.make(elm);
+                     var Maybe = Elm.Maybe.make(elm);
+                     var String = Elm.String.make(elm);
+                     var _op = {};
+                     var validate = F2(function (x,wantIsbn)
+                                       {
+                                         return function ()
+                                                {
+                                                  switch (wantIsbn)
+                                                  {case
+                                                   false :
+                                                     return function ()
+                                                            {
+                                                              var _case1 = String.toFloat(x);
+                                                              switch (_case1.ctor)
+                                                              {case
+                                                               "Just" :
+                                                                 return Prelude.show(_case1._0);
+                                                               case
+                                                               "Nothing" :
+                                                                 return "";}
+                                                              _E.Case($moduleName,
+                                                                      "between lines 24 and 26");
+                                                            }();
+                                                   case
+                                                   true :
+                                                     return A2(String.all,
+                                                               Char.isDigit,
+                                                               x) && (_N.eq(String.length(x),
+                                                                            10) || _N.eq(String.length(x),
+                                                                                         13)) ? x : "";}
+                                                  _E.Case($moduleName,"between lines 22 and 26");
+                                                }();
+                                       });
+                     var preview = F2(function (isbn,price)
+                                      {
+                                        return function ()
+                                               {
+                                                 var arrange = function (arg0)
+                                                               {
+                                                                 return function ()
+                                                                        {
+                                                                          switch (arg0.ctor)
+                                                                          {case
+                                                                           "::" :
+                                                                             switch (arg0._1.ctor)
+                                                                             {case
+                                                                              "::" :
+                                                                                switch (arg0._1._1.ctor)
+                                                                                {case
+                                                                                 "::" :
+                                                                                   switch (arg0._1._1._1.ctor)
+                                                                                   {case
+                                                                                    "::" :
+                                                                                      switch (arg0._1._1._1._1.ctor)
+                                                                                      {case
+                                                                                       "[]" :
+                                                                                         return function ()
+                                                                                                {
+                                                                                                  var title = Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkRed)(Text.toText("Ad Preview")))));
+                                                                                                  return A2(Graphics.Element.flow,
+                                                                                                            Graphics.Element.down,
+                                                                                                            _J.toList([title,
+                                                                                                                       A2(Graphics.Element.flow,
+                                                                                                                          Graphics.Element.right,
+                                                                                                                          _J.toList([arg0._0,
+                                                                                                                                     arg0._1._0])),
+                                                                                                                       A2(Graphics.Element.flow,
+                                                                                                                          Graphics.Element.right,
+                                                                                                                          _J.toList([arg0._1._1._0,
+                                                                                                                                     arg0._1._1._1._0]))]));
+                                                                                                }();}
+                                                                                      break;}
+                                                                                   break;}
+                                                                                break;}
+                                                                             break;}
+                                                                          _E.Case($moduleName,
+                                                                                  "between lines 41 and 42");
+                                                                        }();
+                                                               };
+                                                 return arrange(A2(List.map,
+                                                                   Text.plainText,
+                                                                   _J.toList(["ISBN Number: ",
+                                                                              A2(validate,
+                                                                                 isbn,
+                                                                                 true),
+                                                                              "Price: $",
+                                                                              A2(validate,
+                                                                                 price,
+                                                                                 false)])));
+                                               }();
+                                      });
+                     var isClicked = function (evt)
+                                     {
+                                       return function ()
+                                              {
+                                                var always = F2(function (value,signal)
+                                                                {
+                                                                  return A2(Signal.lift,
+                                                                            function (arg0)
+                                                                            {
+                                                                              return function ()
+                                                                                     {
+                                                                                       return value;
+                                                                                     }();
+                                                                            },
+                                                                            signal);
+                                                                });
+                                                return A2(Signal.merge,
+                                                          A2(always,false,A2(Time.delay,0,evt)),
+                                                          A2(always,true,evt));
+                                              }();
+                                     };
+                     var butn = F3(function (shp,clr,label)
+                                   {
+                                     return Graphics.Element.color(Color.gray)(A3(Graphics.Collage.collage,
+                                                                                  98,
+                                                                                  38,
+                                                                                  _J.toList([Graphics.Collage.rotate(Basics.pi / 2)(Graphics.Collage.move({ctor: "_Tuple2", _0: 25, _1: 0})(A2(Graphics.Collage.filled,
+                                                                                                                                                                                               clr,
+                                                                                                                                                                                               A2(Graphics.Collage.ngon,
+                                                                                                                                                                                                  shp,
+                                                                                                                                                                                                  12)))),
+                                                                                             Graphics.Collage.move({ctor: "_Tuple2", _0: -15, _1: 0})(Graphics.Collage.toForm(Text.plainText(label)))])));
+                                   });
+                     var btnBuilder = function (a)
+                                      {
+                                        return A3(Graphics.Input.customButton,
+                                                  A3(butn,6,Color.lightBlue,a),
+                                                  A3(butn,5,Color.lightRed,a),
+                                                  A3(butn,4,Color.lightOrange,a));
+                                      };
+                     var $ = btnBuilder("Sell"),sell = $._0,sellEvent = $._1;
+                     var $ = Graphics.Input.field("Price"),
+                         price = $._0,
+                         priceSignal = $._1;
+                     var $ = Graphics.Input.field("ISBN"),isbn = $._0,isbnSignal = $._1;
+                     var previewArea = A2(Signal._op["~"],
+                                          A2(Signal._op["<~"],preview,isbnSignal),
+                                          priceSignal);
+                     var $ = btnBuilder("Buy"),buy = $._0,buyEvent = $._1;
+                     var btnGroup = A2(Graphics.Element.flow,
+                                       Graphics.Element.right,
+                                       _J.toList([buy,A2(Graphics.Element.spacer,4,4),sell]));
+                     var adArea = function ()
+                                  {
+                                    var header = Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkRed)(Text.toText("Ad Creator")))));
+                                    return A2(Signal._op["<~"],
+                                              Graphics.Element.flow(Graphics.Element.down),
+                                              Signal.combine(_J.toList([Signal.constant(header),
+                                                                        isbn,
+                                                                        price,
+                                                                        Signal.constant(btnGroup),
+                                                                        previewArea])));
+                                  }();
+                     elm.AdMaker.values = {_op: _op, adArea: adArea};
+                     return elm.AdMaker.values;
+                   };Elm.Header = Elm.Header || {};
+Elm.Header.make = function (elm)
+                  {
+                    elm.Header = elm.Header || {};
+                    if (elm.Header.values)
+                    return elm.Header.values;
+                    var N = Elm.Native,
+                        _N = N.Utils.make(elm),
+                        _L = N.List.make(elm),
+                        _E = N.Error.make(elm),
+                        _J = N.JavaScript.make(elm),
+                        $moduleName = "Header";
+                    var Text = Elm.Text.make(elm);
+                    var Text = Elm.Text.make(elm);
+                    var Basics = Elm.Basics.make(elm);
+                    var Signal = Elm.Signal.make(elm);
+                    var List = Elm.List.make(elm);
+                    var Maybe = Elm.Maybe.make(elm);
+                    var Time = Elm.Time.make(elm);
+                    var Prelude = Elm.Prelude.make(elm);
+                    var Graphics = Graphics || {};
+                    Graphics.Element = Elm.Graphics.Element.make(elm);
+                    var Color = Elm.Color.make(elm);
+                    var Graphics = Graphics || {};
+                    Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                    var Layout = Elm.Layout.make(elm);
+                    var Window = Elm.Window.make(elm);
+                    var _op = {};
+                    var topBarHeight = 50;
+                    var paths = _J.toList([{ctor: "_Tuple2", _0: "Home", _1: "/"},
+                                           {ctor: "_Tuple2", _0: "CheckISBN", _1: "http://www.local-liquidator.com/php/checkISBN.php"},
+                                           {ctor: "_Tuple2", _0: "JSON 1", _1: "http://www.local-liquidator.com/JsonTest.html"},
+                                           {ctor: "_Tuple2", _0: "JSON 2", _1: "http://www.local-liquidator.com/JsonTest/JsonTest.html"},
+                                           {ctor: "_Tuple2", _0: "Login", _1: "/php/login.html"}]);
+                    var navBar = function (arg0)
+                                 {
+                                   return function ()
+                                          {
+                                            switch (arg0.ctor)
+                                            {case
+                                             "_Tuple2" :
+                                               return function ()
+                                                      {
+                                                        var words = Text.text(Text.link(arg0._1)(Text.toText(arg0._0)));
+                                                        return A4(Graphics.Element.container,
+                                                                  Graphics.Element.widthOf(words) + 20,
+                                                                  topBarHeight,
+                                                                  Graphics.Element.midRight,
+                                                                  words);
+                                                      }();}
+                                            _E.Case($moduleName,"between lines 19 and 20");
+                                          }();
+                                 };
+                    var navs = Graphics.Element.flow(Graphics.Element.right)(A2(List.map,
+                                                                                navBar,
+                                                                                paths));
+                    var header = function (arg0)
+                                 {
+                                   return function ()
+                                          {
+                                            switch (arg0.ctor)
+                                            {case
+                                             "_Tuple2" :
+                                               return function ()
+                                                      {
+                                                        var title = Graphics.Element.width(arg0._0)(Text.centered(Text.height(40)(Text.toText("Local Liquidator (logo here)"))));
+                                                        var layoutMsg = Layout.msg({ctor: "_Tuple2", _0: arg0._0, _1: arg0._1});
+                                                        var headerContent = A2(Graphics.Element.flow,
+                                                                               Graphics.Element.down,
+                                                                               _J.toList([title,
+                                                                                          navs]));
+                                                        var h$ = Graphics.Element.heightOf(navs) + Graphics.Element.heightOf(title);
+                                                        return Graphics.Element.color(Color.lightBlue)(A4(Graphics.Element.container,
+                                                                                                          arg0._0,
+                                                                                                          h$,
+                                                                                                          Graphics.Element.middle,
+                                                                                                          headerContent));
+                                                      }();}
+                                            _E.Case($moduleName,"between lines 9 and 14");
+                                          }();
+                                 };
+                    elm.Header.values = {_op: _op, header: header};
+                    return elm.Header.values;
+                  };Elm.Layout = Elm.Layout || {};
+Elm.Layout.make = function (elm)
+                  {
+                    elm.Layout = elm.Layout || {};
+                    if (elm.Layout.values)
+                    return elm.Layout.values;
+                    var N = Elm.Native,
+                        _N = N.Utils.make(elm),
+                        _L = N.List.make(elm),
+                        _E = N.Error.make(elm),
+                        _J = N.JavaScript.make(elm),
+                        $moduleName = "Layout";
+                    var Text = Elm.Text.make(elm);
+                    var Text = Elm.Text.make(elm);
+                    var Basics = Elm.Basics.make(elm);
+                    var Signal = Elm.Signal.make(elm);
+                    var List = Elm.List.make(elm);
+                    var Maybe = Elm.Maybe.make(elm);
+                    var Time = Elm.Time.make(elm);
+                    var Prelude = Elm.Prelude.make(elm);
+                    var Graphics = Graphics || {};
+                    Graphics.Element = Elm.Graphics.Element.make(elm);
+                    var Color = Elm.Color.make(elm);
+                    var Graphics = Graphics || {};
+                    Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                    var _op = {};
+                    var whRatio = 1.0;
+                    var minTablet = 640;
+                    var minPhone = 320;
+                    var phone = function (w)
+                                {
+                                  return _N.cmp(w,minPhone) < 0;
+                                };
+                    var maxTablet = 1200;
+                    var tablet = function (w)
+                                 {
+                                   return _N.cmp(w,minPhone) > -1 && _N.cmp(w,maxTablet) < 0;
+                                 };
+                    var landscape = function (arg0)
+                                    {
+                                      return function ()
+                                             {
+                                               switch (arg0.ctor)
+                                               {case
+                                                "_Tuple2" :
+                                                  return _N.cmp(Basics.toFloat(arg0._0) / Basics.toFloat(arg0._1),
+                                                                whRatio) > 0;}
+                                               _E.Case($moduleName,"on line 20, column 19 to 50");
+                                             }();
+                                    };
+                    var desktop = function (w)
+                                  {
+                                    return _N.cmp(w,maxTablet) > 0;
+                                  };
+                    var msg = function (arg0)
+                              {
+                                return function ()
+                                       {
+                                         switch (arg0.ctor)
+                                         {case
+                                          "_Tuple2" :
+                                            return function ()
+                                                   {
+                                                     var viewStyle = phone(arg0._0) ? "phone" : tablet(arg0._0) ? "tablet" : desktop(arg0._0) ? "desktop" : "desk";
+                                                     var orientation = _N.cmp(arg0._0,
+                                                                              arg0._1) > 0 ? "landscape" : "portrait";
+                                                     var message = _L.append(" Layout: ",
+                                                                             _L.append(orientation,
+                                                                                       _L.append(" ",
+                                                                                                 _L.append(viewStyle,
+                                                                                                           _L.append(" width: ",
+                                                                                                                     Prelude.show(arg0._0))))));
+                                                     return Text.plainText(message);
+                                                   }();}
+                                         _E.Case($moduleName,"between lines 25 and 33");
+                                       }();
+                              };
+                    elm.Layout.values = {_op: _op, msg: msg};
+                    return elm.Layout.values;
+                  };Elm.MapMaker = Elm.MapMaker || {};
+Elm.MapMaker.make = function (elm)
+                    {
+                      elm.MapMaker = elm.MapMaker || {};
+                      if (elm.MapMaker.values)
+                      return elm.MapMaker.values;
+                      var N = Elm.Native,
+                          _N = N.Utils.make(elm),
+                          _L = N.List.make(elm),
+                          _E = N.Error.make(elm),
+                          _J = N.JavaScript.make(elm),
+                          $moduleName = "MapMaker";
+                      var Text = Elm.Text.make(elm);
+                      var Text = Elm.Text.make(elm);
+                      var Basics = Elm.Basics.make(elm);
+                      var Signal = Elm.Signal.make(elm);
+                      var List = Elm.List.make(elm);
+                      var Maybe = Elm.Maybe.make(elm);
+                      var Time = Elm.Time.make(elm);
+                      var Prelude = Elm.Prelude.make(elm);
+                      var Graphics = Graphics || {};
+                      Graphics.Element = Elm.Graphics.Element.make(elm);
+                      var Color = Elm.Color.make(elm);
+                      var Graphics = Graphics || {};
+                      Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                      var _op = {};
+                      var mapArea = F2(function (arg1,arg0)
+                                       {
+                                         return function ()
+                                                {
+                                                  switch (arg0.ctor)
+                                                  {case
+                                                   "_Tuple2" :
+                                                     return function ()
+                                                            {
+                                                              switch (arg1.ctor)
+                                                              {case
+                                                               "_Tuple2" :
+                                                                 return Graphics.Element.color(Color.lightGreen)(A3(Graphics.Collage.collage,
+                                                                                                                    arg0._0,
+                                                                                                                    arg0._1,
+                                                                                                                    _J.toList([Graphics.Collage.move({ctor: "_Tuple2", _0: arg1._0, _1: arg1._1})(Graphics.Collage.filled(Color.darkBlue)(A2(Graphics.Collage.ngon,
+                                                                                                                                                                                                                                             5,
+                                                                                                                                                                                                                                             20))),
+                                                                                                                               Graphics.Collage.rotate(A2(Basics.atan2,
+                                                                                                                                                          arg1._1,
+                                                                                                                                                          arg1._0))(Graphics.Collage.toForm(Text.plainText("Map Goes Here")))])));}
+                                                              _E.Case($moduleName,
+                                                                      "between lines 4 and 7");
+                                                            }();}
+                                                  _E.Case($moduleName,"between lines 4 and 7");
+                                                }();
+                                       });
+                      elm.MapMaker.values = {_op: _op, mapArea: mapArea};
+                      return elm.MapMaker.values;
+                    };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.Main)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>
