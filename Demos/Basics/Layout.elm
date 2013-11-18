@@ -22,8 +22,12 @@ landscape (w,h) = toFloat w / toFloat h > whRatio
 -- Display layout "type" as plainText, where "type" is landscape/portrait + phone/tablet etc.
 msg : (Int,Int) -> Element 
 msg (w,h) =
-  let ph = if phone w then "Phone" else ""
-      ta = if tablet w then "Tablet" else ""
-      de = if desktop w then "Desktop"else ""
-      la = if landscape (w,h) then "Landscape" else "Portrait"
-  in plainText <| (" - " ++ la ++ " " ++ ph ++ ta ++ de ++ ", w: " ++ show w ++ ", h: " ++ show h)
+  let
+    viewStyle = if
+      | phone w -> "phone"
+      | tablet w -> "tablet"
+      | desktop w -> "desktop"
+      | otherwise -> "desk"
+    orientation = if w > h then "landscape" else "portrait"
+    message = " Layout: " ++ orientation ++ " " ++ viewStyle ++ " width: " ++ show w
+  in plainText message

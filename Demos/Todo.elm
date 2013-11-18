@@ -3,14 +3,7 @@ import Keyboard
 import Window
 
 {- 
-    AdWriter.elm is an Elm program which takes textbox input and turns it into a list of stings,
-    where each string corresponds to one aspect of an 'Ad'.  These aspects could include:
-     Price, 
-     Title, 
-     Condition, 
-     Description, 
-     ISBN, 
-     etc.
+  Based on the project at github.com/evancz/TodoFRP
 -}
 
 -- Model --
