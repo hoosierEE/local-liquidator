@@ -23,5 +23,5 @@ paths =
   , ("CheckISBN", "http://www.local-liquidator.com/php/checkISBN.php")
   , ("JSON 1", "http://www.local-liquidator.com/JsonTest.html")
   , ("JSON 2", "http://www.local-liquidator.com/JsonTest/JsonTest.html")
-  , ("Login", "/php/login.html")
+  , ("Login", "/php/php_cas.php")
   ]
