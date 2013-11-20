@@ -5,19 +5,24 @@ import Utils.GetUser (helloUser)
 -- Constants
 topBarHeight = 20
 minLogoHeight = 30
-absoluteUrl = "http://local-liquidator.com"
-relativeUrl = "/php/getUser.php"
 
 -- Visuals
-header' (w,h) login =
+headerBuilder : (Int,Int) -> String -> Element
+headerBuilder (w,h) login =
   let title = width w . centered . Text.height (maximum [minLogoHeight, (toFloat w / 20)]) <| toText "Local Liquidator"
+      welcome = case login of
+        "404" -> plainText "not logged in (404 error)"
+        "guest" -> plainText "welcome Guest"
+        a -> plainText a
   in flow down 
     [ title
-    , flow right [navs, login]
+    , flow right [navs, welcome]
     ] |> color lightBlue
 
--- Site Navigation
+navs : Element
 navs = flow right <| map navBar paths
+
+navBar : (String,String) -> Element
 navBar (name, href) =
   let words = 
     flow right [ spacer 10 10 
@@ -25,13 +30,13 @@ navBar (name, href) =
         , spacer 10 10 ]
   in 
     container (widthOf words) topBarHeight midRight words
+
+paths : [(String,String)]
 paths =
   [ ("Home", "/")
-  , ("CheckISBN", "http://www.local-liquidator.com/php/checkISBN.php")
-  , ("JSON 1", "http://www.local-liquidator.com/JsonTest.html")
-  , ("JSON 2", "http://www.local-liquidator.com/JsonTest/JsonTest.html")
   , ("Login", "/php/php_cas.php")
+  , ("Logout", "https://cas.iu.edu/cas/logout")
   ]
 
 header : Signal Element
-header = header' <~ Window.dimensions ~ helloUser
+header = headerBuilder <~ Window.dimensions ~ helloUser

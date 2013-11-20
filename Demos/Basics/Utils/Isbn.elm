@@ -1,16 +1,11 @@
-module Utils.GetUser (helloUser) where
+module Utils.Isbn (isbnString) where
 import Http
 
 {-
-  Module for turning getUser.php script into a Signal String
-  @return:
-    ""
-    "404"
-    "guest" | String username
+  Module for turning /php/checkISBN.php script into a Signal String
 -}
-
-scriptSrc : Signal String
-scriptSrc = constant "/php/getUser.php"
+scriptSrc : String
+scriptSrc = "/php/checkISBN.php"
 
 prettyPrint : Http.Response String -> String 
 prettyPrint res = case res of
@@ -23,7 +18,12 @@ getLogin req = Http.send <| lift (\r -> Http.post r "") req
 
 -- HTTP control
 sendRequest : Signal String
-sendRequest = keepWhen (constant True) "" <| scriptSrc
+sendRequest = keepWhen (constant True) "" <| constant scriptSrc
 
 helloUser : Signal String
 helloUser = prettyPrint <~ getLogin sendRequest
+
+queryString : String -> String
+queryString str = scriptSrc ++ str
+isbnString = 10
+-- isbnString str = prettyPrint <~ (getLogin <~ queryString str)
