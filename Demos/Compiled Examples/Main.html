@@ -170,7 +170,6 @@ Elm.AdMaker.make = function (elm)
                                                   _E.Case($moduleName,"between lines 21 and 25");
                                                 }();
                                        });
-                     var returnedJsonData = Signal.constant("blah");
                      var redTitle = function (str)
                                     {
                                       return Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkRed)(Text.toText(str)))));
@@ -286,6 +285,7 @@ Elm.AdMaker.make = function (elm)
                                           return A2(validate,n,true);
                                         },
                                         isbnSignal);
+                     var returnedJsonData = Utils.Isbn.isbnString(validIsbn);
                      var previewArea = A2(Signal._op["~"],
                                           A2(Signal._op["~"],
                                              A2(Signal._op["<~"],preview,validIsbn),
@@ -561,11 +561,16 @@ Elm.Utils.Isbn.make = function (elm)
                         var Graphics = Graphics || {};
                         Graphics.Collage = Elm.Graphics.Collage.make(elm);
                         var Http = Elm.Http.make(elm);
+                        var Maybe = Elm.Maybe.make(elm);
                         var _op = {};
                         var scriptSrc = "/php/checkISBN.php";
                         var sendRequest = A2(Signal.keepWhen,
                                              Signal.constant(true),
                                              "")(Signal.constant(scriptSrc));
+                        var responses = function (s)
+                                        {
+                                          return Http.sendGet(A2(Signal.lift,Basics.id,s));
+                                        };
                         var queryString = function (str)
                                           {
                                             return _L.append(scriptSrc,str);
@@ -584,10 +589,9 @@ Elm.Utils.Isbn.make = function (elm)
                                                       case
                                                       "Waiting" :
                                                         return "";}
-                                                     _E.Case($moduleName,"between lines 11 and 14");
+                                                     _E.Case($moduleName,"between lines 12 and 15");
                                                    }();
                                           };
-                        var isbnString = 10;
                         var getLogin = function (req)
                                        {
                                          return Http.send(A2(Signal.lift,
@@ -600,6 +604,14 @@ Elm.Utils.Isbn.make = function (elm)
                         var helloUser = A2(Signal._op["<~"],
                                            prettyPrint,
                                            getLogin(sendRequest));
+                        var isbnString = function (str)
+                                         {
+                                           return A2(Signal._op["<~"],
+                                                     prettyPrint,
+                                                     getLogin(A2(Signal._op["<~"],
+                                                                 queryString,
+                                                                 str)));
+                                         };
                         elm.Utils.Isbn.values = {_op: _op, isbnString: isbnString};
                         return elm.Utils.Isbn.values;
                       };Elm.Visuals = Elm.Visuals || {};
