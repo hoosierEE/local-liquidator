@@ -1,5 +1,8 @@
 module Visuals.Layout (msg) where
 
+-- This module *could* be used for fluid/responsive layout
+-- at the moment it is not used.
+
 -- Constants
 minPhone = 320
 minTablet = 640
