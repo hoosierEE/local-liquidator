@@ -41,45 +41,15 @@ Elm.Main.make = function (elm)
                   var String = Elm.String.make(elm);
                   var Window = Elm.Window.make(elm);
                   var _op = {};
-                  var url = F3(function (first,last,email)
-                               {
-                                 return "/php/getUser.php";
-                               });
-                  var showErrors = function (errs)
-                                   {
-                                     return List.isEmpty(errs) ? A2(Graphics.Element.spacer,
-                                                                    10,
-                                                                    10) : Graphics.Element.flow(Graphics.Element.down)(A2(List.map,
-                                                                                                                          function ($)
-                                                                                                                          {
-                                                                                                                            return Text.text(Text.color(Color.red)(Text.toText($)));
-                                                                                                                          },
-                                                                                                                          errs));
-                                   };
-                  var scene = F3(function (arg2,box,result)
+                  var url = "/php/getUser.php";
+                  var scene = F3(function (box,result,sendble)
                                  {
-                                   return function ()
-                                          {
-                                            switch (arg2.ctor)
-                                            {case
-                                             "_Tuple2" :
-                                               return A2(Graphics.Element.flow,
-                                                         Graphics.Element.down,
-                                                         _J.toList([A2(Graphics.Element.spacer,
-                                                                       arg2._0,
-                                                                       50),
-                                                                    A4(Graphics.Element.container,
-                                                                       arg2._0,
-                                                                       Graphics.Element.heightOf(box),
-                                                                       Graphics.Element.midTop,
-                                                                       box),
-                                                                    A4(Graphics.Element.container,
-                                                                       arg2._0,
-                                                                       arg2._1 - Graphics.Element.heightOf(box),
-                                                                       Graphics.Element.midTop,
-                                                                       result)]));}
-                                            _E.Case($moduleName,"between lines 93 and 97");
-                                          }();
+                                   return A2(Graphics.Element.flow,
+                                             Graphics.Element.down,
+                                             _J.toList([A2(Graphics.Element.flow,
+                                                           Graphics.Element.right,
+                                                           _J.toList([box,Text.asText(sendble)])),
+                                                        result]));
                                  });
                   var prettyPrint = function (res)
                                     {
@@ -95,7 +65,7 @@ Elm.Main.make = function (elm)
                                                 case
                                                 "Waiting" :
                                                   return Text.plainText("");}
-                                               _E.Case($moduleName,"between lines 75 and 78");
+                                               _E.Case($moduleName,"between lines 32 and 35");
                                              }();
                                     };
                   var getLogin = function (req)
@@ -107,159 +77,55 @@ Elm.Main.make = function (elm)
                                                        },
                                                        req));
                                  };
-                  var getErrors = F4(function (first,last,email,remail)
-                                     {
-                                       return Maybe.justs(A2(List.map,
-                                                             function (arg0)
-                                                             {
-                                                               return function ()
-                                                                      {
-                                                                        switch (arg0.ctor)
-                                                                        {case
-                                                                         "_Tuple2" :
-                                                                           return arg0._0 ? Maybe.Just(arg0._1) : Maybe.Nothing;}
-                                                                        _E.Case($moduleName,
-                                                                                "on line 8, column 31 to 64");
-                                                                      }();
-                                                             },
-                                                             _J.toList([{ctor: "_Tuple2", _0: _N.eq(first,
-                                                                                                    ""), _1: "First name required."},
-                                                                        {ctor: "_Tuple2", _0: _N.eq(last,
-                                                                                                    ""), _1: "Last name required."},
-                                                                        {ctor: "_Tuple2", _0: _N.eq(email,
-                                                                                                    ""), _1: "Must enter your email address."},
-                                                                        {ctor: "_Tuple2", _0: _N.eq(remail,
-                                                                                                    ""), _1: "Must re-enter your email address."},
-                                                                        {ctor: "_Tuple2", _0: ! _N.eq(email,
-                                                                                                      remail), _1: "Email addresses do not match."}])));
-                                     });
-                  var formTitle = function (str)
+                  var $ = Graphics.Input.button("Login"),butn = $._0,press = $._1;
+                  var isClicked = function ()
                                   {
-                                    return Graphics.Element.width(400)(Text.centered(Text.height(38)(Text.toText(str))));
-                                  };
-                  var fieldWith = F2(function (txt,fld)
-                                     {
-                                       return A2(Graphics.Element.flow,
-                                                 Graphics.Element.right,
-                                                 _J.toList([A3(Graphics.Element.container,
-                                                               200,
-                                                               32,
-                                                               Graphics.Element.midRight)(Text.plainText(txt)),
-                                                            A3(Graphics.Element.container,
-                                                               200,
-                                                               32,
-                                                               Graphics.Element.middle)(A3(Graphics.Element.size,
-                                                                                           180,
-                                                                                           26,
-                                                                                           fld))]));
-                                     });
-                  var always = F2(function (value,signal)
-                                  {
-                                    return A2(Signal.lift,
-                                              function (arg0)
-                                              {
-                                                return function ()
-                                                       {
-                                                         return value;
-                                                       }();
-                                              },
-                                              signal);
-                                  });
-                  var $ = Graphics.Input.field("Re-enter Email"),
-                      remailBox = $._0,
-                      remail = $._1;
-                  var $ = Graphics.Input.field("Last Name"),
-                      lastBox = $._0,
-                      last = $._1;
-                  var $ = Graphics.Input.field("First Name"),
-                      firstBox = $._0,
-                      first = $._1;
-                  var $ = Graphics.Input.field("Your Email"),
-                      emailBox = $._0,
-                      email = $._1;
-                  var $ = Graphics.Input.button("Submit"),butn = $._0,press = $._1;
-                  var isClicked = A2(Signal.merge,
-                                     A2(always,false,A2(Time.delay,0,press)),
-                                     A2(always,true,press));
+                                    var always = F2(function (value,signal)
+                                                    {
+                                                      return A2(Signal.lift,
+                                                                function (arg0)
+                                                                {
+                                                                  return function ()
+                                                                         {
+                                                                           return value;
+                                                                         }();
+                                                                },
+                                                                signal);
+                                                    });
+                                    return A2(Signal.merge,
+                                              A2(always,false,A2(Time.delay,0,press)),
+                                              A2(always,true,press));
+                                  }();
                   var sendAttempt = A2(Signal.lift,
                                        function (c)
                                        {
                                          return _N.cmp(c,0) > 0;
                                        },
                                        Signal.count(press));
-                  var errors = A3(Signal.keepWhen,
-                                  sendAttempt,
-                                  _J.toList([]),
-                                  A5(Signal.lift4,getErrors,first,last,email,remail));
-                  var sendable = A3(Signal.lift2,
-                                    F2(function (x,y)
-                                       {
-                                         return x && y;
-                                       }),
-                                    isClicked,
-                                    A2(Signal.lift,List.isEmpty,errors));
-                  var sendRequest = A2(Signal.keepWhen,sendable,"")(A4(Signal.lift3,
-                                                                       url,
-                                                                       first,
-                                                                       last,
-                                                                       email));
-                  var loginResponse = A2(Signal.lift,
+                  var sendable = A2(Signal._op["~"],
+                                    A2(Signal._op["<~"],
+                                       F2(function (x,y)
+                                          {
+                                            return x && y;
+                                          }),
+                                       sendAttempt),
+                                    isClicked);
+                  var sendRequest = A2(Signal.keepWhen,
+                                       sendable,
+                                       "")(Signal.constant(url));
+                  var loginResponse = A2(Signal._op["<~"],
                                          prettyPrint,
                                          getLogin(sendRequest));
-                  var userEntry = F5(function (first,last,email,remail,errors)
-                                     {
-                                       return Graphics.Element.color(A3(Color.rgb,
-                                                                        230,
-                                                                        230,
-                                                                        230))(Graphics.Element.flow(Graphics.Element.down)(_J.toList([formTitle("Example Form"),
-                                                                                                                                      A2(fieldWith,
-                                                                                                                                         "First Name:",
-                                                                                                                                         first),
-                                                                                                                                      A2(fieldWith,
-                                                                                                                                         "Last Name:",
-                                                                                                                                         last),
-                                                                                                                                      A2(fieldWith,
-                                                                                                                                         "Your Email:",
-                                                                                                                                         email),
-                                                                                                                                      A2(fieldWith,
-                                                                                                                                         "Re-enter Email:",
-                                                                                                                                         remail),
-                                                                                                                                      showErrors(errors),
-                                                                                                                                      A3(Graphics.Element.container,
-                                                                                                                                         390,
-                                                                                                                                         50,
-                                                                                                                                         Graphics.Element.midRight)(A3(Graphics.Element.size,
-                                                                                                                                                                       60,
-                                                                                                                                                                       30,
-                                                                                                                                                                       butn))])));
-                                     });
-                  var inputForm = A6(Signal.lift5,
-                                     userEntry,
-                                     firstBox,
-                                     lastBox,
-                                     emailBox,
-                                     remailBox,
-                                     errors);
-                  var inputBox = function ()
-                                 {
-                                   var w = A2(Signal.lift,Graphics.Element.widthOf,inputForm);
-                                   var h = A2(Signal.lift,Graphics.Element.heightOf,inputForm);
-                                   var cmaker = F3(function (inForm,bWidth,bHeight)
-                                                   {
-                                                     return A4(Graphics.Element.container,
-                                                               bWidth,
-                                                               bHeight,
-                                                               Graphics.Element.topLeft,
-                                                               inForm);
-                                                   });
-                                   return A4(Signal.lift3,cmaker,inputForm,w,h);
-                                 }();
-                  var main = A4(Signal.lift3,
-                                scene,
-                                Window.dimensions,
-                                inputBox,
-                                loginResponse);
-                  elm.Main.values = {_op: _op, getErrors: getErrors, url: url, first: first, firstBox: firstBox, last: last, lastBox: lastBox, email: email, emailBox: emailBox, remail: remail, remailBox: remailBox, butn: butn, press: press, sendAttempt: sendAttempt, always: always, isClicked: isClicked, errors: errors, sendable: sendable, fieldWith: fieldWith, showErrors: showErrors, formTitle: formTitle, userEntry: userEntry, sendRequest: sendRequest, getLogin: getLogin, prettyPrint: prettyPrint, inputForm: inputForm, inputBox: inputBox, loginResponse: loginResponse, scene: scene, main: main};
+                  var main = A2(Signal._op["~"],
+                                A2(Signal._op["~"],
+                                   A2(Signal._op["<~"],scene,Signal.constant(butn)),
+                                   loginResponse),
+                                sendRequest);
+                  var userEntry = Graphics.Element.flow(Graphics.Element.down)(_J.toList([A3(Graphics.Element.size,
+                                                                                             60,
+                                                                                             30,
+                                                                                             butn)]));
+                  elm.Main.values = {_op: _op, url: url, butn: butn, press: press, sendAttempt: sendAttempt, isClicked: isClicked, sendable: sendable, userEntry: userEntry, sendRequest: sendRequest, getLogin: getLogin, prettyPrint: prettyPrint, loginResponse: loginResponse, scene: scene, main: main};
                   return elm.Main.values;
                 };
         </script>

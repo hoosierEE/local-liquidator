@@ -1,7 +1,6 @@
 import Graphics.Input as Input
 import Http
 import String
-import Window
 
 url = "/php/getUser.php"
 
