@@ -6,7 +6,7 @@
         <title>
             Main
         </title>
-        <script type="text/javascript" src="/home/al/.cabal/share/Elm-0.10/elm-runtime.js">
+        <script type="text/javascript" src="/elm-runtime.js">
             
         </script>
         <script type="text/javascript">
@@ -137,12 +137,14 @@ Elm.AdMaker.make = function (elm)
                      var String = Elm.String.make(elm);
                      var Visuals = Visuals || {};
                      Visuals.CustomControls = Elm.Visuals.CustomControls.make(elm);
+                     var Utils = Utils || {};
+                     Utils.Isbn = Elm.Utils.Isbn.make(elm);
                      var _op = {};
-                     var validate = F2(function (x,i)
+                     var validate = F2(function (x,isIsbn)
                                        {
                                          return function ()
                                                 {
-                                                  switch (i)
+                                                  switch (isIsbn)
                                                   {case
                                                    false :
                                                      return function ()
@@ -156,7 +158,7 @@ Elm.AdMaker.make = function (elm)
                                                                "Nothing" :
                                                                  return "";}
                                                               _E.Case($moduleName,
-                                                                      "between lines 18 and 20");
+                                                                      "between lines 23 and 25");
                                                             }();
                                                    case
                                                    true :
@@ -165,67 +167,85 @@ Elm.AdMaker.make = function (elm)
                                                                x) && (_N.eq(String.length(x),
                                                                             10) || _N.eq(String.length(x),
                                                                                          13)) ? x : "";}
-                                                  _E.Case($moduleName,"between lines 16 and 20");
+                                                  _E.Case($moduleName,"between lines 21 and 25");
                                                 }();
                                        });
-                     var preview = F2(function (isbn,price)
+                     var returnedJsonData = Signal.constant("blah");
+                     var redTitle = function (str)
+                                    {
+                                      return Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkRed)(Text.toText(str)))));
+                                    };
+                     var preview = F3(function (isbn,price,returnedJson)
                                       {
                                         return function ()
                                                {
-                                                 var arrange = function (arg0)
-                                                               {
-                                                                 return function ()
-                                                                        {
-                                                                          switch (arg0.ctor)
-                                                                          {case
-                                                                           "::" :
-                                                                             switch (arg0._1.ctor)
-                                                                             {case
-                                                                              "::" :
-                                                                                switch (arg0._1._1.ctor)
-                                                                                {case
-                                                                                 "::" :
-                                                                                   switch (arg0._1._1._1.ctor)
-                                                                                   {case
-                                                                                    "::" :
-                                                                                      switch (arg0._1._1._1._1.ctor)
-                                                                                      {case
-                                                                                       "[]" :
-                                                                                         return function ()
-                                                                                                {
-                                                                                                  var title = Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkRed)(Text.toText("Ad Preview")))));
-                                                                                                  return A2(Graphics.Element.flow,
-                                                                                                            Graphics.Element.down,
-                                                                                                            _J.toList([title,
-                                                                                                                       A2(Graphics.Element.flow,
-                                                                                                                          Graphics.Element.right,
-                                                                                                                          _J.toList([arg0._0,
-                                                                                                                                     arg0._1._0])),
-                                                                                                                       A2(Graphics.Element.flow,
-                                                                                                                          Graphics.Element.right,
-                                                                                                                          _J.toList([arg0._1._1._0,
-                                                                                                                                     arg0._1._1._1._0]))]));
-                                                                                                }();}
-                                                                                      break;}
-                                                                                   break;}
-                                                                                break;}
-                                                                             break;}
-                                                                          _E.Case($moduleName,
-                                                                                  "between lines 35 and 36");
-                                                                        }();
-                                                               };
-                                                 return arrange(A2(List.map,
-                                                                   Text.plainText,
-                                                                   _J.toList(["ISBN Number: ",
-                                                                              A2(validate,
-                                                                                 isbn,
-                                                                                 true),
-                                                                              "Price: $",
-                                                                              A2(validate,
-                                                                                 price,
-                                                                                 false)])));
+                                                 var previewTitle = redTitle("Ad Preview");
+                                                 var elems = A2(List.map,
+                                                                Text.plainText,
+                                                                _J.toList(["ISBN Number: ",
+                                                                           isbn,
+                                                                           "Price: $",
+                                                                           price,
+                                                                           "Description: ",
+                                                                           returnedJson]));
+                                                 var arranger = function (arg0)
+                                                                {
+                                                                  return function ()
+                                                                         {
+                                                                           switch (arg0.ctor)
+                                                                           {case
+                                                                            "::" :
+                                                                              switch (arg0._1.ctor)
+                                                                              {case
+                                                                               "::" :
+                                                                                 switch (arg0._1._1.ctor)
+                                                                                 {case
+                                                                                  "::" :
+                                                                                    switch (arg0._1._1._1.ctor)
+                                                                                    {case
+                                                                                     "::" :
+                                                                                       switch (arg0._1._1._1._1.ctor)
+                                                                                       {case
+                                                                                        "::" :
+                                                                                          switch (arg0._1._1._1._1._1.ctor)
+                                                                                          {case
+                                                                                           "::" :
+                                                                                             switch (arg0._1._1._1._1._1._1.ctor)
+                                                                                             {case
+                                                                                              "[]" :
+                                                                                                return A2(Graphics.Element.flow,
+                                                                                                          Graphics.Element.down,
+                                                                                                          _J.toList([A2(Graphics.Element.flow,
+                                                                                                                        Graphics.Element.right,
+                                                                                                                        _J.toList([arg0._0,
+                                                                                                                                   arg0._1._0])),
+                                                                                                                     A2(Graphics.Element.flow,
+                                                                                                                        Graphics.Element.right,
+                                                                                                                        _J.toList([arg0._1._1._0,
+                                                                                                                                   arg0._1._1._1._0])),
+                                                                                                                     arg0._1._1._1._1._0,
+                                                                                                                     arg0._1._1._1._1._1._0]));}
+                                                                                             break;}
+                                                                                          break;}
+                                                                                       break;}
+                                                                                    break;}
+                                                                                 break;}
+                                                                              break;}
+                                                                           _E.Case($moduleName,
+                                                                                   "on line 53, column 30 to 82");
+                                                                         }();
+                                                                };
+                                                 return A2(Graphics.Element.flow,
+                                                           Graphics.Element.down,
+                                                           _J.toList([previewTitle,
+                                                                      arranger(elems)]));
                                                }();
                                       });
+                     var isbnScriptUrl = "/php/checkISBN.php?isbn=";
+                     var isbnUrl = function (i)
+                                   {
+                                     return _L.append(isbnScriptUrl,i);
+                                   };
                      var isClicked = function (evt)
                                      {
                                        return function ()
@@ -253,10 +273,24 @@ Elm.AdMaker.make = function (elm)
                      var $ = Graphics.Input.field("Price"),
                          price = $._0,
                          priceSignal = $._1;
+                     var validPrice = A2(Signal._op["<~"],
+                                         function (n)
+                                         {
+                                           return A2(validate,n,false);
+                                         },
+                                         priceSignal);
                      var $ = Graphics.Input.field("ISBN"),isbn = $._0,isbnSignal = $._1;
+                     var validIsbn = A2(Signal._op["<~"],
+                                        function (n)
+                                        {
+                                          return A2(validate,n,true);
+                                        },
+                                        isbnSignal);
                      var previewArea = A2(Signal._op["~"],
-                                          A2(Signal._op["<~"],preview,isbnSignal),
-                                          priceSignal);
+                                          A2(Signal._op["~"],
+                                             A2(Signal._op["<~"],preview,validIsbn),
+                                             validPrice),
+                                          returnedJsonData);
                      var $ = Visuals.CustomControls.btnBuilder("Buy"),
                          buy = $._0,
                          buyEvent = $._1;
@@ -265,7 +299,7 @@ Elm.AdMaker.make = function (elm)
                                        _J.toList([buy,A2(Graphics.Element.spacer,4,4),sell]));
                      var adArea = function ()
                                   {
-                                    var header = Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkRed)(Text.toText("Ad Creator")))));
+                                    var header = redTitle("Ad Creator");
                                     return A2(Signal._op["<~"],
                                               Graphics.Element.flow(Graphics.Element.down),
                                               Signal.combine(_J.toList([Signal.constant(header),
@@ -306,12 +340,9 @@ Elm.Header.make = function (elm)
                     Utils.GetUser = Elm.Utils.GetUser.make(elm);
                     var _op = {};
                     var topBarHeight = 20;
-                    var relativeUrl = "/php/getUser.php";
                     var paths = _J.toList([{ctor: "_Tuple2", _0: "Home", _1: "/"},
-                                           {ctor: "_Tuple2", _0: "CheckISBN", _1: "http://www.local-liquidator.com/php/checkISBN.php"},
-                                           {ctor: "_Tuple2", _0: "JSON 1", _1: "http://www.local-liquidator.com/JsonTest.html"},
-                                           {ctor: "_Tuple2", _0: "JSON 2", _1: "http://www.local-liquidator.com/JsonTest/JsonTest.html"},
-                                           {ctor: "_Tuple2", _0: "Login", _1: "/php/php_cas.php"}]);
+                                           {ctor: "_Tuple2", _0: "Login", _1: "/php/php_cas.php"},
+                                           {ctor: "_Tuple2", _0: "Logout", _1: "https://cas.iu.edu/cas/logout"}]);
                     var navBar = function (arg0)
                                  {
                                    return function ()
@@ -336,39 +367,50 @@ Elm.Header.make = function (elm)
                                                                   Graphics.Element.midRight,
                                                                   words);
                                                       }();}
-                                            _E.Case($moduleName,"between lines 22 and 27");
+                                            _E.Case($moduleName,"between lines 27 and 32");
                                           }();
                                  };
                     var navs = Graphics.Element.flow(Graphics.Element.right)(A2(List.map,
                                                                                 navBar,
                                                                                 paths));
                     var minLogoHeight = 30;
-                    var header$ = F2(function (arg1,login)
-                                     {
-                                       return function ()
-                                              {
-                                                switch (arg1.ctor)
-                                                {case
-                                                 "_Tuple2" :
-                                                   return function ()
-                                                          {
-                                                            var title = Graphics.Element.width(arg1._0)(Text.centered(Text.height(List.maximum(_J.toList([minLogoHeight,
-                                                                                                                                                          Basics.toFloat(arg1._0) / 20])))(Text.toText("Local Liquidator"))));
-                                                            return Graphics.Element.color(Color.lightBlue)(A2(Graphics.Element.flow,
-                                                                                                              Graphics.Element.down,
-                                                                                                              _J.toList([title,
-                                                                                                                         A2(Graphics.Element.flow,
-                                                                                                                            Graphics.Element.right,
-                                                                                                                            _J.toList([navs,
-                                                                                                                                       login]))])));
-                                                          }();}
-                                                _E.Case($moduleName,"between lines 13 and 17");
-                                              }();
-                                     });
+                    var headerBuilder = F2(function (arg1,login)
+                                           {
+                                             return function ()
+                                                    {
+                                                      switch (arg1.ctor)
+                                                      {case
+                                                       "_Tuple2" :
+                                                         return function ()
+                                                                {
+                                                                  var welcome = function ()
+                                                                                {
+                                                                                  switch (login)
+                                                                                  {case
+                                                                                   "404" :
+                                                                                     return Text.plainText("not logged in (404 error)");
+                                                                                   case
+                                                                                   "guest" :
+                                                                                     return Text.plainText("welcome Guest");}
+                                                                                  return Text.plainText(login);
+                                                                                }();
+                                                                  var title = Graphics.Element.width(arg1._0)(Text.centered(Text.height(List.maximum(_J.toList([minLogoHeight,
+                                                                                                                                                                Basics.toFloat(arg1._0) / 20])))(Text.toText("Local Liquidator"))));
+                                                                  return Graphics.Element.color(Color.lightBlue)(A2(Graphics.Element.flow,
+                                                                                                                    Graphics.Element.down,
+                                                                                                                    _J.toList([title,
+                                                                                                                               A2(Graphics.Element.flow,
+                                                                                                                                  Graphics.Element.right,
+                                                                                                                                  _J.toList([navs,
+                                                                                                                                             welcome]))])));
+                                                                }();}
+                                                      _E.Case($moduleName,
+                                                              "between lines 12 and 20");
+                                                    }();
+                                           });
                     var header = A2(Signal._op["~"],
-                                    A2(Signal._op["<~"],header$,Window.dimensions),
+                                    A2(Signal._op["<~"],headerBuilder,Window.dimensions),
                                     Utils.GetUser.helloUser);
-                    var absoluteUrl = "http://local-liquidator.com";
                     elm.Header.values = {_op: _op, header: header};
                     return elm.Header.values;
                   };Elm.MapMaker = Elm.MapMaker || {};
@@ -455,6 +497,10 @@ Elm.Utils.GetUser.make = function (elm)
                            Graphics.Collage = Elm.Graphics.Collage.make(elm);
                            var Http = Elm.Http.make(elm);
                            var _op = {};
+                           var scriptSrc = Signal.constant("/php/getUser.php");
+                           var sendRequest = A2(Signal.keepWhen,
+                                                Signal.constant(true),
+                                                "")(scriptSrc);
                            var prettyPrint = function (res)
                                              {
                                                return function ()
@@ -462,16 +508,15 @@ Elm.Utils.GetUser.make = function (elm)
                                                         switch (res.ctor)
                                                         {case
                                                          "Failure" :
-                                                           return Text.plainText("");
+                                                           return "404";
                                                          case
                                                          "Success" :
-                                                           return Text.plainText(_L.append("Welcome, ",
-                                                                                           res._0));
+                                                           return res._0;
                                                          case
                                                          "Waiting" :
-                                                           return Text.plainText("");}
+                                                           return "";}
                                                         _E.Case($moduleName,
-                                                                "between lines 6 and 9");
+                                                                "between lines 16 and 19");
                                                       }();
                                              };
                            var getLogin = function (req)
@@ -483,16 +528,81 @@ Elm.Utils.GetUser.make = function (elm)
                                                                 },
                                                                 req));
                                           };
-                           var defaultValue = Signal.constant("/php/getUser.php");
-                           var sendRequest = A2(Signal.keepWhen,
-                                                Signal.constant(true),
-                                                "")(defaultValue);
                            var helloUser = A2(Signal._op["<~"],
                                               prettyPrint,
                                               getLogin(sendRequest));
                            elm.Utils.GetUser.values = {_op: _op, helloUser: helloUser};
                            return elm.Utils.GetUser.values;
-                         };Elm.Visuals = Elm.Visuals || {};
+                         };Elm.Utils = Elm.Utils || {};
+Elm.Utils.Isbn = Elm.Utils.Isbn || {};
+Elm.Utils.Isbn.make = function (elm)
+                      {
+                        elm.Utils = elm.Utils || {};
+                        elm.Utils.Isbn = elm.Utils.Isbn || {};
+                        if (elm.Utils.Isbn.values)
+                        return elm.Utils.Isbn.values;
+                        var N = Elm.Native,
+                            _N = N.Utils.make(elm),
+                            _L = N.List.make(elm),
+                            _E = N.Error.make(elm),
+                            _J = N.JavaScript.make(elm),
+                            $moduleName = "Utils.Isbn";
+                        var Text = Elm.Text.make(elm);
+                        var Text = Elm.Text.make(elm);
+                        var Basics = Elm.Basics.make(elm);
+                        var Signal = Elm.Signal.make(elm);
+                        var List = Elm.List.make(elm);
+                        var Maybe = Elm.Maybe.make(elm);
+                        var Time = Elm.Time.make(elm);
+                        var Prelude = Elm.Prelude.make(elm);
+                        var Graphics = Graphics || {};
+                        Graphics.Element = Elm.Graphics.Element.make(elm);
+                        var Color = Elm.Color.make(elm);
+                        var Graphics = Graphics || {};
+                        Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                        var Http = Elm.Http.make(elm);
+                        var _op = {};
+                        var scriptSrc = "/php/checkISBN.php";
+                        var sendRequest = A2(Signal.keepWhen,
+                                             Signal.constant(true),
+                                             "")(Signal.constant(scriptSrc));
+                        var queryString = function (str)
+                                          {
+                                            return _L.append(scriptSrc,str);
+                                          };
+                        var prettyPrint = function (res)
+                                          {
+                                            return function ()
+                                                   {
+                                                     switch (res.ctor)
+                                                     {case
+                                                      "Failure" :
+                                                        return "404";
+                                                      case
+                                                      "Success" :
+                                                        return res._0;
+                                                      case
+                                                      "Waiting" :
+                                                        return "";}
+                                                     _E.Case($moduleName,"between lines 11 and 14");
+                                                   }();
+                                          };
+                        var isbnString = 10;
+                        var getLogin = function (req)
+                                       {
+                                         return Http.send(A2(Signal.lift,
+                                                             function (r)
+                                                             {
+                                                               return A2(Http.post,r,"");
+                                                             },
+                                                             req));
+                                       };
+                        var helloUser = A2(Signal._op["<~"],
+                                           prettyPrint,
+                                           getLogin(sendRequest));
+                        elm.Utils.Isbn.values = {_op: _op, isbnString: isbnString};
+                        return elm.Utils.Isbn.values;
+                      };Elm.Visuals = Elm.Visuals || {};
 Elm.Visuals.CustomControls = Elm.Visuals.CustomControls || {};
 Elm.Visuals.CustomControls.make = function (elm)
                                   {
