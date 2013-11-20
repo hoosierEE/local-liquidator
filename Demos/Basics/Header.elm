@@ -23,7 +23,7 @@ paths =
   , ("CheckISBN", "http://www.local-liquidator.com/php/checkISBN.php")
   , ("JSON 1", "http://www.local-liquidator.com/JsonTest.html")
   , ("JSON 2", "http://www.local-liquidator.com/JsonTest/JsonTest.html")
-  -- , ("Login", "/php/php_cas.php")
+  , ("Login", "/php/php_cas.php")
   ]
 
 header : Signal Element
