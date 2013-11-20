@@ -1,6 +1,6 @@
 module Header (header) where
 import Window
-import GetUser (helloUser)
+import Utils.GetUser (helloUser)
 
 -- Constants
 topBarHeight = 20
@@ -11,13 +11,20 @@ relativeUrl = "/php/getUser.php"
 -- Visuals
 header' (w,h) login =
   let title = width w . centered . Text.height (maximum [minLogoHeight, (toFloat w / 20)]) <| toText "Local Liquidator"
-  in flow down [title, navs, login] |> color lightBlue
+  in flow down 
+    [ title
+    , flow right [navs, login]
+    ] |> color lightBlue
 
 -- Site Navigation
 navs = flow right <| map navBar paths
 navBar (name, href) =
-  let words = text . Text.link href <| toText name
-  in container (widthOf words + 20) topBarHeight midRight words
+  let words = 
+    flow right [ spacer 10 10 
+        , (text . Text.link href <| toText name)
+        , spacer 10 10 ]
+  in 
+    container (widthOf words) topBarHeight midRight words
 paths =
   [ ("Home", "/")
   , ("CheckISBN", "http://www.local-liquidator.com/php/checkISBN.php")

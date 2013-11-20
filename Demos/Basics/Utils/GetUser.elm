@@ -1,4 +1,4 @@
-module GetUser (helloUser) where
+module Utils.GetUser (helloUser) where
 
 {- module simply posts {username} or {guest} as an elemnet -}
 
