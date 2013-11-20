@@ -1,4 +1,4 @@
-module Layout (msg) where
+module Visuals.Layout (msg) where
 
 -- Constants
 minPhone = 320
