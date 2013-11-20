@@ -15,7 +15,9 @@ responses : Signal String -> Signal (Http.Response String)
 responses s = Http.sendGet (queryString <~ s)
 
 queryString : String -> String
-queryString str = scriptSrc ++ str
+queryString str = case str of
+  "" -> scriptSrc ++ "0" -- hack to prevent weird default ISBN return value (somebody else's bug?)
+  s -> scriptSrc ++ s
 
 isbnString : Signal String -> Signal String
 isbnString str = prettyPrint <~ responses (dropRepeats str)

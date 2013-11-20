@@ -7,9 +7,6 @@ import String
 import Visuals.CustomControls (btnBuilder)
 import Utils.Isbn (isbnString)
 
--- Constants
-isbnScriptUrl = "/php/checkISBN.php?isbn="
-
 -- Inputs
 (isbn , isbnSignal)  = Input.field "ISBN"
 (price, priceSignal) = Input.field "Price"
@@ -27,9 +24,6 @@ validate x isIsbn = case isIsbn of
 -- Actually validate the inputs
 validIsbn = (\n -> validate n True) <~ isbnSignal
 validPrice = (\n -> validate n False) <~ priceSignal 
-
-isbnUrl : String -> String
-isbnUrl i = isbnScriptUrl ++ i
 
 returnedJsonData : Signal String
 returnedJsonData = isbnString validIsbn
