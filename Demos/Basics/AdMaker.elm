@@ -32,7 +32,7 @@ isbnUrl : String -> String
 isbnUrl i = isbnScriptUrl ++ i
 
 returnedJsonData : Signal String
-returnedJsonData = constant "blah"
+returnedJsonData = isbnString validIsbn
 
 -- Visuals
 btnGroup : Element
