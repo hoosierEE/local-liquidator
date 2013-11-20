@@ -1,27 +1,12 @@
 module Header (header) where
 import Window
-import Http
+import GetUser (helloUser)
 
 -- Constants
 topBarHeight = 20
 minLogoHeight = 30
 absoluteUrl = "http://local-liquidator.com"
 relativeUrl = "/php/getUser.php"
-
--- display "welcome back {username} ... logout" or "welcome guest ...login"
-sendRequest : Signal String
-sendRequest = constant relativeUrl -- alternate: (absoluteUrl ++ relativeUrl)
-
-getLogin : Signal String -> Signal (Http.Response String)
-getLogin req = Http.send <| lift (\r -> Http.post r "") req
-
-prettyPrint : Http.Response String -> Element
-prettyPrint res = case res of
-  Http.Waiting -> plainText ""
-  Http.Failure _ _ -> plainText ""
-  Http.Success a -> plainText a
-
-
 
 -- Visuals
 header' (w,h) login =
@@ -42,4 +27,4 @@ paths =
   ]
 
 header : Signal Element
-header = header' <~ Window.dimensions ~ (prettyPrint <~ (getLogin sendRequest)) 
+header = header' <~ Window.dimensions ~ helloUser
