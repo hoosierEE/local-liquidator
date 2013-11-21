@@ -12,8 +12,8 @@ headerBuilder (w,h) login =
   let title = width w . centered . Text.height (maximum [minLogoHeight, (toFloat w / 20)]) <| toText "Local Liquidator"
       welcome = case login of
         "404" -> plainText "not logged in (404 error)"
-        "guest" -> plainText "welcome Guest"
-        a -> plainText a
+        "guest" -> plainText "Welcome Guest"
+        a -> plainText ("Welcome, " ++ a)
   in flow down 
     [ title
     , flow right [navs, welcome]

@@ -1,3 +1,11 @@
 module Utils.Model (advert) where
 
-advert = 1
+advert = 
+  { title:String
+  , isbn10:Int
+  , isbn13:Int
+  , imageUrl:String
+  , expTime:Int
+  }
+
+
