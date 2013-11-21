@@ -35,7 +35,7 @@ paths : [(String,String)]
 paths =
   [ ("Home", "/")
   , ("Login", "/php/php_cas.php")
-  , ("Logout", "https://cas.iu.edu/cas/logout")
+  , ("Logout", "/php/cas_logout.php")
   ]
 
 header : Signal Element

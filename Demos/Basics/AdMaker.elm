@@ -22,7 +22,10 @@ validate x isIsbn = case isIsbn of
     Just x -> show x
 
 -- Actually validate the inputs
+validIsbn : Signal String
 validIsbn = (\n -> validate n True) <~ isbnSignal
+
+validPrice : Signal String
 validPrice = (\n -> validate n False) <~ priceSignal 
 
 returnedJsonData : Signal String
