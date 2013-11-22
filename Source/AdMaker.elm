@@ -49,7 +49,7 @@ preview isbn price returnedJson =
     previewTitle = redTitle "Ad Preview"
     arranger [a,b,c,d,e,f] = flow down [ flow right [a,b], flow right [c,d],e,f ]
   in 
-    flow down [ previewTitle, arranger elems ]
+    width 200 <| flow down <| [ previewTitle, arranger elems ]
 
 previewArea : Signal Element
 previewArea = preview <~ validIsbn ~ validPrice ~ returnedJsonData
