@@ -1,14 +1,14 @@
-module Utils.HttpFunctions (prettyPrint, responses, getLogin) where
+module Utils.HttpFunctions (prettyPrint, sendReq) where
 
 import Http
 
-scriptSrc : String
-scriptSrc = "/php/checkISBN.php?isbn="
+-- @functions: sendReq, prettyPrint
 
-queryString : String -> String
-queryString str = case str of
-  "" -> scriptSrc ++ "0" -- hack to prevent weird default ISBN return value (somebody else's bug?)
-  s -> scriptSrc ++ s
+-- True for GET, false for POST
+sendReq : Signal String -> String -> Signal (Http.Response String)
+sendReq str method = case method of
+  "get"  -> Http.sendGet <| str
+  "post" -> Http.send    <| (\r -> Http.post r "" ) <~ str
 
 prettyPrint : Http.Response String -> String 
 prettyPrint res = case res of
@@ -16,9 +16,6 @@ prettyPrint res = case res of
   Http.Failure _ _ -> "404" -- for debugging
   Http.Success a   -> a 
 
--- maybe turn responses and getLogin into one function that takes Post/Get as a parameter 
-responses : Signal String -> Signal (Http.Response String)
-responses s = Http.sendGet (queryString <~ s)
-
-getLogin : Signal String -> Signal (Http.Response String)
-getLogin req = Http.send <| lift (\r -> Http.post r "") req
+-- uncomment these lines to test this code
+-- url = constant "/"
+-- main = plainText <~ (prettyPrint <~ sendReq url True)

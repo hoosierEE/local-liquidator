@@ -1,6 +1,11 @@
 module Header (header) where
 import Window
-import Utils.GetUser (helloUser)
+import Utils.HttpFunctions (sendReq, prettyPrint)
+
+scriptSrc : Signal String
+scriptSrc = constant "/php/getUser.php"
+helloUser : Signal String
+helloUser = prettyPrint <~ sendReq scriptSrc "post"
 
 -- Constants
 topBarHeight = 20
@@ -36,6 +41,7 @@ paths =
   [ ("Home", "/")
   , ("Login", "/php/php_cas.php")
   , ("Logout", "/php/cas_logout.php")
+  , ("Send Ad (test)", "/storeAdTest.html")
   ]
 
 header : Signal Element
