@@ -65,6 +65,7 @@ Elm.Main.make = function (elm)
                                                _E.Case($moduleName,"between lines 20 and 23");
                                              }();
                                     };
+                  var note = Text.plainText(" click to Http.post the url \"/php/storeAd.php?Title=randomBookTitle&ISBN10=1234567890\" ");
                   var isClicked = function (evt)
                                   {
                                     return function ()
@@ -96,19 +97,22 @@ Elm.Main.make = function (elm)
                                                        req));
                                  };
                   var $ = Graphics.Input.button("Store Ad"),butn = $._0,press = $._1;
+                  var elems = A2(Graphics.Element.flow,
+                                 Graphics.Element.right,
+                                 _J.toList([butn,note]));
                   var sendable = isClicked(press);
-                  var sendRequest = A2(Signal.keepWhen,sendable,"")(A4(Signal.lift3,
-                                                                       url,
-                                                                       Signal.constant("randomBookTitle"),
-                                                                       Signal.constant("1234123412"),
-                                                                       Signal.constant("1234123412341")));
+                  var sendRequest = A2(Signal.keepWhen,sendable,"0")(A4(Signal.lift3,
+                                                                        url,
+                                                                        Signal.constant("randomBookTitle"),
+                                                                        Signal.constant("1234123412"),
+                                                                        Signal.constant("1234123412341")));
                   var loginResponse = A2(Signal.lift,
                                          prettyPrint,
                                          getLogin(sendRequest));
                   var main = A2(Signal._op["<~"],
                                 Graphics.Element.flow(Graphics.Element.down),
-                                Signal.combine(_J.toList([Signal.constant(butn),loginResponse])));
-                  elm.Main.values = {_op: _op, butn: butn, press: press, url: url, isClicked: isClicked, sendable: sendable, sendRequest: sendRequest, getLogin: getLogin, prettyPrint: prettyPrint, loginResponse: loginResponse, main: main};
+                                Signal.combine(_J.toList([Signal.constant(elems),loginResponse])));
+                  elm.Main.values = {_op: _op, butn: butn, press: press, url: url, isClicked: isClicked, sendable: sendable, sendRequest: sendRequest, getLogin: getLogin, prettyPrint: prettyPrint, loginResponse: loginResponse, note: note, elems: elems, main: main};
                   return elm.Main.values;
                 };
         </script>

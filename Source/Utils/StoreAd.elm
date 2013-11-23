@@ -13,7 +13,7 @@ isClicked evt = let always value signal = lift (\_->value) signal
 
 sendable = isClicked press
 
-sendRequest = keepWhen sendable "" <| lift3 url (constant "randomBookTitle") (constant  "1234123412") (constant "1234123412341")
+sendRequest = keepWhen sendable "0" <| lift3 url (constant "randomBookTitle") (constant  "1234123412") (constant "1234123412341")
 
 getLogin req = Http.send <| lift (\r -> Http.post r "") req
 
@@ -23,5 +23,7 @@ prettyPrint res = case res of
   Http.Success a -> plainText a
 
 loginResponse = lift prettyPrint (getLogin sendRequest)
-
-main = flow down <~ combine [constant butn, loginResponse]
+note = plainText <| 
+  """ click to Http.post the url "/php/storeAd.php?Title=randomBookTitle&ISBN10=1234567890" """
+elems = flow right [butn, note]
+main = flow down <~ combine [constant elems, loginResponse]
