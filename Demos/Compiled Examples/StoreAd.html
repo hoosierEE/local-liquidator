@@ -39,15 +39,7 @@ Elm.Main.make = function (elm)
                   var Graphics = Graphics || {};
                   Graphics.Input = Elm.Graphics.Input.make(elm);
                   var _op = {};
-                  var url = F3(function (title,isbn10,isbn13)
-                               {
-                                 return _L.append("/php/storeAd.php?Title=",
-                                                  _L.append(title,
-                                                            _L.append("&ISBN10=",
-                                                                      _L.append(isbn10,
-                                                                                _L.append("&ISBN13=",
-                                                                                          isbn13)))));
-                               });
+                  var url = "/php/storeAd.php?Title=&ISBN10=1234567890&ISBN13=123456789abc&imageURL=someImgUrl&ExpTime=later&Description=Short&Condition=new&Price=12.42&user=ashroyer&Adtype=seller&Lat=1&Lon=2";
                   var prettyPrint = function (res)
                                     {
                                       return function ()
@@ -62,10 +54,11 @@ Elm.Main.make = function (elm)
                                                 case
                                                 "Waiting" :
                                                   return Text.plainText("waiting");}
-                                               _E.Case($moduleName,"between lines 20 and 23");
+                                               _E.Case($moduleName,"between lines 17 and 20");
                                              }();
                                     };
-                  var note = Text.plainText(" click to Http.post the url \"/php/storeAd.php?Title=randomBookTitle&ISBN10=1234567890\" ");
+                  var note = Graphics.Element.width(100)(Text.plainText(_L.append("click to post the URL to ",
+                                                                                  url)));
                   var isClicked = function (evt)
                                   {
                                     return function ()
@@ -101,11 +94,9 @@ Elm.Main.make = function (elm)
                                  Graphics.Element.right,
                                  _J.toList([butn,note]));
                   var sendable = isClicked(press);
-                  var sendRequest = A2(Signal.keepWhen,sendable,"0")(A4(Signal.lift3,
-                                                                        url,
-                                                                        Signal.constant("randomBookTitle"),
-                                                                        Signal.constant("1234123412"),
-                                                                        Signal.constant("1234123412341")));
+                  var sendRequest = A2(Signal.keepWhen,
+                                       sendable,
+                                       "0")(Signal.constant(url));
                   var loginResponse = A2(Signal.lift,
                                          prettyPrint,
                                          getLogin(sendRequest));
