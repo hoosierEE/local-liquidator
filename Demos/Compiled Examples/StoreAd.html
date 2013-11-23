@@ -39,7 +39,18 @@ Elm.Main.make = function (elm)
                   var Graphics = Graphics || {};
                   Graphics.Input = Elm.Graphics.Input.make(elm);
                   var _op = {};
-                  var url = "/php/storeAd.php?Title=&ISBN10=1234567890&ISBN13=123456789abc&imageURL=someImgUrl&ExpTime=later&Description=Short&Condition=new&Price=12.42&user=ashroyer&Adtype=seller&Lat=1&Lon=2";
+                  var url = _L.append("/php/storeAd.php?",
+                                      _L.append("Title=someRandomBook",
+                                                _L.append("&ISBN10=1234567890",
+                                                          _L.append("&ISBN13=123456789abc",
+                                                                    _L.append("&imageURL=someImgUrl",
+                                                                              _L.append("&ExpTime=1385507557",
+                                                                                        _L.append("&Description=Short",
+                                                                                                  _L.append("&Condition=new",
+                                                                                                            _L.append("&Price=12.42",
+                                                                                                                      _L.append("&user=ashroyer",
+                                                                                                                                _L.append("&Adtype=seller",
+                                                                                                                                          "&Lat=1&Lon=2")))))))))));
                   var prettyPrint = function (res)
                                     {
                                       return function ()
@@ -47,17 +58,17 @@ Elm.Main.make = function (elm)
                                                switch (res.ctor)
                                                {case
                                                 "Failure" :
-                                                  return Text.plainText("aw dang, 404");
+                                                  return Text.plainText("");
                                                 case
                                                 "Success" :
                                                   return Text.plainText(res._0);
                                                 case
                                                 "Waiting" :
                                                   return Text.plainText("waiting");}
-                                               _E.Case($moduleName,"between lines 17 and 20");
+                                               _E.Case($moduleName,"between lines 31 and 34");
                                              }();
                                     };
-                  var note = Graphics.Element.width(100)(Text.plainText(_L.append("click to post the URL to ",
+                  var note = Graphics.Element.width(400)(Text.plainText(_L.append("click to post the URL to ",
                                                                                   url)));
                   var isClicked = function (evt)
                                   {
@@ -103,7 +114,7 @@ Elm.Main.make = function (elm)
                   var main = A2(Signal._op["<~"],
                                 Graphics.Element.flow(Graphics.Element.down),
                                 Signal.combine(_J.toList([Signal.constant(elems),loginResponse])));
-                  elm.Main.values = {_op: _op, butn: butn, press: press, url: url, isClicked: isClicked, sendable: sendable, sendRequest: sendRequest, getLogin: getLogin, prettyPrint: prettyPrint, loginResponse: loginResponse, note: note, elems: elems, main: main};
+                  elm.Main.values = {_op: _op, butn: butn, press: press, url: url, isClicked: isClicked, sendable: sendable, sendRequest: sendRequest, getLogin: getLogin, loginResponse: loginResponse, prettyPrint: prettyPrint, note: note, elems: elems, main: main};
                   return elm.Main.values;
                 };
         </script>
