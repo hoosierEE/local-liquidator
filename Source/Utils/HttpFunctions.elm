@@ -22,5 +22,3 @@ responses s = Http.sendGet (queryString <~ s)
 
 getLogin : Signal String -> Signal (Http.Response String)
 getLogin req = Http.send <| lift (\r -> Http.post r "") req
-
-

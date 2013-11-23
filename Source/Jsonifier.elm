@@ -4,13 +4,14 @@ import Json
 import JavaScript.Experimental as JS
 
 url = "isbn.json"
+example = { valid = True, name = "George" }
 
 responses : Signal (Http.Response String)
 responses = Http.sendGet <| constant url 
 
-stringToRecord : String -> Maybe String
+-- stringToRecord : String -> Maybe a
 stringToRecord str = case Json.fromString str of
-  Just jsonValue -> Just <| JS.toRecord <| Json.toJSObject jsonValue
+  Just jsonValue -> (JS.toRecord (Json.toJSObject jsonValue)).valid
   Nothing -> Nothing
 
 -- Convert Http Response (String) into an Element
@@ -19,7 +20,10 @@ formatify a =
   let x = stringToRecord a
   in case x of
     Nothing -> asText ""
-    _ -> asText <| x
+    _ -> flow down
+      [ asText example.name
+      , asText x
+      ]
 
 -- Display a response.
 display response = case response of

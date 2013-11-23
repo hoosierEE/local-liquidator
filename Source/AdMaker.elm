@@ -12,6 +12,7 @@ import Utils.Isbn (isbnString)
 (price, priceSignal) = Input.field "Price"
 (buy  , buyEvent)    = btnBuilder "Buy"
 (sell , sellEvent)   = btnBuilder "Sell"
+(addAdButton, press) = Input.button "storeAd"
 
 -- Form Valication Logic
 validate : String -> Bool -> String
@@ -57,7 +58,7 @@ previewArea = preview <~ validIsbn ~ validPrice ~ returnedJsonData
 -- User Entry and Preview (large block Element)
 adArea : Signal Element
 adArea = let header = redTitle "Ad Creator"
-  in flow down <~ combine [constant header, isbn, price, constant btnGroup, previewArea]
+  in flow down <~ combine [constant header, isbn, price, constant btnGroup, previewArea, constant addAdButton]
 
 -- Helper Functions
 redTitle : String -> Element
