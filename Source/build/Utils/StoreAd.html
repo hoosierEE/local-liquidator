@@ -35,22 +35,38 @@ Elm.Main.make = function (elm)
                   var Color = Elm.Color.make(elm);
                   var Graphics = Graphics || {};
                   Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                  var Json = Elm.Json.make(elm);
+                  var JavaScript = JavaScript || {};
+                  JavaScript.Experimental = Elm.JavaScript.Experimental.make(elm);
                   var Http = Elm.Http.make(elm);
                   var Graphics = Graphics || {};
                   Graphics.Input = Elm.Graphics.Input.make(elm);
                   var _op = {};
                   var url = _L.append("/php/storeAd.php?",
-                                      _L.append("Title=someRandomBook",
-                                                _L.append("&ISBN10=1234567890",
-                                                          _L.append("&ISBN13=123456789abc",
-                                                                    _L.append("&imageURL=someImgUrl",
-                                                                              _L.append("&ExpTime=2013-11-30 01:01:01",
-                                                                                        _L.append("&Description=Short",
-                                                                                                  _L.append("&Condition=new",
-                                                                                                            _L.append("&Price=12.42",
-                                                                                                                      _L.append("&user=ashroyer",
-                                                                                                                                _L.append("&Adtype=seller",
-                                                                                                                                          "&Lat=1&Lon=2")))))))))));
+                                      _L.append("Title",
+                                                _L.append("someRandomBook",
+                                                          _L.append("&ISBN10",
+                                                                    _L.append("1234567890",
+                                                                              _L.append("&ISBN13",
+                                                                                        _L.append("123456789abc",
+                                                                                                  _L.append("&imageURL",
+                                                                                                            _L.append("someImgUrl",
+                                                                                                                      _L.append("&ExpTime",
+                                                                                                                                _L.append("2013-11-30 01:01:01",
+                                                                                                                                          _L.append("&Description",
+                                                                                                                                                    _L.append("Short",
+                                                                                                                                                              _L.append("&Condition",
+                                                                                                                                                                        _L.append("new",
+                                                                                                                                                                                  _L.append("&Price",
+                                                                                                                                                                                            _L.append("12.42",
+                                                                                                                                                                                                      _L.append("&user",
+                                                                                                                                                                                                                _L.append("ashroyer",
+                                                                                                                                                                                                                          _L.append("&Adtype",
+                                                                                                                                                                                                                                    _L.append("seller",
+                                                                                                                                                                                                                                              _L.append("&Lat",
+                                                                                                                                                                                                                                                        _L.append("1",
+                                                                                                                                                                                                                                                                  _L.append("&Lon",
+                                                                                                                                                                                                                                                                            "2"))))))))))))))))))))))));
                   var prettyPrint = function (res)
                                     {
                                       return function ()
@@ -65,7 +81,7 @@ Elm.Main.make = function (elm)
                                                 case
                                                 "Waiting" :
                                                   return Text.plainText("waiting");}
-                                               _E.Case($moduleName,"between lines 48 and 51");
+                                               _E.Case($moduleName,"between lines 50 and 53");
                                              }();
                                     };
                   var note = Graphics.Element.width(400)(Text.plainText("click to post the following JSON object to /php/storeAd.php"));
@@ -100,8 +116,12 @@ Elm.Main.make = function (elm)
                                                        req));
                                  };
                   var adRecord = {_: {}, adType: true, condition: "fair", description: "string description, could be quite long", expTime: 10080, imageUrl: "http://site.domain/path/file.img", isbn10: 1234567890, isbn13: 1912276171, lat: 48.8284284, lon: 52.8248294, price: 12.42, title: "book title", user: "username"};
-                  var preview = Graphics.Element.width(600)(Text.plainText(_L.append("Elm Record: \n",
-                                                                                     Prelude.show(adRecord))));
+                  var jsObject = A2(Json.toJSString,
+                                    "",
+                                    Json.fromJSObject(JavaScript.Experimental.fromRecord(adRecord)));
+                  var previewJSObject = Text.asText(jsObject);
+                  var previewRecord = Graphics.Element.width(600)(Text.plainText(_L.append("Elm Record: \n",
+                                                                                           Prelude.show(adRecord))));
                   var $ = Graphics.Input.button("Store Ad"),butn = $._0,press = $._1;
                   var elems = A2(Graphics.Element.flow,
                                  Graphics.Element.right,
@@ -116,9 +136,9 @@ Elm.Main.make = function (elm)
                   var main = A2(Signal._op["<~"],
                                 Graphics.Element.flow(Graphics.Element.down),
                                 Signal.combine(_J.toList([Signal.constant(elems),
-                                                          Signal.constant(preview),
+                                                          Signal.constant(previewRecord),
                                                           loginResponse])));
-                  elm.Main.values = {_op: _op, butn: butn, press: press, url: url, adRecord: adRecord, isClicked: isClicked, sendable: sendable, sendRequest: sendRequest, getLogin: getLogin, loginResponse: loginResponse, prettyPrint: prettyPrint, note: note, elems: elems, preview: preview, main: main};
+                  elm.Main.values = {_op: _op, butn: butn, press: press, url: url, adRecord: adRecord, jsObject: jsObject, isClicked: isClicked, sendable: sendable, sendRequest: sendRequest, getLogin: getLogin, loginResponse: loginResponse, prettyPrint: prettyPrint, note: note, elems: elems, previewRecord: previewRecord, previewJSObject: previewJSObject, main: main};
                   return elm.Main.values;
                 };
         </script>

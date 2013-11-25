@@ -6,17 +6,17 @@ import Graphics.Input as Input
 -- data
 (butn, press) = Input.button "Store Ad" 
 url =  "/php/storeAd.php?"
-    ++ "Title=someRandomBook"
-    ++ "&ISBN10=1234567890" 
-    ++ "&ISBN13=123456789abc"
-    ++ "&imageURL=someImgUrl"
-    ++ "&ExpTime=2013-11-30 01:01:01"
-    ++ "&Description=Short"
-    ++ "&Condition=new"
-    ++ "&Price=12.42"
-    ++ "&user=ashroyer"
-    ++ "&Adtype=seller"
-    ++ "&Lat=1&Lon=2"
+    ++ "Title" ++ "someRandomBook"
+    ++ "&ISBN10" ++ "1234567890" 
+    ++ "&ISBN13" ++ "123456789abc"
+    ++ "&imageURL" ++ "someImgUrl"
+    ++ "&ExpTime" ++ "2013-11-30 01:01:01"
+    ++ "&Description" ++ "Short"
+    ++ "&Condition" ++ "new"
+    ++ "&Price" ++ "12.42"
+    ++ "&user" ++ "ashroyer"
+    ++ "&Adtype" ++ "seller"
+    ++ "&Lat" ++ "1" ++ "&Lon" ++ "2"
 
 adRecord =
   { title = "book title"
@@ -56,10 +56,6 @@ prettyPrint res = case res of
 note = width 400 . plainText <| "click to post the following JSON object to /php/storeAd.php"
 elems = flow right [butn, note]
 previewRecord = width 600 <| plainText ("Elm Record: \n" ++ show adRecord) 
-previewJSObject = text . show . toText jsObject
+previewJSObject = asText jsObject
 
-main = flow down <~ combine [constant elems, constant previewRecord, constant previewJSObject, loginResponse]
-
-
-{-
--}
+main = flow down <~ combine [constant elems, constant previewRecord, loginResponse]

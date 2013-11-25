@@ -2,7 +2,7 @@ module Utils.HttpFunctions (prettyPrint, sendReq) where
 
 import Http
 
--- @functions: sendReq, prettyPrint
+-- Send a string, print the HTTP response string
 
 -- True for GET, false for POST
 sendReq : Signal String -> String -> Signal (Http.Response String)
@@ -16,6 +16,6 @@ prettyPrint res = case res of
   Http.Failure _ _ -> "404" -- for debugging
   Http.Success a   -> a 
 
--- uncomment these lines to test this code
+-- uncomment these lines (and comment out the module declaration) to test this code
 -- url = constant "/"
 -- main = plainText <~ (prettyPrint <~ sendReq url True)

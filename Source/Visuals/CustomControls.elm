@@ -8,7 +8,7 @@ btnBuilder a = Input.customButton (butn 6 lightBlue a) (butn 5 lightRed a) (butn
 
 -- Define button inactive/hover/click elements
 butn : Int -> Color -> String -> Element
-butn shp clr label = collage 98 38
-  [ rotate (pi/2) <| move (25,0) <| filled clr (ngon shp 12)
-  , move (-15,0) <| toForm <| plainText label
-  ] |> color gray
+butn shp clr label = collage 98 48
+  [ rotate (pi/2) <| move (0,0) <| filled clr (ngon shp 20)
+  , move (0,0) <| toForm <| plainText label
+  ] |> color darkBlue 

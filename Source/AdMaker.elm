@@ -6,13 +6,14 @@ import Maybe
 import String
 import Visuals.CustomControls (btnBuilder)
 import Utils.Isbn (isbnString)
+import Utils.HttpFunctions (sendReq, prettyPrint)
 
 -- Inputs
 (isbn , isbnSignal)  = Input.field "ISBN"
 (price, priceSignal) = Input.field "Price"
 (buy  , buyEvent)    = btnBuilder "Buy"
 (sell , sellEvent)   = btnBuilder "Sell"
-(addAdButton, press) = Input.button "storeAd"
+-- (addAdButton, press) = btnBuilder "storeAd"
 
 -- Form Valication Logic
 validate : String -> Bool -> String
@@ -58,7 +59,7 @@ previewArea = preview <~ validIsbn ~ validPrice ~ returnedJsonData
 -- User Entry and Preview (large block Element)
 adArea : Signal Element
 adArea = let header = redTitle "Ad Creator"
-  in flow down <~ combine [constant header, isbn, price, constant btnGroup, previewArea, constant addAdButton]
+  in flow down <~ combine [constant header, isbn, price, constant btnGroup, previewArea]
 
 -- Helper Functions
 redTitle : String -> Element
