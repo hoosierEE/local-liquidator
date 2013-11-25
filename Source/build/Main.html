@@ -1,0 +1,614 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Main
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.Main = Elm.Main || {};
+Elm.Main.make = function (elm)
+                {
+                  elm.Main = elm.Main || {};
+                  if (elm.Main.values)
+                  return elm.Main.values;
+                  var N = Elm.Native,
+                      _N = N.Utils.make(elm),
+                      _L = N.List.make(elm),
+                      _E = N.Error.make(elm),
+                      _J = N.JavaScript.make(elm),
+                      $moduleName = "Main";
+                  var Text = Elm.Text.make(elm);
+                  var Text = Elm.Text.make(elm);
+                  var Basics = Elm.Basics.make(elm);
+                  var Signal = Elm.Signal.make(elm);
+                  var List = Elm.List.make(elm);
+                  var Maybe = Elm.Maybe.make(elm);
+                  var Time = Elm.Time.make(elm);
+                  var Prelude = Elm.Prelude.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Element = Elm.Graphics.Element.make(elm);
+                  var Color = Elm.Color.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                  var Mouse = Elm.Mouse.make(elm);
+                  var Window = Elm.Window.make(elm);
+                  var AdMaker = Elm.AdMaker.make(elm);
+                  var MapMaker = Elm.MapMaker.make(elm);
+                  var Header = Elm.Header.make(elm);
+                  var _op = {};
+                  var sigFlow = F2(function (dir,args)
+                                   {
+                                     return A2(Signal._op["<~"],
+                                               Graphics.Element.flow(dir),
+                                               Signal.combine(args));
+                                   });
+                  var sideBarWidth = A2(Signal._op["<~"],
+                                        Graphics.Element.widthOf,
+                                        AdMaker.adArea);
+                  var main = A2(sigFlow,
+                                Graphics.Element.down,
+                                _J.toList([Header.header,AdMaker.adArea]));
+                  var headerHeight = A2(Signal._op["<~"],
+                                        Graphics.Element.heightOf,
+                                        Header.header);
+                  elm.Main.values = {_op: _op, sideBarWidth: sideBarWidth, headerHeight: headerHeight, main: main, sigFlow: sigFlow};
+                  return elm.Main.values;
+                };Elm.AdMaker = Elm.AdMaker || {};
+Elm.AdMaker.make = function (elm)
+                   {
+                     elm.AdMaker = elm.AdMaker || {};
+                     if (elm.AdMaker.values)
+                     return elm.AdMaker.values;
+                     var N = Elm.Native,
+                         _N = N.Utils.make(elm),
+                         _L = N.List.make(elm),
+                         _E = N.Error.make(elm),
+                         _J = N.JavaScript.make(elm),
+                         $moduleName = "AdMaker";
+                     var Text = Elm.Text.make(elm);
+                     var Text = Elm.Text.make(elm);
+                     var Basics = Elm.Basics.make(elm);
+                     var Signal = Elm.Signal.make(elm);
+                     var List = Elm.List.make(elm);
+                     var Maybe = Elm.Maybe.make(elm);
+                     var Time = Elm.Time.make(elm);
+                     var Prelude = Elm.Prelude.make(elm);
+                     var Graphics = Graphics || {};
+                     Graphics.Element = Elm.Graphics.Element.make(elm);
+                     var Color = Elm.Color.make(elm);
+                     var Graphics = Graphics || {};
+                     Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                     var Graphics = Graphics || {};
+                     Graphics.Input = Elm.Graphics.Input.make(elm);
+                     var Char = Elm.Char.make(elm);
+                     var Maybe = Elm.Maybe.make(elm);
+                     var String = Elm.String.make(elm);
+                     var Visuals = Visuals || {};
+                     Visuals.CustomControls = Elm.Visuals.CustomControls.make(elm);
+                     var Utils = Utils || {};
+                     Utils.Isbn = Elm.Utils.Isbn.make(elm);
+                     var _op = {};
+                     var validate = F2(function (x,isIsbn)
+                                       {
+                                         return function ()
+                                                {
+                                                  switch (isIsbn)
+                                                  {case
+                                                   false :
+                                                     return function ()
+                                                            {
+                                                              var _case1 = String.toFloat(x);
+                                                              switch (_case1.ctor)
+                                                              {case
+                                                               "Just" :
+                                                                 return Prelude.show(_case1._0);
+                                                               case
+                                                               "Nothing" :
+                                                                 return "";}
+                                                              _E.Case($moduleName,
+                                                                      "between lines 21 and 23");
+                                                            }();
+                                                   case
+                                                   true :
+                                                     return A2(String.all,
+                                                               Char.isDigit,
+                                                               x) && (_N.eq(String.length(x),
+                                                                            10) || _N.eq(String.length(x),
+                                                                                         13)) ? x : "";}
+                                                  _E.Case($moduleName,"between lines 19 and 23");
+                                                }();
+                                       });
+                     var redTitle = function (str)
+                                    {
+                                      return Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkRed)(Text.toText(str)))));
+                                    };
+                     var preview = F3(function (isbn,price,returnedJson)
+                                      {
+                                        return function ()
+                                               {
+                                                 var previewTitle = redTitle("Ad Preview");
+                                                 var elems = A2(List.map,
+                                                                Text.plainText,
+                                                                _J.toList(["ISBN Number: ",
+                                                                           isbn,
+                                                                           "Price: $",
+                                                                           price,
+                                                                           "Description: ",
+                                                                           returnedJson]));
+                                                 var arranger = function (arg0)
+                                                                {
+                                                                  return function ()
+                                                                         {
+                                                                           switch (arg0.ctor)
+                                                                           {case
+                                                                            "::" :
+                                                                              switch (arg0._1.ctor)
+                                                                              {case
+                                                                               "::" :
+                                                                                 switch (arg0._1._1.ctor)
+                                                                                 {case
+                                                                                  "::" :
+                                                                                    switch (arg0._1._1._1.ctor)
+                                                                                    {case
+                                                                                     "::" :
+                                                                                       switch (arg0._1._1._1._1.ctor)
+                                                                                       {case
+                                                                                        "::" :
+                                                                                          switch (arg0._1._1._1._1._1.ctor)
+                                                                                          {case
+                                                                                           "::" :
+                                                                                             switch (arg0._1._1._1._1._1._1.ctor)
+                                                                                             {case
+                                                                                              "[]" :
+                                                                                                return A2(Graphics.Element.flow,
+                                                                                                          Graphics.Element.down,
+                                                                                                          _J.toList([A2(Graphics.Element.flow,
+                                                                                                                        Graphics.Element.right,
+                                                                                                                        _J.toList([arg0._0,
+                                                                                                                                   arg0._1._0])),
+                                                                                                                     A2(Graphics.Element.flow,
+                                                                                                                        Graphics.Element.right,
+                                                                                                                        _J.toList([arg0._1._1._0,
+                                                                                                                                   arg0._1._1._1._0])),
+                                                                                                                     arg0._1._1._1._1._0,
+                                                                                                                     arg0._1._1._1._1._1._0]));}
+                                                                                             break;}
+                                                                                          break;}
+                                                                                       break;}
+                                                                                    break;}
+                                                                                 break;}
+                                                                              break;}
+                                                                           _E.Case($moduleName,
+                                                                                   "on line 51, column 30 to 82");
+                                                                         }();
+                                                                };
+                                                 return Graphics.Element.width(200)(Graphics.Element.flow(Graphics.Element.down)(_J.toList([previewTitle,
+                                                                                                                                            arranger(elems)])));
+                                               }();
+                                      });
+                     var isClicked = function (evt)
+                                     {
+                                       return function ()
+                                              {
+                                                var always = F2(function (value,signal)
+                                                                {
+                                                                  return A2(Signal.lift,
+                                                                            function (arg0)
+                                                                            {
+                                                                              return function ()
+                                                                                     {
+                                                                                       return value;
+                                                                                     }();
+                                                                            },
+                                                                            signal);
+                                                                });
+                                                return A2(Signal.merge,
+                                                          A2(always,false,A2(Time.delay,0,evt)),
+                                                          A2(always,true,evt));
+                                              }();
+                                     };
+                     var $ = Visuals.CustomControls.btnBuilder("Sell"),
+                         sell = $._0,
+                         sellEvent = $._1;
+                     var $ = Graphics.Input.field("Price"),
+                         price = $._0,
+                         priceSignal = $._1;
+                     var validPrice = A2(Signal._op["<~"],
+                                         function (n)
+                                         {
+                                           return A2(validate,n,false);
+                                         },
+                                         priceSignal);
+                     var $ = Graphics.Input.field("ISBN"),isbn = $._0,isbnSignal = $._1;
+                     var validIsbn = A2(Signal._op["<~"],
+                                        function (n)
+                                        {
+                                          return A2(validate,n,true);
+                                        },
+                                        isbnSignal);
+                     var returnedJsonData = Utils.Isbn.isbnString(validIsbn);
+                     var previewArea = A2(Signal._op["~"],
+                                          A2(Signal._op["~"],
+                                             A2(Signal._op["<~"],preview,validIsbn),
+                                             validPrice),
+                                          returnedJsonData);
+                     var $ = Visuals.CustomControls.btnBuilder("Buy"),
+                         buy = $._0,
+                         buyEvent = $._1;
+                     var btnGroup = A2(Graphics.Element.flow,
+                                       Graphics.Element.right,
+                                       _J.toList([buy,A2(Graphics.Element.spacer,4,4),sell]));
+                     var $ = Graphics.Input.button("storeAd"),
+                         addAdButton = $._0,
+                         press = $._1;
+                     var adArea = function ()
+                                  {
+                                    var header = redTitle("Ad Creator");
+                                    return A2(Signal._op["<~"],
+                                              Graphics.Element.flow(Graphics.Element.down),
+                                              Signal.combine(_J.toList([Signal.constant(header),
+                                                                        isbn,
+                                                                        price,
+                                                                        Signal.constant(btnGroup),
+                                                                        previewArea,
+                                                                        Signal.constant(addAdButton)])));
+                                  }();
+                     elm.AdMaker.values = {_op: _op, adArea: adArea};
+                     return elm.AdMaker.values;
+                   };Elm.Header = Elm.Header || {};
+Elm.Header.make = function (elm)
+                  {
+                    elm.Header = elm.Header || {};
+                    if (elm.Header.values)
+                    return elm.Header.values;
+                    var N = Elm.Native,
+                        _N = N.Utils.make(elm),
+                        _L = N.List.make(elm),
+                        _E = N.Error.make(elm),
+                        _J = N.JavaScript.make(elm),
+                        $moduleName = "Header";
+                    var Text = Elm.Text.make(elm);
+                    var Text = Elm.Text.make(elm);
+                    var Basics = Elm.Basics.make(elm);
+                    var Signal = Elm.Signal.make(elm);
+                    var List = Elm.List.make(elm);
+                    var Maybe = Elm.Maybe.make(elm);
+                    var Time = Elm.Time.make(elm);
+                    var Prelude = Elm.Prelude.make(elm);
+                    var Graphics = Graphics || {};
+                    Graphics.Element = Elm.Graphics.Element.make(elm);
+                    var Color = Elm.Color.make(elm);
+                    var Graphics = Graphics || {};
+                    Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                    var Window = Elm.Window.make(elm);
+                    var Utils = Utils || {};
+                    Utils.HttpFunctions = Elm.Utils.HttpFunctions.make(elm);
+                    var _op = {};
+                    var topBarHeight = 20;
+                    var scriptSrc = Signal.constant("/php/getUser.php");
+                    var paths = _J.toList([{ctor: "_Tuple2", _0: "Home", _1: "/"},
+                                           {ctor: "_Tuple2", _0: "Login", _1: "/php/php_cas.php"},
+                                           {ctor: "_Tuple2", _0: "Logout", _1: "/php/cas_logout.php"},
+                                           {ctor: "_Tuple2", _0: "Send Ad (test)", _1: "/storeAdTest.html"}]);
+                    var navBar = function (arg0)
+                                 {
+                                   return function ()
+                                          {
+                                            switch (arg0.ctor)
+                                            {case
+                                             "_Tuple2" :
+                                               return function ()
+                                                      {
+                                                        var words = A2(Graphics.Element.flow,
+                                                                       Graphics.Element.right,
+                                                                       _J.toList([A2(Graphics.Element.spacer,
+                                                                                     10,
+                                                                                     10),
+                                                                                  Text.text(Text.link(arg0._1)(Text.toText(arg0._0))),
+                                                                                  A2(Graphics.Element.spacer,
+                                                                                     10,
+                                                                                     10)]));
+                                                        return A4(Graphics.Element.container,
+                                                                  Graphics.Element.widthOf(words),
+                                                                  topBarHeight,
+                                                                  Graphics.Element.midRight,
+                                                                  words);
+                                                      }();}
+                                            _E.Case($moduleName,"between lines 32 and 37");
+                                          }();
+                                 };
+                    var navs = Graphics.Element.flow(Graphics.Element.right)(A2(List.map,
+                                                                                navBar,
+                                                                                paths));
+                    var minLogoHeight = 30;
+                    var helloUser = A2(Signal._op["<~"],
+                                       Utils.HttpFunctions.prettyPrint,
+                                       A2(Utils.HttpFunctions.sendReq,scriptSrc,"post"));
+                    var headerBuilder = F2(function (arg1,login)
+                                           {
+                                             return function ()
+                                                    {
+                                                      switch (arg1.ctor)
+                                                      {case
+                                                       "_Tuple2" :
+                                                         return function ()
+                                                                {
+                                                                  var welcome = function ()
+                                                                                {
+                                                                                  switch (login)
+                                                                                  {case
+                                                                                   "404" :
+                                                                                     return Text.plainText("not logged in (404 error)");
+                                                                                   case
+                                                                                   "guest" :
+                                                                                     return Text.plainText("Welcome Guest");}
+                                                                                  return Text.plainText(_L.append("Welcome, ",
+                                                                                                                  login));
+                                                                                }();
+                                                                  var title = Graphics.Element.width(arg1._0)(Text.centered(Text.height(List.maximum(_J.toList([minLogoHeight,
+                                                                                                                                                                Basics.toFloat(arg1._0) / 20])))(Text.toText("Local Liquidator"))));
+                                                                  return Graphics.Element.color(Color.lightBlue)(A2(Graphics.Element.flow,
+                                                                                                                    Graphics.Element.down,
+                                                                                                                    _J.toList([title,
+                                                                                                                               A2(Graphics.Element.flow,
+                                                                                                                                  Graphics.Element.right,
+                                                                                                                                  _J.toList([navs,
+                                                                                                                                             welcome]))])));
+                                                                }();}
+                                                      _E.Case($moduleName,
+                                                              "between lines 17 and 25");
+                                                    }();
+                                           });
+                    var header = A2(Signal._op["~"],
+                                    A2(Signal._op["<~"],headerBuilder,Window.dimensions),
+                                    helloUser);
+                    elm.Header.values = {_op: _op, header: header};
+                    return elm.Header.values;
+                  };Elm.MapMaker = Elm.MapMaker || {};
+Elm.MapMaker.make = function (elm)
+                    {
+                      elm.MapMaker = elm.MapMaker || {};
+                      if (elm.MapMaker.values)
+                      return elm.MapMaker.values;
+                      var N = Elm.Native,
+                          _N = N.Utils.make(elm),
+                          _L = N.List.make(elm),
+                          _E = N.Error.make(elm),
+                          _J = N.JavaScript.make(elm),
+                          $moduleName = "MapMaker";
+                      var Text = Elm.Text.make(elm);
+                      var Text = Elm.Text.make(elm);
+                      var Basics = Elm.Basics.make(elm);
+                      var Signal = Elm.Signal.make(elm);
+                      var List = Elm.List.make(elm);
+                      var Maybe = Elm.Maybe.make(elm);
+                      var Time = Elm.Time.make(elm);
+                      var Prelude = Elm.Prelude.make(elm);
+                      var Graphics = Graphics || {};
+                      Graphics.Element = Elm.Graphics.Element.make(elm);
+                      var Color = Elm.Color.make(elm);
+                      var Graphics = Graphics || {};
+                      Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                      var _op = {};
+                      var mapArea = F2(function (arg1,arg0)
+                                       {
+                                         return function ()
+                                                {
+                                                  switch (arg0.ctor)
+                                                  {case
+                                                   "_Tuple2" :
+                                                     return function ()
+                                                            {
+                                                              switch (arg1.ctor)
+                                                              {case
+                                                               "_Tuple2" :
+                                                                 return Graphics.Element.color(Color.lightGreen)(A3(Graphics.Collage.collage,
+                                                                                                                    arg0._0,
+                                                                                                                    arg0._1,
+                                                                                                                    _J.toList([Graphics.Collage.move({ctor: "_Tuple2", _0: arg1._0, _1: arg1._1})(Graphics.Collage.filled(Color.darkBlue)(A2(Graphics.Collage.ngon,
+                                                                                                                                                                                                                                             5,
+                                                                                                                                                                                                                                             20))),
+                                                                                                                               Graphics.Collage.rotate(A2(Basics.atan2,
+                                                                                                                                                          arg1._1,
+                                                                                                                                                          arg1._0))(Graphics.Collage.toForm(Text.plainText("Map Goes Here")))])));}
+                                                              _E.Case($moduleName,
+                                                                      "between lines 4 and 7");
+                                                            }();}
+                                                  _E.Case($moduleName,"between lines 4 and 7");
+                                                }();
+                                       });
+                      elm.MapMaker.values = {_op: _op, mapArea: mapArea};
+                      return elm.MapMaker.values;
+                    };Elm.Utils = Elm.Utils || {};
+Elm.Utils.Isbn = Elm.Utils.Isbn || {};
+Elm.Utils.Isbn.make = function (elm)
+                      {
+                        elm.Utils = elm.Utils || {};
+                        elm.Utils.Isbn = elm.Utils.Isbn || {};
+                        if (elm.Utils.Isbn.values)
+                        return elm.Utils.Isbn.values;
+                        var N = Elm.Native,
+                            _N = N.Utils.make(elm),
+                            _L = N.List.make(elm),
+                            _E = N.Error.make(elm),
+                            _J = N.JavaScript.make(elm),
+                            $moduleName = "Utils.Isbn";
+                        var Text = Elm.Text.make(elm);
+                        var Text = Elm.Text.make(elm);
+                        var Basics = Elm.Basics.make(elm);
+                        var Signal = Elm.Signal.make(elm);
+                        var List = Elm.List.make(elm);
+                        var Maybe = Elm.Maybe.make(elm);
+                        var Time = Elm.Time.make(elm);
+                        var Prelude = Elm.Prelude.make(elm);
+                        var Graphics = Graphics || {};
+                        Graphics.Element = Elm.Graphics.Element.make(elm);
+                        var Color = Elm.Color.make(elm);
+                        var Graphics = Graphics || {};
+                        Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                        var Utils = Utils || {};
+                        Utils.HttpFunctions = Elm.Utils.HttpFunctions.make(elm);
+                        var _op = {};
+                        var scriptSrc = "/php/checkISBN.php?isbn=";
+                        var queryString = function (str)
+                                          {
+                                            return function ()
+                                                   {
+                                                     switch (str)
+                                                     {case
+                                                      "" :
+                                                        return _L.append(scriptSrc,"0");}
+                                                     return _L.append(scriptSrc,str);
+                                                   }();
+                                          };
+                        var isbnString = function (str)
+                                         {
+                                           return A2(Signal._op["<~"],
+                                                     Utils.HttpFunctions.prettyPrint,
+                                                     A2(Utils.HttpFunctions.sendReq,
+                                                        Signal.dropRepeats(A2(Signal._op["<~"],
+                                                                              queryString,
+                                                                              str)),
+                                                        "get"));
+                                         };
+                        elm.Utils.Isbn.values = {_op: _op, isbnString: isbnString};
+                        return elm.Utils.Isbn.values;
+                      };Elm.Utils = Elm.Utils || {};
+Elm.Utils.HttpFunctions = Elm.Utils.HttpFunctions || {};
+Elm.Utils.HttpFunctions.make = function (elm)
+                               {
+                                 elm.Utils = elm.Utils || {};
+                                 elm.Utils.HttpFunctions = elm.Utils.HttpFunctions || {};
+                                 if (elm.Utils.HttpFunctions.values)
+                                 return elm.Utils.HttpFunctions.values;
+                                 var N = Elm.Native,
+                                     _N = N.Utils.make(elm),
+                                     _L = N.List.make(elm),
+                                     _E = N.Error.make(elm),
+                                     _J = N.JavaScript.make(elm),
+                                     $moduleName = "Utils.HttpFunctions";
+                                 var Text = Elm.Text.make(elm);
+                                 var Text = Elm.Text.make(elm);
+                                 var Basics = Elm.Basics.make(elm);
+                                 var Signal = Elm.Signal.make(elm);
+                                 var List = Elm.List.make(elm);
+                                 var Maybe = Elm.Maybe.make(elm);
+                                 var Time = Elm.Time.make(elm);
+                                 var Prelude = Elm.Prelude.make(elm);
+                                 var Graphics = Graphics || {};
+                                 Graphics.Element = Elm.Graphics.Element.make(elm);
+                                 var Color = Elm.Color.make(elm);
+                                 var Graphics = Graphics || {};
+                                 Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                                 var Http = Elm.Http.make(elm);
+                                 var _op = {};
+                                 var sendReq = F2(function (str,method)
+                                                  {
+                                                    return function ()
+                                                           {
+                                                             switch (method)
+                                                             {case
+                                                              "get" :
+                                                                return Http.sendGet(str);
+                                                              case
+                                                              "post" :
+                                                                return Http.send(A2(Signal._op["<~"],
+                                                                                    function (r)
+                                                                                    {
+                                                                                      return A2(Http.post,
+                                                                                                r,
+                                                                                                "");
+                                                                                    },
+                                                                                    str));}
+                                                             _E.Case($moduleName,
+                                                                     "between lines 9 and 11");
+                                                           }();
+                                                  });
+                                 var prettyPrint = function (res)
+                                                   {
+                                                     return function ()
+                                                            {
+                                                              switch (res.ctor)
+                                                              {case
+                                                               "Failure" :
+                                                                 return "404";
+                                                               case
+                                                               "Success" :
+                                                                 return res._0;
+                                                               case
+                                                               "Waiting" :
+                                                                 return "";}
+                                                              _E.Case($moduleName,
+                                                                      "between lines 14 and 17");
+                                                            }();
+                                                   };
+                                 elm.Utils.HttpFunctions.values = {_op: _op, prettyPrint: prettyPrint, sendReq: sendReq};
+                                 return elm.Utils.HttpFunctions.values;
+                               };Elm.Visuals = Elm.Visuals || {};
+Elm.Visuals.CustomControls = Elm.Visuals.CustomControls || {};
+Elm.Visuals.CustomControls.make = function (elm)
+                                  {
+                                    elm.Visuals = elm.Visuals || {};
+                                    elm.Visuals.CustomControls = elm.Visuals.CustomControls || {};
+                                    if (elm.Visuals.CustomControls.values)
+                                    return elm.Visuals.CustomControls.values;
+                                    var N = Elm.Native,
+                                        _N = N.Utils.make(elm),
+                                        _L = N.List.make(elm),
+                                        _E = N.Error.make(elm),
+                                        _J = N.JavaScript.make(elm),
+                                        $moduleName = "Visuals.CustomControls";
+                                    var Text = Elm.Text.make(elm);
+                                    var Text = Elm.Text.make(elm);
+                                    var Basics = Elm.Basics.make(elm);
+                                    var Signal = Elm.Signal.make(elm);
+                                    var List = Elm.List.make(elm);
+                                    var Maybe = Elm.Maybe.make(elm);
+                                    var Time = Elm.Time.make(elm);
+                                    var Prelude = Elm.Prelude.make(elm);
+                                    var Graphics = Graphics || {};
+                                    Graphics.Element = Elm.Graphics.Element.make(elm);
+                                    var Color = Elm.Color.make(elm);
+                                    var Graphics = Graphics || {};
+                                    Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                                    var Graphics = Graphics || {};
+                                    Graphics.Input = Elm.Graphics.Input.make(elm);
+                                    var _op = {};
+                                    var butn = F3(function (shp,clr,label)
+                                                  {
+                                                    return Graphics.Element.color(Color.gray)(A3(Graphics.Collage.collage,
+                                                                                                 98,
+                                                                                                 38,
+                                                                                                 _J.toList([Graphics.Collage.rotate(Basics.pi / 2)(Graphics.Collage.move({ctor: "_Tuple2", _0: 25, _1: 0})(A2(Graphics.Collage.filled,
+                                                                                                                                                                                                              clr,
+                                                                                                                                                                                                              A2(Graphics.Collage.ngon,
+                                                                                                                                                                                                                 shp,
+                                                                                                                                                                                                                 12)))),
+                                                                                                            Graphics.Collage.move({ctor: "_Tuple2", _0: -15, _1: 0})(Graphics.Collage.toForm(Text.plainText(label)))])));
+                                                  });
+                                    var btnBuilder = function (a)
+                                                     {
+                                                       return A3(Graphics.Input.customButton,
+                                                                 A3(butn,6,Color.lightBlue,a),
+                                                                 A3(butn,5,Color.lightRed,a),
+                                                                 A3(butn,4,Color.lightOrange,a));
+                                                     };
+                                    elm.Visuals.CustomControls.values = {_op: _op, btnBuilder: btnBuilder};
+                                    return elm.Visuals.CustomControls.values;
+                                  };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.Main)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>

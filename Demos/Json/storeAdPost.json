@@ -1,0 +1,6 @@
+{ title:"book title"
+, isbn10:1234567890
+, isbn13:1234567890123
+, imageUrl:"http://site.domain/path/file.ext"
+, expTime:10080
+, 
