@@ -6,7 +6,7 @@
         <title>
             StoreAd
         </title>
-        <script type="text/javascript" src="/elm-runtime.js">
+        <script type="text/javascript" src="/vendor/elm-runtime.js">
             
         </script>
         <script type="text/javascript">
@@ -43,17 +43,30 @@ Elm.Main.make = function (elm)
                   Graphics.Input = Elm.Graphics.Input.make(elm);
                   var _op = {};
                   var url = _L.append("/php/storeAd.php?",
-                                      _L.append("Title=someRandomBook",
-                                                _L.append("&ISBN10=1234567890",
-                                                          _L.append("&ISBN13=123456789abc",
-                                                                    _L.append("&imageURL=someImgUrl",
-                                                                              _L.append("&ExpTime=2013-11-30 01:01:01",
-                                                                                        _L.append("&Description=Short",
-                                                                                                  _L.append("&Condition=new",
-                                                                                                            _L.append("&Price=12.42",
-                                                                                                                      _L.append("&user=ashroyer",
-                                                                                                                                _L.append("&Adtype=seller",
-                                                                                                                                          "&Lat=1&Lon=2")))))))))));
+                                      _L.append("Title",
+                                                _L.append("someRandomBook",
+                                                          _L.append("&ISBN10",
+                                                                    _L.append("1234567890",
+                                                                              _L.append("&ISBN13",
+                                                                                        _L.append("123456789abc",
+                                                                                                  _L.append("&imageURL",
+                                                                                                            _L.append("someImgUrl",
+                                                                                                                      _L.append("&ExpTime",
+                                                                                                                                _L.append("2013-11-30 01:01:01",
+                                                                                                                                          _L.append("&Description",
+                                                                                                                                                    _L.append("Short",
+                                                                                                                                                              _L.append("&Condition",
+                                                                                                                                                                        _L.append("new",
+                                                                                                                                                                                  _L.append("&Price",
+                                                                                                                                                                                            _L.append("12.42",
+                                                                                                                                                                                                      _L.append("&user",
+                                                                                                                                                                                                                _L.append("ashroyer",
+                                                                                                                                                                                                                          _L.append("&Adtype",
+                                                                                                                                                                                                                                    _L.append("seller",
+                                                                                                                                                                                                                                              _L.append("&Lat",
+                                                                                                                                                                                                                                                        _L.append("1",
+                                                                                                                                                                                                                                                                  _L.append("&Lon",
+                                                                                                                                                                                                                                                                            "2"))))))))))))))))))))))));
                   var prettyPrint = function (res)
                                     {
                                       return function ()
@@ -124,7 +137,6 @@ Elm.Main.make = function (elm)
                                 Graphics.Element.flow(Graphics.Element.down),
                                 Signal.combine(_J.toList([Signal.constant(elems),
                                                           Signal.constant(previewRecord),
-                                                          Signal.constant(previewJSObject),
                                                           loginResponse])));
                   elm.Main.values = {_op: _op, butn: butn, press: press, url: url, adRecord: adRecord, jsObject: jsObject, isClicked: isClicked, sendable: sendable, sendRequest: sendRequest, getLogin: getLogin, loginResponse: loginResponse, prettyPrint: prettyPrint, note: note, elems: elems, previewRecord: previewRecord, previewJSObject: previewJSObject, main: main};
                   return elm.Main.values;

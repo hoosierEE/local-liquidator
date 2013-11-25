@@ -42,6 +42,7 @@ paths =
   , ("Login", "/php/php_cas.php")
   , ("Logout", "/php/cas_logout.php")
   , ("Send Ad (test)", "/storeAdTest.html")
+  , ("Add User (test)", "/addUserTest.html")
   ]
 
 header : Signal Element
