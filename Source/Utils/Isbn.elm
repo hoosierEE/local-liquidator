@@ -1,6 +1,6 @@
 module Utils.Isbn (isbnString) where
 
-import open Utils.HttpFunctions
+import Utils.HttpFunctions (prettyPrint, sendReq)
 
 scriptSrc : String
 scriptSrc = "/php/checkISBN.php?isbn="

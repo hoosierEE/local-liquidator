@@ -50,38 +50,52 @@ Elm.Main.make = function (elm)
                                                      switch (_case0.ctor)
                                                      {case
                                                       "Just" :
-                                                        return arg(JavaScript.Experimental.toRecord(Json.toJSObject(_case0._0)));
+                                                        return Maybe.Just(arg(JavaScript.Experimental.toRecord(Json.toJSObject(_case0._0))));
                                                       case
                                                       "Nothing" :
                                                         return Maybe.Nothing;}
-                                                     _E.Case($moduleName,"between lines 13 and 15");
+                                                     _E.Case($moduleName,"between lines 30 and 32");
                                                    }();
                                           });
                   var responses = Http.sendGet(Signal.constant(url));
-                  var example = {_: {}, name: "George", valid: true};
                   var formatify = function (a)
                                   {
                                     return function ()
                                            {
-                                             var x = A2(stringToRecord,
-                                                        a,
-                                                        function (_)
+                                             var x = A2(List.map,
+                                                        function (n)
                                                         {
-                                                          return _.description;
-                                                        });
+                                                          return A2(stringToRecord,a,n);
+                                                        },
+                                                        _J.toList([function (_)
+                                                                   {
+                                                                     return _.title;
+                                                                   },
+                                                                   function (_)
+                                                                   {
+                                                                     return _.description;
+                                                                   }]));
                                              return function ()
                                                     {
                                                       switch (x.ctor)
                                                       {case
-                                                       "Nothing" :
+                                                       "::" :
+                                                         switch (x._0.ctor)
+                                                         {case
+                                                          "Just" :
+                                                            return A2(Graphics.Element.flow,
+                                                                      Graphics.Element.down,
+                                                                      _J.toList([Text.plainText(x._0._0)]));}
+                                                         break;
+                                                       case
+                                                       "[]" :
                                                          return Text.asText("");}
-                                                      return A2(Graphics.Element.flow,
-                                                                Graphics.Element.down,
-                                                                _J.toList([Text.asText(example.name),
-                                                                           Text.asText(x)]));
+                                                      _E.Case($moduleName,
+                                                              "between lines 22 and 25");
                                                     }();
                                            }();
                                   };
+                  var example = {_: {}, name: "George", valid: true};
                   var display = function (response)
                                 {
                                   return function ()
@@ -96,11 +110,11 @@ Elm.Main.make = function (elm)
                                             case
                                             "Waiting" :
                                               return Text.asText("waiting");}
-                                           _E.Case($moduleName,"between lines 28 and 31");
+                                           _E.Case($moduleName,"between lines 13 and 16");
                                          }();
                                 };
                   var main = A2(Signal._op["<~"],display,responses);
-                  elm.Main.values = {_op: _op, url: url, example: example, responses: responses, stringToRecord: stringToRecord, formatify: formatify, display: display, main: main};
+                  elm.Main.values = {_op: _op, url: url, example: example, responses: responses, display: display, formatify: formatify, main: main, stringToRecord: stringToRecord};
                   return elm.Main.values;
                 };
         </script>
