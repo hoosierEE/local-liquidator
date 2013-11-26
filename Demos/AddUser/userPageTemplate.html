@@ -3,15 +3,15 @@
 <html>
   <head>
     <title>Embedded Elm Form</title>
-    <script src="vendor/elm-runtime.js"></script>
-    <script src="build/AddUser.js"></script>
+    <script src="vendor/elm-runtime.js">//after uploading this should be "/vendor/elm-runtime.js"</script>
+    <script src="build/AddUser.js">//after uploading this should be "/some/directory/AddUser.js"</script>
   </head>
   <body>
     <div id="elmForm"></div>
   </body>
   <script type="text/javascript">
-    // This puts the program into the div, be after the /body tag.
+    // This puts the program into the div; goes after the /body tag.
     var formDiv = document.getElementById('elmForm');
-    var form = Elm.embed(Elm.AddUser, formDiv);
+    Elm.embed(Elm.AddUser, formDiv);
   </script>
 </html>
