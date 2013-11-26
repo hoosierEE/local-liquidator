@@ -1,7 +1,12 @@
+module AddUser where
+
 import Graphics.Input as Input
 import Http
 import String
 import Window
+
+bgColor = (rgb 230 230 230) 
+rowHeight = 32
 
 getErrors : String -> String -> String -> String -> [String]
 getErrors first last email remail =
@@ -28,8 +33,8 @@ url first last email phone =
 sendAttempt : Signal Bool
 sendAttempt = lift (\c -> c > 0) (count press)
 
-always value signal = lift (\_ -> value) signal
-isClicked = merge (always False (delay 0 press)) (always True press)
+isClicked = let always value signal = lift (\_ -> value) signal
+  in merge (always False (delay 0 press)) (always True press)
 
 errors : Signal [String]
 errors = keepWhen sendAttempt []
@@ -42,8 +47,8 @@ sendable = lift2 (&&) isClicked (lift isEmpty errors)
 fieldWith : String -> Element -> Element
 fieldWith txt fld =
   flow right
-    [ container 200 32 midRight <| plainText txt
-    , container 200 32 middle <| size 180 26 fld ]
+    [ container 200 rowHeight midRight <| plainText txt
+    , container 200 rowHeight middle <| size 180 26 fld ]
 
 showErrors : [String] -> Element
 showErrors errs =
@@ -55,7 +60,7 @@ formTitle str = width 400 . centered . Text.height 38 <| toText str
 
 userEntry : Element -> Element -> Element -> Element -> Element -> [String] -> Element
 userEntry first last email remail phone errors =
-  color (rgb 230 230 230) . flow down <|
+  color bgColor . flow down <|
     [ formTitle "Add User"
     , fieldWith "First Name:" first
     , fieldWith "Last Name:"  last
@@ -80,7 +85,7 @@ prettyPrint res = case res of
   Http.Failure _ _ -> plainText ""
   Http.Success a -> plainText a
 
-inputForm = lift6 userEntry firstBox lastBox emailBox remailBox phoneBox errors
+inputForm = userEntry <~ firstBox ~ lastBox ~ emailBox ~ remailBox ~ phoneBox ~ errors
 
 inputBox = 
   let
@@ -88,16 +93,15 @@ inputBox =
     w = lift widthOf inputForm
     h = lift heightOf inputForm
   in 
-    lift3 cmaker inputForm w h
+    cmaker <~ inputForm ~ w ~ h
     
 loginResponse = lift prettyPrint (getLogin sendRequest)
 
 scene (w,h) box result =
   flow down 
-    [ spacer w 50
-    , container w ((heightOf box)) midTop box
-    , container w (h - heightOf box) midTop result
+    [ container (widthOf box) (heightOf box) midTop box
+    , container (widthOf box) (heightOf result) midTop result
     ]
 
 main : Signal Element
-main = lift3 scene Window.dimensions inputBox loginResponse
+main = scene <~ Window.dimensions ~ inputBox ~ loginResponse

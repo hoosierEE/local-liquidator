@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Embedded Elm Form</title>
+    <script src="vendor/elm-runtime.js"></script>
+    <script src="build/AddUser.js"></script>
+  </head>
+  <body>
+    <div id="elmForm"></div>
+  </body>
+  <script type="text/javascript">
+    // This puts the program into the div, be after the /body tag.
+    var formDiv = document.getElementById('elmForm');
+    var form = Elm.embed(Elm.AddUser, formDiv);
+  </script>
+</html>
