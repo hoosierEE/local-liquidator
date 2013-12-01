@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Layout
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.Visuals = Elm.Visuals || {};
+Elm.Visuals.Layout = Elm.Visuals.Layout || {};
+Elm.Visuals.Layout.make = function (elm)
+                          {
+                            elm.Visuals = elm.Visuals || {};
+                            elm.Visuals.Layout = elm.Visuals.Layout || {};
+                            if (elm.Visuals.Layout.values)
+                            return elm.Visuals.Layout.values;
+                            var N = Elm.Native,
+                                _N = N.Utils.make(elm),
+                                _L = N.List.make(elm),
+                                _E = N.Error.make(elm),
+                                _J = N.JavaScript.make(elm),
+                                $moduleName = "Visuals.Layout";
+                            var Text = Elm.Text.make(elm);
+                            var Text = Elm.Text.make(elm);
+                            var Basics = Elm.Basics.make(elm);
+                            var Signal = Elm.Signal.make(elm);
+                            var List = Elm.List.make(elm);
+                            var Maybe = Elm.Maybe.make(elm);
+                            var Time = Elm.Time.make(elm);
+                            var Prelude = Elm.Prelude.make(elm);
+                            var Graphics = Graphics || {};
+                            Graphics.Element = Elm.Graphics.Element.make(elm);
+                            var Color = Elm.Color.make(elm);
+                            var Graphics = Graphics || {};
+                            Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                            var _op = {};
+                            var whRatio = 1.0;
+                            var minTablet = 640;
+                            var minPhone = 320;
+                            var phone = function (w)
+                                        {
+                                          return _N.cmp(w,minPhone) < 0;
+                                        };
+                            var maxTablet = 1200;
+                            var tablet = function (w)
+                                         {
+                                           return _N.cmp(w,minPhone) > -1 && _N.cmp(w,
+                                                                                    maxTablet) < 0;
+                                         };
+                            var landscape = function (arg0)
+                                            {
+                                              return function ()
+                                                     {
+                                                       switch (arg0.ctor)
+                                                       {case
+                                                        "_Tuple2" :
+                                                          return _N.cmp(Basics.toFloat(arg0._0) / Basics.toFloat(arg0._1),
+                                                                        whRatio) > 0;}
+                                                       _E.Case($moduleName,
+                                                               "on line 23, column 19 to 50");
+                                                     }();
+                                            };
+                            var desktop = function (w)
+                                          {
+                                            return _N.cmp(w,maxTablet) > 0;
+                                          };
+                            var msg = function (arg0)
+                                      {
+                                        return function ()
+                                               {
+                                                 switch (arg0.ctor)
+                                                 {case
+                                                  "_Tuple2" :
+                                                    return function ()
+                                                           {
+                                                             var viewStyle = phone(arg0._0) ? "phone" : tablet(arg0._0) ? "tablet" : desktop(arg0._0) ? "desktop" : "desk";
+                                                             var orientation = _N.cmp(arg0._0,
+                                                                                      arg0._1) > 0 ? "landscape" : "portrait";
+                                                             var message = _L.append(" Layout: ",
+                                                                                     _L.append(orientation,
+                                                                                               _L.append(" ",
+                                                                                                         _L.append(viewStyle,
+                                                                                                                   _L.append(" width: ",
+                                                                                                                             Prelude.show(arg0._0))))));
+                                                             return Text.plainText(message);
+                                                           }();}
+                                                 _E.Case($moduleName,"between lines 28 and 36");
+                                               }();
+                                      };
+                            elm.Visuals.Layout.values = {_op: _op, msg: msg};
+                            return elm.Visuals.Layout.values;
+                          };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.Visuals.Layout)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>

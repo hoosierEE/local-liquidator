@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            StoreAd
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.Main = Elm.Main || {};
+Elm.Main.make = function (elm)
+                {
+                  elm.Main = elm.Main || {};
+                  if (elm.Main.values)
+                  return elm.Main.values;
+                  var N = Elm.Native,
+                      _N = N.Utils.make(elm),
+                      _L = N.List.make(elm),
+                      _E = N.Error.make(elm),
+                      _J = N.JavaScript.make(elm),
+                      $moduleName = "Main";
+                  var Text = Elm.Text.make(elm);
+                  var Text = Elm.Text.make(elm);
+                  var Basics = Elm.Basics.make(elm);
+                  var Signal = Elm.Signal.make(elm);
+                  var List = Elm.List.make(elm);
+                  var Maybe = Elm.Maybe.make(elm);
+                  var Time = Elm.Time.make(elm);
+                  var Prelude = Elm.Prelude.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Element = Elm.Graphics.Element.make(elm);
+                  var Color = Elm.Color.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                  var Http = Elm.Http.make(elm);
+                  var Graphics = Graphics || {};
+                  Graphics.Input = Elm.Graphics.Input.make(elm);
+                  var _op = {};
+                  var url = _L.append("/php/storeAd.php?",
+                                      _L.append("Title=someRandomBook",
+                                                _L.append("&ISBN10=1234567890",
+                                                          _L.append("&ISBN13=123456789abc",
+                                                                    _L.append("&imageURL=someImgUrl",
+                                                                              _L.append("&ExpTime=1385507557",
+                                                                                        _L.append("&Description=Short",
+                                                                                                  _L.append("&Condition=new",
+                                                                                                            _L.append("&Price=12.42",
+                                                                                                                      _L.append("&user=ashroyer",
+                                                                                                                                _L.append("&Adtype=seller",
+                                                                                                                                          "&Lat=1&Lon=2")))))))))));
+                  var prettyPrint = function (res)
+                                    {
+                                      return function ()
+                                             {
+                                               switch (res.ctor)
+                                               {case
+                                                "Failure" :
+                                                  return Text.plainText("");
+                                                case
+                                                "Success" :
+                                                  return Text.plainText(res._0);
+                                                case
+                                                "Waiting" :
+                                                  return Text.plainText("waiting");}
+                                               _E.Case($moduleName,"between lines 31 and 34");
+                                             }();
+                                    };
+                  var note = Graphics.Element.width(400)(Text.plainText(_L.append("click to post the URL to ",
+                                                                                  url)));
+                  var isClicked = function (evt)
+                                  {
+                                    return function ()
+                                           {
+                                             var always = F2(function (value,signal)
+                                                             {
+                                                               return A2(Signal.lift,
+                                                                         function (arg0)
+                                                                         {
+                                                                           return function ()
+                                                                                  {
+                                                                                    return value;
+                                                                                  }();
+                                                                         },
+                                                                         signal);
+                                                             });
+                                             return A2(Signal.merge,
+                                                       A2(always,false,A2(Time.delay,0,evt)),
+                                                       A2(always,true,evt));
+                                           }();
+                                  };
+                  var getLogin = function (req)
+                                 {
+                                   return Http.send(A2(Signal.lift,
+                                                       function (r)
+                                                       {
+                                                         return A2(Http.post,r,"");
+                                                       },
+                                                       req));
+                                 };
+                  var $ = Graphics.Input.button("Store Ad"),butn = $._0,press = $._1;
+                  var elems = A2(Graphics.Element.flow,
+                                 Graphics.Element.right,
+                                 _J.toList([butn,note]));
+                  var sendable = isClicked(press);
+                  var sendRequest = A2(Signal.keepWhen,
+                                       sendable,
+                                       "0")(Signal.constant(url));
+                  var loginResponse = A2(Signal.lift,
+                                         prettyPrint,
+                                         getLogin(sendRequest));
+                  var main = A2(Signal._op["<~"],
+                                Graphics.Element.flow(Graphics.Element.down),
+                                Signal.combine(_J.toList([Signal.constant(elems),loginResponse])));
+                  elm.Main.values = {_op: _op, butn: butn, press: press, url: url, isClicked: isClicked, sendable: sendable, sendRequest: sendRequest, getLogin: getLogin, loginResponse: loginResponse, prettyPrint: prettyPrint, note: note, elems: elems, main: main};
+                  return elm.Main.values;
+                };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.Main)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>

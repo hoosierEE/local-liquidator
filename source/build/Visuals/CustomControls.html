@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            CustomControls
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.Visuals = Elm.Visuals || {};
+Elm.Visuals.CustomControls = Elm.Visuals.CustomControls || {};
+Elm.Visuals.CustomControls.make = function (elm)
+                                  {
+                                    elm.Visuals = elm.Visuals || {};
+                                    elm.Visuals.CustomControls = elm.Visuals.CustomControls || {};
+                                    if (elm.Visuals.CustomControls.values)
+                                    return elm.Visuals.CustomControls.values;
+                                    var N = Elm.Native,
+                                        _N = N.Utils.make(elm),
+                                        _L = N.List.make(elm),
+                                        _E = N.Error.make(elm),
+                                        _J = N.JavaScript.make(elm),
+                                        $moduleName = "Visuals.CustomControls";
+                                    var Text = Elm.Text.make(elm);
+                                    var Text = Elm.Text.make(elm);
+                                    var Basics = Elm.Basics.make(elm);
+                                    var Signal = Elm.Signal.make(elm);
+                                    var List = Elm.List.make(elm);
+                                    var Maybe = Elm.Maybe.make(elm);
+                                    var Time = Elm.Time.make(elm);
+                                    var Prelude = Elm.Prelude.make(elm);
+                                    var Graphics = Graphics || {};
+                                    Graphics.Element = Elm.Graphics.Element.make(elm);
+                                    var Color = Elm.Color.make(elm);
+                                    var Graphics = Graphics || {};
+                                    Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                                    var Graphics = Graphics || {};
+                                    Graphics.Input = Elm.Graphics.Input.make(elm);
+                                    var _op = {};
+                                    var butn = F3(function (shp,clr,label)
+                                                  {
+                                                    return Graphics.Element.color(Color.darkBlue)(A3(Graphics.Collage.collage,
+                                                                                                     98,
+                                                                                                     48,
+                                                                                                     _J.toList([Graphics.Collage.rotate(Basics.pi / 2)(Graphics.Collage.move({ctor: "_Tuple2", _0: 0, _1: 0})(A2(Graphics.Collage.filled,
+                                                                                                                                                                                                                 clr,
+                                                                                                                                                                                                                 A2(Graphics.Collage.ngon,
+                                                                                                                                                                                                                    shp,
+                                                                                                                                                                                                                    20)))),
+                                                                                                                Graphics.Collage.move({ctor: "_Tuple2", _0: 0, _1: 0})(Graphics.Collage.toForm(Text.plainText(label)))])));
+                                                  });
+                                    var btnBuilder = function (a)
+                                                     {
+                                                       return A3(Graphics.Input.customButton,
+                                                                 A3(butn,6,Color.lightBlue,a),
+                                                                 A3(butn,5,Color.lightRed,a),
+                                                                 A3(butn,4,Color.lightOrange,a));
+                                                     };
+                                    elm.Visuals.CustomControls.values = {_op: _op, btnBuilder: btnBuilder};
+                                    return elm.Visuals.CustomControls.values;
+                                  };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.Visuals.CustomControls)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>
