@@ -16,7 +16,7 @@ logoHeight = 30
 -- Visuals
 headerBuilder : (Int,Int) -> String -> Element
 headerBuilder (w,h) login =
-  let title = width w . centered . Text.height (maximum [logoHeight, (toFloat w / 20)]) <| toText "Local Liquidator"
+  let title = width w . centered . Text.color lightYellow . Text.height (maximum [logoHeight, (toFloat w / 20)]) <| toText "Local Liquidator"
       welcome = case login of
         "" -> plainText "not logged in (404 error)"
         "guest" -> plainText "Welcome Guest"
@@ -25,6 +25,7 @@ headerBuilder (w,h) login =
   in flow down 
     [ title
     , flow right [navs, welcome]
+    , spacer w 10 |> color lightYellow 
     ] |> color lightBlue
 
 navs : Element

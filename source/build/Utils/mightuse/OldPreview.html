@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            OldPreview
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.Utils = Elm.Utils || {};
+Elm.Utils.Preview = Elm.Utils.Preview || {};
+Elm.Utils.Preview.make = function (elm)
+                         {
+                           elm.Utils = elm.Utils || {};
+                           elm.Utils.Preview = elm.Utils.Preview || {};
+                           if (elm.Utils.Preview.values)
+                           return elm.Utils.Preview.values;
+                           var N = Elm.Native,
+                               _N = N.Utils.make(elm),
+                               _L = N.List.make(elm),
+                               _E = N.Error.make(elm),
+                               _J = N.JavaScript.make(elm),
+                               $moduleName = "Utils.Preview";
+                           var Text = Elm.Text.make(elm);
+                           var Text = Elm.Text.make(elm);
+                           var Basics = Elm.Basics.make(elm);
+                           var Signal = Elm.Signal.make(elm);
+                           var List = Elm.List.make(elm);
+                           var Maybe = Elm.Maybe.make(elm);
+                           var Time = Elm.Time.make(elm);
+                           var Prelude = Elm.Prelude.make(elm);
+                           var Graphics = Graphics || {};
+                           Graphics.Element = Elm.Graphics.Element.make(elm);
+                           var Color = Elm.Color.make(elm);
+                           var Graphics = Graphics || {};
+                           Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                           var Http = Elm.Http.make(elm);
+                           var Maybe = Elm.Maybe.make(elm);
+                           var Json = Elm.Json.make(elm);
+                           var JavaScript = JavaScript || {};
+                           JavaScript.Experimental = Elm.JavaScript.Experimental.make(elm);
+                           var _op = {};
+                           var responses = function (req)
+                                           {
+                                             return Http.sendGet(req);
+                                           };
+                           var partOf = F2(function (str,portion)
+                                           {
+                                             return function ()
+                                                    {
+                                                      var stringToRecord = function (str)
+                                                                           {
+                                                                             return function ()
+                                                                                    {
+                                                                                      var _case0 = Json.fromString(str);
+                                                                                      switch (_case0.ctor)
+                                                                                      {case
+                                                                                       "Just" :
+                                                                                         return Maybe.Just(JavaScript.Experimental.toRecord(Json.toJSObject(_case0._0)));
+                                                                                       case
+                                                                                       "Nothing" :
+                                                                                         return Maybe.Nothing;}
+                                                                                      _E.Case($moduleName,
+                                                                                              "between lines 46 and 49");
+                                                                                    }();
+                                                                           };
+                                                      return A3(Maybe.maybe,
+                                                                "",
+                                                                portion,
+                                                                stringToRecord(str));
+                                                    }();
+                                           });
+                           var headings = _J.toList(["Title","Description","Valid"]);
+                           var accessors = _J.toList([function (_)
+                                                      {
+                                                        return _.title;
+                                                      },
+                                                      function (_)
+                                                      {
+                                                        return _.description;
+                                                      }]);
+                           var formatify = function (str)
+                                           {
+                                             return function ()
+                                                    {
+                                                      var row = function (arg0)
+                                                                {
+                                                                  return function ()
+                                                                         {
+                                                                           switch (arg0.ctor)
+                                                                           {case
+                                                                            "_Tuple2" :
+                                                                              return A2(Graphics.Element.flow,
+                                                                                        Graphics.Element.right,
+                                                                                        _J.toList([Graphics.Element.width(100)(Text.plainText(arg0._0)),
+                                                                                                   Graphics.Element.width(300)(Text.plainText(Prelude.show(arg0._1)))]));}
+                                                                           _E.Case($moduleName,
+                                                                                   "between lines 37 and 39");
+                                                                         }();
+                                                                };
+                                                      var myFunc = function (s)
+                                                                   {
+                                                                     return A2(List.map,
+                                                                               function (n)
+                                                                               {
+                                                                                 return A2(partOf,
+                                                                                           s,
+                                                                                           n);
+                                                                               },
+                                                                               accessors);
+                                                                   };
+                                                      return Graphics.Element.flow(Graphics.Element.down)(A2(List.map,
+                                                                                                             row,
+                                                                                                             A2(List.zip,
+                                                                                                                headings,
+                                                                                                                myFunc(str))));
+                                                    }();
+                                           };
+                           var display = function (response)
+                                         {
+                                           return function ()
+                                                  {
+                                                    switch (response.ctor)
+                                                    {case
+                                                     "Failure" :
+                                                       return Text.plainText("");
+                                                     case
+                                                     "Success" :
+                                                       return formatify(response._0);
+                                                     case
+                                                     "Waiting" :
+                                                       return Text.plainText("waiting");}
+                                                    _E.Case($moduleName,"between lines 19 and 22");
+                                                  }();
+                                         };
+                           var preview = function (req)
+                                         {
+                                           return A2(Signal._op["<~"],display,responses(req));
+                                         };
+                           elm.Utils.Preview.values = {_op: _op, preview: preview};
+                           return elm.Utils.Preview.values;
+                         };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.Utils.Preview)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>

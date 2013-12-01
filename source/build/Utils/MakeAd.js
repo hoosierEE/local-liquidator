@@ -1,16 +1,4 @@
-<!DOCTYPE HTML>
-
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>
-            MakeAd
-        </title>
-        <script type="text/javascript" src="/elm-runtime.js">
-            
-        </script>
-        <script type="text/javascript">
-            Elm.Main = Elm.Main || {};
+Elm.Main = Elm.Main || {};
 Elm.Main.make = function (elm)
                 {
                   elm.Main = elm.Main || {};
@@ -611,14 +599,3 @@ Elm.Utils.Validation.make = function (elm)
                               elm.Utils.Validation.values = {_op: _op, validate: validate};
                               return elm.Utils.Validation.values;
                             };
-        </script>
-    </head>
-    <body>
-        <script type="text/javascript">
-            Elm.fullscreen(Elm.Main)
-        </script>
-        <noscript>
-            
-        </noscript>
-    </body>
-</html>

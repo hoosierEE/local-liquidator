@@ -1,8 +1,8 @@
-module Utils.Inputs (creator) where
+module Utils.Inputs (controls, urlString) where
 
-import String
-import Char
 import Graphics.Input as Input
+import Utils.HttpFunctions (prettyPrint, sendReq)
+import Utils.Validation (validate)
 
 -- Inputs
 (isbn , isbnSignal)  = Input.field "ISBN"
@@ -10,20 +10,30 @@ import Graphics.Input as Input
 (buy  , buyEvent)    = Input.button "Buy"
 (sell , sellEvent)   = Input.button "Sell"
 
--- Input Valication Logic
-validate : String -> Bool -> String
-validate x isIsbn = case isIsbn of
-  True -> if (String.all Char.isDigit x && (String.length x == 10 || String.length x == 13)) then x else ""
-  False -> case (String.toFloat x) of
-    Nothing -> ""
-    Just x -> show x
-
 -- Actually validate the inputs
 validIsbn = (\n -> validate n True) <~ isbnSignal
 validPrice = (\n -> validate n False) <~ priceSignal 
 
-creator =
+-- Url source of the ISBN script
+url' = "/php/checkISBN.php?isbn="
+
+urlString =
+  let queryString s = case s of
+        "" -> url' ++ "0"
+        _  -> url' ++ s 
+      srq isbn = sendReq (dropRepeats (queryString <~ isbn)) "get"
+  in (prettyPrint <~ srq validIsbn)
+
+urlelem = plainText <~ validIsbn 
+    
+-- Visual Layout
+controls =
   let
-    arranged a b c = flow down [a,b,c]
+    arranged a b c d = 
+      let h = map heightOf [a,b,c,d] |> foldr (+) 0
+          w = map widthOf [a,b,c,d] |> maximum
+          border = 10
+          title = width 200 . centered . Text.height 20 . Text.color darkYellow <| toText "Controls"
+      in flow down [title, flow down [a,b,c,d] |> container (w + border) (h + border) middle |> color lightBlue]
     btngroup = constant <| flow right [buy, sell]
-  in arranged <~ isbn ~ price ~ btngroup
+  in arranged <~ isbn ~ price ~ btngroup ~ urlelem
