@@ -4,29 +4,13 @@ import Graphics.Input as Input
 import Utils.HttpFunctions (prettyPrint, sendReq)
 import Utils.Validation (validate)
 
--- Inputs
+-- Model
 (isbn , isbnSignal)  = Input.field "ISBN"
 (price, priceSignal) = Input.field "Price"
 (buy  , buyEvent)    = Input.button "Buy"
 (sell , sellEvent)   = Input.button "Sell"
 
--- Actually validate the inputs
-validIsbn = (\n -> validate n True) <~ isbnSignal
-validPrice = (\n -> validate n False) <~ priceSignal 
-
--- Url source of the ISBN script
-url' = "/php/checkISBN.php?isbn="
-
-urlString =
-  let queryString s = case s of
-        "" -> url' ++ "0"
-        _  -> url' ++ s 
-      srq isbn = sendReq (dropRepeats (queryString <~ isbn)) "get"
-  in (prettyPrint <~ srq validIsbn)
-
-urlelem = plainText <~ validIsbn 
-    
--- Visual Layout
+-- View
 controls =
   let
     arranged a b c d = 
@@ -37,3 +21,22 @@ controls =
       in flow down [title, flow down [a,b,c,d] |> container (w + border) (h + border) middle |> color lightBlue]
     btngroup = constant <| flow right [buy, sell]
   in arranged <~ isbn ~ price ~ btngroup ~ urlelem
+
+urlelem = plainText <~ validIsbn
+
+-- Controller
+validIsbn  = (\n -> validate n True)  <~ isbnSignal
+validPrice = (\n -> validate n False) <~ priceSignal 
+
+ready = let blarg x = case x of
+    "" -> False
+    _  -> True
+  in blarg <~ validIsbn
+
+urlString =
+  let scriptPath = "/php/checkISBN.php?isbn="
+      queryString s = case s of
+        "" -> "0" -- scriptPath
+        _  -> scriptPath ++ s 
+      srq i = sampleOn i (sendReq (dropRepeats (queryString <~ i)) "post")
+  in prettyPrint <~ srq validIsbn

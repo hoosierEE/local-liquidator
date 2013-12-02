@@ -6,7 +6,7 @@
         <title>
             MakeAd
         </title>
-        <script type="text/javascript" src="/elm-runtime.js">
+        <script type="text/javascript" src="/vendor/elm-runtime.js">
             
         </script>
         <script type="text/javascript">
@@ -46,15 +46,12 @@ Elm.Main.make = function (elm)
                                 {
                                   return function ()
                                          {
-                                           var redTitle = function (str)
-                                                          {
-                                                            return Graphics.Element.width(500)(Text.centered(Text.height(20)(Text.color(Color.darkYellow)(Text.toText(str)))));
-                                                          };
+                                           var title = Graphics.Element.width(500)(Text.centered(Text.height(20)(Text.color(Color.darkYellow)(Text.toText("Ad Preview")))));
                                            var scene = function (sig)
                                                        {
                                                          return A2(Graphics.Element.flow,
                                                                    Graphics.Element.down,
-                                                                   _J.toList([redTitle("Ad Preview"),
+                                                                   _J.toList([title,
                                                                               A2(Graphics.Element.flow,
                                                                                  Graphics.Element.down,
                                                                                  sig)]));
@@ -158,7 +155,7 @@ Elm.Utils.Header.make = function (elm)
                           var paths = _J.toList([{ctor: "_Tuple2", _0: "Home", _1: "/"},
                                                  {ctor: "_Tuple2", _0: "Login", _1: "/php/php_cas.php"},
                                                  {ctor: "_Tuple2", _0: "Logout", _1: "/php/cas_logout.php"},
-                                                 {ctor: "_Tuple2", _0: "Send Ad (test)", _1: "/storeAdTest.html"},
+                                                 {ctor: "_Tuple2", _0: "Create Ad", _1: "/MakeAd.html"},
                                                  {ctor: "_Tuple2", _0: "Add User (test)", _1: "/addUserTest.html"}]);
                           var navBar = function (arg0)
                                        {
@@ -184,7 +181,7 @@ Elm.Utils.Header.make = function (elm)
                                                                         Graphics.Element.midRight,
                                                                         words);
                                                             }();}
-                                                  _E.Case($moduleName,"between lines 36 and 41");
+                                                  _E.Case($moduleName,"between lines 42 and 47");
                                                 }();
                                        };
                           var navs = Graphics.Element.flow(Graphics.Element.right)(A2(List.map,
@@ -194,7 +191,7 @@ Elm.Utils.Header.make = function (elm)
                           var helloUser = A2(Signal._op["<~"],
                                              Utils.HttpFunctions.prettyPrint,
                                              A2(Utils.HttpFunctions.sendReq,scriptSrc,"post"));
-                          var headerBuilder = F2(function (arg1,login)
+                          var headerBuilder = F2(function (arg1,username)
                                                  {
                                                    return function ()
                                                           {
@@ -205,7 +202,7 @@ Elm.Utils.Header.make = function (elm)
                                                                       {
                                                                         var welcome = function ()
                                                                                       {
-                                                                                        switch (login)
+                                                                                        switch (username)
                                                                                         {case
                                                                                          "" :
                                                                                            return Text.plainText("not logged in (404 error)");
@@ -216,10 +213,13 @@ Elm.Utils.Header.make = function (elm)
                                                                                          "waiting" :
                                                                                            return Text.plainText("waiting...");}
                                                                                         return Text.plainText(_L.append("Welcome, ",
-                                                                                                                        login));
+                                                                                                                        username));
                                                                                       }();
-                                                                        var title = Graphics.Element.width(arg1._0)(Text.centered(Text.color(Color.lightYellow)(Text.height(List.maximum(_J.toList([logoHeight,
-                                                                                                                                                                                                    Basics.toFloat(arg1._0) / 20])))(Text.toText("Local Liquidator")))));
+                                                                        var title = function ($)
+                                                                                    {
+                                                                                      return Graphics.Element.width(arg1._0)(Text.centered(Text.italic(Text.color(Color.lightYellow)(Text.height(List.maximum(_J.toList([logoHeight,
+                                                                                                                                                                                                                         Basics.toFloat(arg1._0) / 20])))($)))));
+                                                                                    }(Text.toText("local liquidator"));
                                                                         return Graphics.Element.color(Color.lightBlue)(A2(Graphics.Element.flow,
                                                                                                                           Graphics.Element.down,
                                                                                                                           _J.toList([title,
@@ -232,7 +232,7 @@ Elm.Utils.Header.make = function (elm)
                                                                                                                                                                                   10))])));
                                                                       }();}
                                                             _E.Case($moduleName,
-                                                                    "between lines 19 and 29");
+                                                                    "between lines 19 and 35");
                                                           }();
                                                  });
                           var hdr = A2(Signal._op["~"],
@@ -274,7 +274,6 @@ Elm.Utils.Inputs.make = function (elm)
                           var Utils = Utils || {};
                           Utils.Validation = Elm.Utils.Validation.make(elm);
                           var _op = {};
-                          var url$ = "/php/checkISBN.php?isbn=";
                           var $ = Graphics.Input.button("Sell"),sell = $._0,sellEvent = $._1;
                           var $ = Graphics.Input.field("Price"),
                               price = $._0,
@@ -292,8 +291,24 @@ Elm.Utils.Inputs.make = function (elm)
                                                return A2(Utils.Validation.validate,n,true);
                                              },
                                              isbnSignal);
+                          var ready = function ()
+                                      {
+                                        var blarg = function (x)
+                                                    {
+                                                      return function ()
+                                                             {
+                                                               switch (x)
+                                                               {case
+                                                                "" :
+                                                                  return false;}
+                                                               return true;
+                                                             }();
+                                                    };
+                                        return A2(Signal._op["<~"],blarg,validIsbn);
+                                      }();
                           var urlString = function ()
                                           {
+                                            var scriptPath = "/php/checkISBN.php?isbn=";
                                             var queryString = function (s)
                                                               {
                                                                 return function ()
@@ -301,18 +316,20 @@ Elm.Utils.Inputs.make = function (elm)
                                                                          switch (s)
                                                                          {case
                                                                           "" :
-                                                                            return _L.append(url$,
-                                                                                             "0");}
-                                                                         return _L.append(url$,s);
+                                                                            return "0";}
+                                                                         return _L.append(scriptPath,
+                                                                                          s);
                                                                        }();
                                                               };
-                                            var srq = function (isbn)
+                                            var srq = function (i)
                                                       {
-                                                        return A2(Utils.HttpFunctions.sendReq,
-                                                                  Signal.dropRepeats(A2(Signal._op["<~"],
-                                                                                        queryString,
-                                                                                        isbn)),
-                                                                  "get");
+                                                        return A2(Signal.sampleOn,
+                                                                  i,
+                                                                  A2(Utils.HttpFunctions.sendReq,
+                                                                     Signal.dropRepeats(A2(Signal._op["<~"],
+                                                                                           queryString,
+                                                                                           i)),
+                                                                     "post"));
                                                       };
                                             return A2(Signal._op["<~"],
                                                       Utils.HttpFunctions.prettyPrint,
@@ -421,7 +438,7 @@ Elm.Utils.HttpFunctions.make = function (elm)
                                                                                     },
                                                                                     str));}
                                                              _E.Case($moduleName,
-                                                                     "between lines 9 and 11");
+                                                                     "between lines 7 and 9");
                                                            }();
                                                   });
                                  var prettyPrint = function (res)
@@ -437,9 +454,9 @@ Elm.Utils.HttpFunctions.make = function (elm)
                                                                  return res._0;
                                                                case
                                                                "Waiting" :
-                                                                 return "waiting";}
+                                                                 return "Waiting";}
                                                               _E.Case($moduleName,
-                                                                      "between lines 14 and 17");
+                                                                      "between lines 12 and 15");
                                                             }();
                                                    };
                                  elm.Utils.HttpFunctions.values = {_op: _op, prettyPrint: prettyPrint, sendReq: sendReq};
