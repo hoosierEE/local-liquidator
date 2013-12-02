@@ -1,4 +1,4 @@
-module Utils.Header (hdr) where
+module Utils.Header (hdr, helloUser) where
 
 import Window
 import Utils.HttpFunctions (sendReq, prettyPrint)

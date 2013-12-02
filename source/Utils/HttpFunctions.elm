@@ -9,8 +9,8 @@ sendReq str method = case method of
 
 prettyPrint : Http.Response String -> String 
 prettyPrint res = case res of
-  Http.Waiting     -> "Waiting"
-  Http.Failure _ _ -> "error" -- for debugging
+  Http.Waiting     -> ""
+  Http.Failure _ _ -> "" -- for debugging
   Http.Success a   -> a 
 
 

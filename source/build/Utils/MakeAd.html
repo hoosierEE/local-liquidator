@@ -6,7 +6,7 @@
         <title>
             MakeAd
         </title>
-        <script type="text/javascript" src="/vendor/elm-runtime.js">
+        <script type="text/javascript" src="/elm-runtime.js">
             
         </script>
         <script type="text/javascript">
@@ -120,6 +120,173 @@ Elm.Main.make = function (elm)
                   elm.Main.values = {_op: _op, preview: preview, content: content, main: main};
                   return elm.Main.values;
                 };Elm.Utils = Elm.Utils || {};
+Elm.Utils.Inputs = Elm.Utils.Inputs || {};
+Elm.Utils.Inputs.make = function (elm)
+                        {
+                          elm.Utils = elm.Utils || {};
+                          elm.Utils.Inputs = elm.Utils.Inputs || {};
+                          if (elm.Utils.Inputs.values)
+                          return elm.Utils.Inputs.values;
+                          var N = Elm.Native,
+                              _N = N.Utils.make(elm),
+                              _L = N.List.make(elm),
+                              _E = N.Error.make(elm),
+                              _J = N.JavaScript.make(elm),
+                              $moduleName = "Utils.Inputs";
+                          var Text = Elm.Text.make(elm);
+                          var Text = Elm.Text.make(elm);
+                          var Basics = Elm.Basics.make(elm);
+                          var Signal = Elm.Signal.make(elm);
+                          var List = Elm.List.make(elm);
+                          var Maybe = Elm.Maybe.make(elm);
+                          var Time = Elm.Time.make(elm);
+                          var Prelude = Elm.Prelude.make(elm);
+                          var Graphics = Graphics || {};
+                          Graphics.Element = Elm.Graphics.Element.make(elm);
+                          var Color = Elm.Color.make(elm);
+                          var Graphics = Graphics || {};
+                          Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                          var Graphics = Graphics || {};
+                          Graphics.Input = Elm.Graphics.Input.make(elm);
+                          var Utils = Utils || {};
+                          Utils.HttpFunctions = Elm.Utils.HttpFunctions.make(elm);
+                          var Utils = Utils || {};
+                          Utils.Validation = Elm.Utils.Validation.make(elm);
+                          var Utils = Utils || {};
+                          Utils.Header = Elm.Utils.Header.make(elm);
+                          var _op = {};
+                          var adDisplay = A2(Signal._op["<~"],
+                                             Text.plainText,
+                                             Signal.constant(""));
+                          var $ = Graphics.Input.button("Sell"),sell = $._0,sellEvent = $._1;
+                          var $ = Graphics.Input.field("Price"),
+                              price = $._0,
+                              priceSignal = $._1;
+                          var validPrice = A2(Signal._op["<~"],
+                                              function (n)
+                                              {
+                                                return A2(Utils.Validation.validate,n,false);
+                                              },
+                                              priceSignal);
+                          var $ = Graphics.Input.field("ISBN"),isbn = $._0,isbnSignal = $._1;
+                          var validIsbn = A2(Signal._op["<~"],
+                                             function (n)
+                                             {
+                                               return A2(Utils.Validation.validate,n,true);
+                                             },
+                                             isbnSignal);
+                          var isbnRequestString = function ()
+                                                  {
+                                                    var ajax = function (s)
+                                                               {
+                                                                 return function ()
+                                                                        {
+                                                                          switch (s)
+                                                                          {case
+                                                                           "" :
+                                                                             return "null";}
+                                                                          return _L.append("/php/checkISBN.php?isbn=",
+                                                                                           s);
+                                                                        }();
+                                                               };
+                                                    return Signal.dropRepeats(A2(Signal._op["<~"],
+                                                                                 ajax,
+                                                                                 validIsbn));
+                                                  }();
+                          var $ = Graphics.Input.button("Buy"),buy = $._0,buyEvent = $._1;
+                          var adRequestString = function ()
+                                                {
+                                                  var whichButton = function ()
+                                                                    {
+                                                                      var ss = A3(Signal.keepWhen,
+                                                                                  Utils.Validation.btnClicked(sellEvent),
+                                                                                  "",
+                                                                                  Signal.constant("sell"));
+                                                                      var bs = A3(Signal.keepWhen,
+                                                                                  Utils.Validation.btnClicked(buyEvent),
+                                                                                  "",
+                                                                                  Signal.constant("buy"));
+                                                                      return A2(Signal.merge,ss,bs);
+                                                                    }();
+                                                  var baseUrl = F4(function (adType,price,user,isbn)
+                                                                   {
+                                                                     return _L.append("/php/storeAd.php?user=",
+                                                                                      _L.append(user,
+                                                                                                _L.append("&ExpTime=10&Price=",
+                                                                                                          _L.append(price,
+                                                                                                                    _L.append("&Adtype=",
+                                                                                                                              _L.append(adType,
+                                                                                                                                        _L.append("&ISBN10=",
+                                                                                                                                                  isbn)))))));
+                                                                   });
+                                                  return A2(Utils.HttpFunctions.sendReq,
+                                                            A2(Signal.sampleOn,
+                                                               whichButton,
+                                                               A2(Signal._op["~"],
+                                                                  A2(Signal._op["~"],
+                                                                     A2(Signal._op["~"],
+                                                                        A2(Signal._op["<~"],
+                                                                           baseUrl,
+                                                                           whichButton),
+                                                                        validPrice),
+                                                                     Utils.Header.helloUser),
+                                                                  validIsbn)),
+                                                            "get");
+                                                }();
+                          var controls = function ()
+                                         {
+                                           var btngroup = Signal.constant(A2(Graphics.Element.flow,
+                                                                             Graphics.Element.right,
+                                                                             _J.toList([buy,
+                                                                                        sell])));
+                                           var arranged = F4(function (a,b,c,d)
+                                                             {
+                                                               return function ()
+                                                                      {
+                                                                        var w = List.maximum(A2(List.map,
+                                                                                                Graphics.Element.widthOf,
+                                                                                                _J.toList([a,
+                                                                                                           b,
+                                                                                                           c,
+                                                                                                           d])));
+                                                                        var title = Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkYellow)(Text.toText("Controls")))));
+                                                                        var h = A2(List.foldr,
+                                                                                   F2(function (x,y)
+                                                                                      {
+                                                                                        return x + y;
+                                                                                      }),
+                                                                                   0)(A2(List.map,
+                                                                                         Graphics.Element.heightOf,
+                                                                                         _J.toList([a,
+                                                                                                    b,
+                                                                                                    c,
+                                                                                                    d])));
+                                                                        var border = 10;
+                                                                        return A2(Graphics.Element.flow,
+                                                                                  Graphics.Element.down,
+                                                                                  _J.toList([title,
+                                                                                             Graphics.Element.color(Color.lightBlue)(A3(Graphics.Element.container,
+                                                                                                                                        w + border,
+                                                                                                                                        h + border,
+                                                                                                                                        Graphics.Element.middle)(A2(Graphics.Element.flow,
+                                                                                                                                                                    Graphics.Element.down,
+                                                                                                                                                                    _J.toList([a,
+                                                                                                                                                                               b,
+                                                                                                                                                                               c,
+                                                                                                                                                                               d]))))]));
+                                                                      }();
+                                                             });
+                                           return A2(Signal._op["~"],
+                                                     A2(Signal._op["~"],
+                                                        A2(Signal._op["~"],
+                                                           A2(Signal._op["<~"],arranged,isbn),
+                                                           price),
+                                                        btngroup),
+                                                     adDisplay);
+                                         }();
+                          elm.Utils.Inputs.values = {_op: _op, controls: controls, isbnRequestString: isbnRequestString};
+                          return elm.Utils.Inputs.values;
+                        };Elm.Utils = Elm.Utils || {};
 Elm.Utils.Header = Elm.Utils.Header || {};
 Elm.Utils.Header.make = function (elm)
                         {
@@ -233,170 +400,8 @@ Elm.Utils.Header.make = function (elm)
                           var hdr = A2(Signal._op["~"],
                                        A2(Signal._op["<~"],headerBuilder,Window.dimensions),
                                        helloUser);
-                          elm.Utils.Header.values = {_op: _op, hdr: hdr};
+                          elm.Utils.Header.values = {_op: _op, hdr: hdr, helloUser: helloUser};
                           return elm.Utils.Header.values;
-                        };Elm.Utils = Elm.Utils || {};
-Elm.Utils.Inputs = Elm.Utils.Inputs || {};
-Elm.Utils.Inputs.make = function (elm)
-                        {
-                          elm.Utils = elm.Utils || {};
-                          elm.Utils.Inputs = elm.Utils.Inputs || {};
-                          if (elm.Utils.Inputs.values)
-                          return elm.Utils.Inputs.values;
-                          var N = Elm.Native,
-                              _N = N.Utils.make(elm),
-                              _L = N.List.make(elm),
-                              _E = N.Error.make(elm),
-                              _J = N.JavaScript.make(elm),
-                              $moduleName = "Utils.Inputs";
-                          var Text = Elm.Text.make(elm);
-                          var Text = Elm.Text.make(elm);
-                          var Basics = Elm.Basics.make(elm);
-                          var Signal = Elm.Signal.make(elm);
-                          var List = Elm.List.make(elm);
-                          var Maybe = Elm.Maybe.make(elm);
-                          var Time = Elm.Time.make(elm);
-                          var Prelude = Elm.Prelude.make(elm);
-                          var Graphics = Graphics || {};
-                          Graphics.Element = Elm.Graphics.Element.make(elm);
-                          var Color = Elm.Color.make(elm);
-                          var Graphics = Graphics || {};
-                          Graphics.Collage = Elm.Graphics.Collage.make(elm);
-                          var Graphics = Graphics || {};
-                          Graphics.Input = Elm.Graphics.Input.make(elm);
-                          var Utils = Utils || {};
-                          Utils.HttpFunctions = Elm.Utils.HttpFunctions.make(elm);
-                          var Utils = Utils || {};
-                          Utils.Validation = Elm.Utils.Validation.make(elm);
-                          var _op = {};
-                          var ad = function (str)
-                                   {
-                                     return function ()
-                                            {
-                                              var scriptString = function (n)
-                                                                 {
-                                                                   return _L.append("/php/storeAd.php?user=ashroyer&Price=",
-                                                                                    n);
-                                                                 };
-                                              return function (n)
-                                                     {
-                                                       return A2(Utils.HttpFunctions.sendReq,
-                                                                 n,
-                                                                 "get");
-                                                     }(A2(Signal._op["<~"],scriptString,str));
-                                            }();
-                                   };
-                          var $ = Graphics.Input.button("Sell"),sell = $._0,sellEvent = $._1;
-                          var $ = Graphics.Input.field("Price"),
-                              price = $._0,
-                              priceSignal = $._1;
-                          var validPrice = A2(Signal._op["<~"],
-                                              function (n)
-                                              {
-                                                return A2(Utils.Validation.validate,n,false);
-                                              },
-                                              priceSignal);
-                          var afterClicked = function (clik)
-                                             {
-                                               return function ()
-                                                      {
-                                                        switch (clik)
-                                                        {case
-                                                         false :
-                                                           return Signal.constant("");
-                                                         case
-                                                         true :
-                                                           return A2(Signal._op["<~"],
-                                                                     Utils.HttpFunctions.prettyPrint,
-                                                                     ad(validPrice));}
-                                                        _E.Case($moduleName,
-                                                                "between lines 21 and 23");
-                                                      }();
-                                             };
-                          var $ = Graphics.Input.field("ISBN"),isbn = $._0,isbnSignal = $._1;
-                          var validIsbn = A2(Signal._op["<~"],
-                                             function (n)
-                                             {
-                                               return A2(Utils.Validation.validate,n,true);
-                                             },
-                                             isbnSignal);
-                          var isbnRequestString = function ()
-                                                  {
-                                                    var ajax = function (s)
-                                                               {
-                                                                 return function ()
-                                                                        {
-                                                                          switch (s)
-                                                                          {case
-                                                                           "" :
-                                                                             return "null";}
-                                                                          return _L.append("/php/checkISBN.php?isbn=",
-                                                                                           s);
-                                                                        }();
-                                                               };
-                                                    return Signal.dropRepeats(A2(Signal._op["<~"],
-                                                                                 ajax,
-                                                                                 validIsbn));
-                                                  }();
-                          var $ = Graphics.Input.button("Buy"),buy = $._0,buyEvent = $._1;
-                          var buyTester = A2(Signal._op["<~"],
-                                             Text.asText,
-                                             A2(Signal._op["<~"],
-                                                afterClicked,
-                                                Utils.Validation.btnClicked(buyEvent)));
-                          var controls = function ()
-                                         {
-                                           var btngroup = Signal.constant(A2(Graphics.Element.flow,
-                                                                             Graphics.Element.right,
-                                                                             _J.toList([buy,
-                                                                                        sell])));
-                                           var arranged = F4(function (a,b,c,d)
-                                                             {
-                                                               return function ()
-                                                                      {
-                                                                        var w = List.maximum(A2(List.map,
-                                                                                                Graphics.Element.widthOf,
-                                                                                                _J.toList([a,
-                                                                                                           b,
-                                                                                                           c,
-                                                                                                           d])));
-                                                                        var title = Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkYellow)(Text.toText("Controls")))));
-                                                                        var h = A2(List.foldr,
-                                                                                   F2(function (x,y)
-                                                                                      {
-                                                                                        return x + y;
-                                                                                      }),
-                                                                                   0)(A2(List.map,
-                                                                                         Graphics.Element.heightOf,
-                                                                                         _J.toList([a,
-                                                                                                    b,
-                                                                                                    c,
-                                                                                                    d])));
-                                                                        var border = 10;
-                                                                        return A2(Graphics.Element.flow,
-                                                                                  Graphics.Element.down,
-                                                                                  _J.toList([title,
-                                                                                             Graphics.Element.color(Color.lightBlue)(A3(Graphics.Element.container,
-                                                                                                                                        w + border,
-                                                                                                                                        h + border,
-                                                                                                                                        Graphics.Element.middle)(A2(Graphics.Element.flow,
-                                                                                                                                                                    Graphics.Element.down,
-                                                                                                                                                                    _J.toList([a,
-                                                                                                                                                                               b,
-                                                                                                                                                                               c,
-                                                                                                                                                                               d]))))]));
-                                                                      }();
-                                                             });
-                                           return A2(Signal._op["~"],
-                                                     A2(Signal._op["~"],
-                                                        A2(Signal._op["~"],
-                                                           A2(Signal._op["<~"],arranged,isbn),
-                                                           price),
-                                                        btngroup),
-                                                     buyTester);
-                                         }();
-                          elm.Utils.Inputs.values = {_op: _op, controls: controls, isbnRequestString: isbnRequestString};
-                          return elm.Utils.Inputs.values;
                         };Elm.Utils = Elm.Utils || {};
 Elm.Utils.HttpFunctions = Elm.Utils.HttpFunctions || {};
 Elm.Utils.HttpFunctions.make = function (elm)
@@ -455,13 +460,13 @@ Elm.Utils.HttpFunctions.make = function (elm)
                                                               switch (res.ctor)
                                                               {case
                                                                "Failure" :
-                                                                 return "error";
+                                                                 return "";
                                                                case
                                                                "Success" :
                                                                  return res._0;
                                                                case
                                                                "Waiting" :
-                                                                 return "Waiting";}
+                                                                 return "";}
                                                               _E.Case($moduleName,
                                                                       "between lines 11 and 14");
                                                             }();
