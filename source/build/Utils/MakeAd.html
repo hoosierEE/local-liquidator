@@ -61,7 +61,7 @@ Elm.Main.make = function (elm)
                                                                   {
                                                                     return Graphics.Element.width(400)(Text.plainText($));
                                                                   },
-                                                                  A2(Graphics.Element.fittedImage,
+                                                                  A2(Graphics.Element.image,
                                                                      400,
                                                                      400)]);
                                            var caps = A2(List.map,
@@ -116,7 +116,7 @@ Elm.Main.make = function (elm)
                                                              A2(Signal._op["<~"],
                                                                 content,
                                                                 Utils.Inputs.controls),
-                                                             preview(Utils.Inputs.urlString))])));
+                                                             preview(Utils.Inputs.isbnRequestString))])));
                   elm.Main.values = {_op: _op, preview: preview, content: content, main: main};
                   return elm.Main.values;
                 };Elm.Utils = Elm.Utils || {};
@@ -269,10 +269,50 @@ Elm.Utils.Inputs.make = function (elm)
                           var Utils = Utils || {};
                           Utils.Validation = Elm.Utils.Validation.make(elm);
                           var _op = {};
+                          var ad = function (str)
+                                   {
+                                     return function ()
+                                            {
+                                              var scriptString = function (n)
+                                                                 {
+                                                                   return _L.append("/php/storeAd.php?user=ashroyer&Price=",
+                                                                                    n);
+                                                                 };
+                                              return function (n)
+                                                     {
+                                                       return A2(Utils.HttpFunctions.sendReq,
+                                                                 n,
+                                                                 "get");
+                                                     }(A2(Signal._op["<~"],scriptString,str));
+                                            }();
+                                   };
                           var $ = Graphics.Input.button("Sell"),sell = $._0,sellEvent = $._1;
                           var $ = Graphics.Input.field("Price"),
                               price = $._0,
                               priceSignal = $._1;
+                          var validPrice = A2(Signal._op["<~"],
+                                              function (n)
+                                              {
+                                                return A2(Utils.Validation.validate,n,false);
+                                              },
+                                              priceSignal);
+                          var afterClicked = function (clik)
+                                             {
+                                               return function ()
+                                                      {
+                                                        switch (clik)
+                                                        {case
+                                                         false :
+                                                           return Signal.constant("");
+                                                         case
+                                                         true :
+                                                           return A2(Signal._op["<~"],
+                                                                     Utils.HttpFunctions.prettyPrint,
+                                                                     ad(validPrice));}
+                                                        _E.Case($moduleName,
+                                                                "between lines 21 and 23");
+                                                      }();
+                                             };
                           var $ = Graphics.Input.field("ISBN"),isbn = $._0,isbnSignal = $._1;
                           var validIsbn = A2(Signal._op["<~"],
                                              function (n)
@@ -280,32 +320,37 @@ Elm.Utils.Inputs.make = function (elm)
                                                return A2(Utils.Validation.validate,n,true);
                                              },
                                              isbnSignal);
-                          var urlString = function ()
-                                          {
-                                            var ajax = function (s)
-                                                       {
-                                                         return function ()
-                                                                {
-                                                                  switch (s)
-                                                                  {case
-                                                                   "" :
-                                                                     return "null";}
-                                                                  return _L.append("/php/checkISBN.php?isbn=",
-                                                                                   s);
-                                                                }();
-                                                       };
-                                            return Signal.dropRepeats(A2(Signal._op["<~"],
-                                                                         ajax,
-                                                                         validIsbn));
-                                          }();
+                          var isbnRequestString = function ()
+                                                  {
+                                                    var ajax = function (s)
+                                                               {
+                                                                 return function ()
+                                                                        {
+                                                                          switch (s)
+                                                                          {case
+                                                                           "" :
+                                                                             return "null";}
+                                                                          return _L.append("/php/checkISBN.php?isbn=",
+                                                                                           s);
+                                                                        }();
+                                                               };
+                                                    return Signal.dropRepeats(A2(Signal._op["<~"],
+                                                                                 ajax,
+                                                                                 validIsbn));
+                                                  }();
                           var $ = Graphics.Input.button("Buy"),buy = $._0,buyEvent = $._1;
+                          var buyTester = A2(Signal._op["<~"],
+                                             Text.asText,
+                                             A2(Signal._op["<~"],
+                                                afterClicked,
+                                                Utils.Validation.btnClicked(buyEvent)));
                           var controls = function ()
                                          {
                                            var btngroup = Signal.constant(A2(Graphics.Element.flow,
                                                                              Graphics.Element.right,
                                                                              _J.toList([buy,
                                                                                         sell])));
-                                           var arranged = F3(function (a,b,c)
+                                           var arranged = F4(function (a,b,c,d)
                                                              {
                                                                return function ()
                                                                       {
@@ -313,7 +358,8 @@ Elm.Utils.Inputs.make = function (elm)
                                                                                                 Graphics.Element.widthOf,
                                                                                                 _J.toList([a,
                                                                                                            b,
-                                                                                                           c])));
+                                                                                                           c,
+                                                                                                           d])));
                                                                         var title = Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkYellow)(Text.toText("Controls")))));
                                                                         var h = A2(List.foldr,
                                                                                    F2(function (x,y)
@@ -324,7 +370,8 @@ Elm.Utils.Inputs.make = function (elm)
                                                                                          Graphics.Element.heightOf,
                                                                                          _J.toList([a,
                                                                                                     b,
-                                                                                                    c])));
+                                                                                                    c,
+                                                                                                    d])));
                                                                         var border = 10;
                                                                         return A2(Graphics.Element.flow,
                                                                                   Graphics.Element.down,
@@ -336,16 +383,19 @@ Elm.Utils.Inputs.make = function (elm)
                                                                                                                                                                     Graphics.Element.down,
                                                                                                                                                                     _J.toList([a,
                                                                                                                                                                                b,
-                                                                                                                                                                               c]))))]));
+                                                                                                                                                                               c,
+                                                                                                                                                                               d]))))]));
                                                                       }();
                                                              });
                                            return A2(Signal._op["~"],
                                                      A2(Signal._op["~"],
-                                                        A2(Signal._op["<~"],arranged,isbn),
-                                                        price),
-                                                     btngroup);
+                                                        A2(Signal._op["~"],
+                                                           A2(Signal._op["<~"],arranged,isbn),
+                                                           price),
+                                                        btngroup),
+                                                     buyTester);
                                          }();
-                          elm.Utils.Inputs.values = {_op: _op, controls: controls, urlString: urlString};
+                          elm.Utils.Inputs.values = {_op: _op, controls: controls, isbnRequestString: isbnRequestString};
                           return elm.Utils.Inputs.values;
                         };Elm.Utils = Elm.Utils || {};
 Elm.Utils.HttpFunctions = Elm.Utils.HttpFunctions || {};
@@ -405,7 +455,7 @@ Elm.Utils.HttpFunctions.make = function (elm)
                                                               switch (res.ctor)
                                                               {case
                                                                "Failure" :
-                                                                 return "";
+                                                                 return "error";
                                                                case
                                                                "Success" :
                                                                  return res._0;
@@ -569,7 +619,7 @@ Elm.Utils.Validation.make = function (elm)
                                                                         "Nothing" :
                                                                           return "";}
                                                                        _E.Case($moduleName,
-                                                                               "between lines 9 and 11");
+                                                                               "between lines 11 and 13");
                                                                      }();
                                                             case
                                                             true :
@@ -579,10 +629,33 @@ Elm.Utils.Validation.make = function (elm)
                                                                                      10) || _N.eq(String.length(x),
                                                                                                   13)) ? x : "";}
                                                            _E.Case($moduleName,
-                                                                   "between lines 6 and 11");
+                                                                   "between lines 8 and 13");
                                                          }();
                                                 });
-                              elm.Utils.Validation.values = {_op: _op, validate: validate};
+                              var btnClicked = function (btnPress)
+                                               {
+                                                 return function ()
+                                                        {
+                                                          var always = F2(function (value,signal)
+                                                                          {
+                                                                            return A2(Signal.lift,
+                                                                                      function (arg0)
+                                                                                      {
+                                                                                        return function ()
+                                                                                               {
+                                                                                                 return value;
+                                                                                               }();
+                                                                                      },
+                                                                                      signal);
+                                                                          });
+                                                          return A2(Signal.merge,
+                                                                    A2(always,
+                                                                       false,
+                                                                       A2(Time.delay,0,btnPress)),
+                                                                    A2(always,true,btnPress));
+                                                        }();
+                                               };
+                              elm.Utils.Validation.values = {_op: _op, validate: validate, btnClicked: btnClicked};
                               return elm.Utils.Validation.values;
                             };
         </script>

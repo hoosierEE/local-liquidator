@@ -1,20 +1,23 @@
 import Utils.Header (hdr)
 import Utils.JConvert (stringy)
-import Utils.Inputs (controls, urlString)
+import Utils.Inputs (controls, isbnRequestString)
+
 -- Module for creating a new ad
--- previews isbn data (buggy)
+-- previews isbn data
 -- grabs geolocation data (todo)
--- user selects buy/sell (todo)
+-- user selects buy/sell
 -- all this is turned into an http request to /php/sendAd.php (todo)
 
 -- url = constant "/Utils/JsonTest/isbn.json" -- for debugging
 
 preview : Signal String -> Signal Element
 preview url = let
-    -- Logic
+   
+   -- Logic
     results = stringy url accs
-    funcs = [plainText, width 400 . plainText, fittedImage 400 400] 
+    funcs = [plainText, width 400 . plainText, image 400 400] 
     accs = [.title, .description, .imageURL]
+    
     -- Display
     todos str = zipWith (beside) caps (zipWith (<|) funcs str)
     title = width 500 . centered . Text.height 20 . Text.color darkYellow <| toText "Ad Preview"
@@ -27,4 +30,4 @@ content a b = flow right [a, spacer 10 10, b]
 
 main = flow down <~ combine
   [ hdr
-  , content <~ controls ~ (preview urlString) ]
+  , content <~ controls ~ (preview isbnRequestString) ]

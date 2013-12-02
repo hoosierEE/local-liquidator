@@ -1,7 +1,9 @@
-module Utils.Validation (validate) where
+module Utils.Validation (validate, btnClicked) where
 import String
 import Char
+
 -- Input Valication Logic
+
 validate : String -> Bool -> String
 validate x isIsbn = case isIsbn of
   -- hack "0" around the "show own html" issue
@@ -9,3 +11,7 @@ validate x isIsbn = case isIsbn of
   False -> case (String.toFloat x) of
     Nothing -> ""
     Just x -> show x
+
+btnClicked : Signal () -> Signal Bool
+btnClicked btnPress = let always value signal = lift (\_ -> value) signal
+  in merge (always False (delay 0 btnPress)) (always True btnPress)
