@@ -2,7 +2,6 @@ module Utils.HttpFunctions (prettyPrint, sendReq) where
 
 import Http
 
--- True for GET, false for POST
 sendReq : Signal String -> String -> Signal (Http.Response String)
 sendReq str method = case method of
   "get"  -> Http.sendGet <| str

@@ -4,6 +4,15 @@ import Graphics.Input as Input
 import Utils.HttpFunctions (prettyPrint, sendReq)
 import Utils.Validation (validate)
 
+-- Logic
+validIsbn = (\n->validate n True) <~ isbnSignal
+
+urlString =
+  let ajax s = case s of
+    "" -> "null"
+    _  -> "/php/checkISBN.php?isbn=" ++ s
+  in dropRepeats (ajax <~ validIsbn)
+
 -- Model
 (isbn , isbnSignal)  = Input.field "ISBN"
 (price, priceSignal) = Input.field "Price"
@@ -13,30 +22,11 @@ import Utils.Validation (validate)
 -- View
 controls =
   let
-    arranged a b c d = 
-      let h = map heightOf [a,b,c,d] |> foldr (+) 0
-          w = map widthOf [a,b,c,d] |> maximum
+    arranged a b c = 
+      let h = map heightOf [a,b,c] |> foldr (+) 0
+          w = map widthOf [a,b,c] |> maximum
           border = 10
           title = width 200 . centered . Text.height 20 . Text.color darkYellow <| toText "Controls"
-      in flow down [title, flow down [a,b,c,d] |> container (w + border) (h + border) middle |> color lightBlue]
+      in flow down [title, flow down [a,b,c] |> container (w + border) (h + border) middle |> color lightBlue]
     btngroup = constant <| flow right [buy, sell]
-  in arranged <~ isbn ~ price ~ btngroup ~ urlelem
-
-urlelem = plainText <~ validIsbn
-
--- Controller
-validIsbn  = (\n -> validate n True)  <~ isbnSignal
-validPrice = (\n -> validate n False) <~ priceSignal 
-
-ready = let blarg x = case x of
-    "" -> False
-    _  -> True
-  in blarg <~ validIsbn
-
-urlString =
-  let scriptPath = "/php/checkISBN.php?isbn="
-      queryString s = case s of
-        "" -> "0" -- scriptPath
-        _  -> scriptPath ++ s 
-      srq i = sampleOn i (sendReq (dropRepeats (queryString <~ i)) "post")
-  in prettyPrint <~ srq validIsbn
+  in arranged <~ isbn ~ price ~ btngroup

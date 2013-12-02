@@ -2,10 +2,10 @@ import Utils.Header (hdr)
 import Utils.JConvert (stringy)
 import Utils.Inputs (controls, urlString)
 -- Module for creating a new ad
--- previews isbn data
--- grabs geolocation data
--- user selects buy/sell
--- all this is turned into an http request to /php/sendAd.php
+-- previews isbn data (buggy)
+-- grabs geolocation data (todo)
+-- user selects buy/sell (todo)
+-- all this is turned into an http request to /php/sendAd.php (todo)
 
 -- url = constant "/Utils/JsonTest/isbn.json" -- for debugging
 
@@ -25,6 +25,6 @@ preview url = let
 content : Element -> Element -> Element
 content a b = flow right [a, spacer 10 10, b]
 
-main = flow down <~ combine [ hdr, content <~ controls ~ (preview urlString) ]
-
--- OOPS!  sends entire Record instead of ISBN!!!!
+main = flow down <~ combine
+  [ hdr
+  , content <~ controls ~ (preview urlString) ]

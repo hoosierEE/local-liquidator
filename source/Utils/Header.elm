@@ -23,9 +23,7 @@ headerBuilder (w,h) username =
              . Text.color lightYellow
              . Text.height (maximum [logoHeight, (toFloat w / 20)])
       welcome = case username of
-        "" -> plainText "not logged in (404 error)"
         "guest" -> plainText "Welcome Guest"
-        "waiting" -> plainText "waiting..."
         a -> plainText ("Welcome, " ++ a)
         _ -> plainText "wat?"
   in flow down 
@@ -41,7 +39,7 @@ navBar : (String,String) -> Element
 navBar (name, href) =
   let words = 
     flow right [ spacer 10 10 
-        , (text . Text.link href <| toText name)
+        , (text . Text.link href . Text.color lightYellow <| toText name)
         , spacer 10 10 ]
   in 
     container (widthOf words) topBarHeight midRight words
@@ -52,7 +50,8 @@ paths =
   , ("Login", "/php/php_cas.php")
   , ("Logout", "/php/cas_logout.php")
   , ("Create Ad", "/MakeAd.html")
-  , ("Add User (test)", "/addUserTest.html")
+  , ("My Ads", "/php/getUserAds.php")
+  , ("My Coordinates", "/php/findUserPosition.html")
   ]
 
 hdr : Signal Element
