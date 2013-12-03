@@ -168,7 +168,7 @@ Elm.Utils.Header.make = function (elm)
                           var hdr = A2(Signal._op["~"],
                                        A2(Signal._op["<~"],headerBuilder,Window.dimensions),
                                        helloUser);
-                          elm.Utils.Header.values = {_op: _op, hdr: hdr};
+                          elm.Utils.Header.values = {_op: _op, hdr: hdr, helloUser: helloUser};
                           return elm.Utils.Header.values;
                         };Elm.Utils = Elm.Utils || {};
 Elm.Utils.HttpFunctions = Elm.Utils.HttpFunctions || {};
@@ -234,7 +234,7 @@ Elm.Utils.HttpFunctions.make = function (elm)
                                                                  return res._0;
                                                                case
                                                                "Waiting" :
-                                                                 return "Waiting";}
+                                                                 return "";}
                                                               _E.Case($moduleName,
                                                                       "between lines 11 and 14");
                                                             }();

@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Validation
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.Utils = Elm.Utils || {};
+Elm.Utils.Validation = Elm.Utils.Validation || {};
+Elm.Utils.Validation.make = function (elm)
+                            {
+                              elm.Utils = elm.Utils || {};
+                              elm.Utils.Validation = elm.Utils.Validation || {};
+                              if (elm.Utils.Validation.values)
+                              return elm.Utils.Validation.values;
+                              var N = Elm.Native,
+                                  _N = N.Utils.make(elm),
+                                  _L = N.List.make(elm),
+                                  _E = N.Error.make(elm),
+                                  _J = N.JavaScript.make(elm),
+                                  $moduleName = "Utils.Validation";
+                              var Text = Elm.Text.make(elm);
+                              var Text = Elm.Text.make(elm);
+                              var Basics = Elm.Basics.make(elm);
+                              var Signal = Elm.Signal.make(elm);
+                              var List = Elm.List.make(elm);
+                              var Maybe = Elm.Maybe.make(elm);
+                              var Time = Elm.Time.make(elm);
+                              var Prelude = Elm.Prelude.make(elm);
+                              var Graphics = Graphics || {};
+                              Graphics.Element = Elm.Graphics.Element.make(elm);
+                              var Color = Elm.Color.make(elm);
+                              var Graphics = Graphics || {};
+                              Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                              var String = Elm.String.make(elm);
+                              var Char = Elm.Char.make(elm);
+                              var _op = {};
+                              var validate = F2(function (x,isIsbn)
+                                                {
+                                                  return function ()
+                                                         {
+                                                           switch (isIsbn)
+                                                           {case
+                                                            false :
+                                                              return function ()
+                                                                     {
+                                                                       var _case1 = String.toFloat(x);
+                                                                       switch (_case1.ctor)
+                                                                       {case
+                                                                        "Just" :
+                                                                          return Prelude.show(_case1._0);
+                                                                        case
+                                                                        "Nothing" :
+                                                                          return "";}
+                                                                       _E.Case($moduleName,
+                                                                               "between lines 11 and 13");
+                                                                     }();
+                                                            case
+                                                            true :
+                                                              return A2(String.all,
+                                                                        Char.isDigit,
+                                                                        x) && (_N.eq(String.length(x),
+                                                                                     10) || _N.eq(String.length(x),
+                                                                                                  13)) ? x : "";}
+                                                           _E.Case($moduleName,
+                                                                   "between lines 8 and 13");
+                                                         }();
+                                                });
+                              var btnClicked = function (btnPress)
+                                               {
+                                                 return function ()
+                                                        {
+                                                          var always = F2(function (value,signal)
+                                                                          {
+                                                                            return A2(Signal.lift,
+                                                                                      function (arg0)
+                                                                                      {
+                                                                                        return function ()
+                                                                                               {
+                                                                                                 return value;
+                                                                                               }();
+                                                                                      },
+                                                                                      signal);
+                                                                          });
+                                                          return A2(Signal.merge,
+                                                                    A2(always,
+                                                                       false,
+                                                                       A2(Time.delay,0,btnPress)),
+                                                                    A2(always,true,btnPress));
+                                                        }();
+                                               };
+                              elm.Utils.Validation.values = {_op: _op, validate: validate, btnClicked: btnClicked};
+                              return elm.Utils.Validation.values;
+                            };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.Utils.Validation)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>

@@ -6,7 +6,7 @@
         <title>
             MakeAd
         </title>
-        <script type="text/javascript" src="/elm-runtime.js">
+        <script type="text/javascript" src="/vendor/elm-runtime.js">
             
         </script>
         <script type="text/javascript">
@@ -165,14 +165,14 @@ Elm.Utils.Inputs.make = function (elm)
                           var validPrice = A2(Signal._op["<~"],
                                               function (n)
                                               {
-                                                return A2(Utils.Validation.validate,n,false);
+                                                return A2(Utils.Validation.validate,n,"price");
                                               },
                                               priceSignal);
                           var $ = Graphics.Input.field("ISBN"),isbn = $._0,isbnSignal = $._1;
                           var validIsbn = A2(Signal._op["<~"],
                                              function (n)
                                              {
-                                               return A2(Utils.Validation.validate,n,true);
+                                               return A2(Utils.Validation.validate,n,"isbn");
                                              },
                                              isbnSignal);
                           var isbnRequestString = function ()
@@ -193,6 +193,15 @@ Elm.Utils.Inputs.make = function (elm)
                                                                                  ajax,
                                                                                  validIsbn));
                                                   }();
+                          var $ = Graphics.Input.field("Expire Time"),
+                              expire = $._0,
+                              expTimeSignal = $._1;
+                          var validExpTime = A2(Signal._op["<~"],
+                                                function (n)
+                                                {
+                                                  return A2(Utils.Validation.validate,n,"expire");
+                                                },
+                                                expTimeSignal);
                           var $ = Graphics.Input.button("Buy"),buy = $._0,buyEvent = $._1;
                           var adRequestString = function ()
                                                 {
@@ -208,16 +217,22 @@ Elm.Utils.Inputs.make = function (elm)
                                                                                   Signal.constant("buy"));
                                                                       return A2(Signal.merge,ss,bs);
                                                                     }();
-                                                  var baseUrl = F4(function (adType,price,user,isbn)
+                                                  var baseUrl = F5(function (adType,
+                                                                             price,
+                                                                             user,
+                                                                             isbn,
+                                                                             expTime)
                                                                    {
                                                                      return _L.append("/php/storeAd.php?user=",
                                                                                       _L.append(user,
-                                                                                                _L.append("&ExpTime=10&Price=",
-                                                                                                          _L.append(price,
-                                                                                                                    _L.append("&Adtype=",
-                                                                                                                              _L.append(adType,
-                                                                                                                                        _L.append("&ISBN10=",
-                                                                                                                                                  isbn)))))));
+                                                                                                _L.append("&ExpTime=",
+                                                                                                          _L.append(expTime,
+                                                                                                                    _L.append("&Price=",
+                                                                                                                              _L.append(price,
+                                                                                                                                        _L.append("&Adtype=",
+                                                                                                                                                  _L.append(adType,
+                                                                                                                                                            _L.append("&ISBN10=",
+                                                                                                                                                                      isbn)))))))));
                                                                    });
                                                   return A2(Utils.HttpFunctions.sendReq,
                                                             A2(Signal.sampleOn,
@@ -225,12 +240,14 @@ Elm.Utils.Inputs.make = function (elm)
                                                                A2(Signal._op["~"],
                                                                   A2(Signal._op["~"],
                                                                      A2(Signal._op["~"],
-                                                                        A2(Signal._op["<~"],
-                                                                           baseUrl,
-                                                                           whichButton),
-                                                                        validPrice),
-                                                                     Utils.Header.helloUser),
-                                                                  validIsbn)),
+                                                                        A2(Signal._op["~"],
+                                                                           A2(Signal._op["<~"],
+                                                                              baseUrl,
+                                                                              whichButton),
+                                                                           validPrice),
+                                                                        Utils.Header.helloUser),
+                                                                     validIsbn),
+                                                                  validExpTime)),
                                                             "get");
                                                 }();
                           var controls = function ()
@@ -239,7 +256,7 @@ Elm.Utils.Inputs.make = function (elm)
                                                                              Graphics.Element.right,
                                                                              _J.toList([buy,
                                                                                         sell])));
-                                           var arranged = F4(function (a,b,c,d)
+                                           var arranged = F5(function (a,b,c,d,f)
                                                              {
                                                                return function ()
                                                                       {
@@ -248,7 +265,8 @@ Elm.Utils.Inputs.make = function (elm)
                                                                                                 _J.toList([a,
                                                                                                            b,
                                                                                                            c,
-                                                                                                           d])));
+                                                                                                           d,
+                                                                                                           f])));
                                                                         var title = Graphics.Element.width(200)(Text.centered(Text.height(20)(Text.color(Color.darkYellow)(Text.toText("Controls")))));
                                                                         var h = A2(List.foldr,
                                                                                    F2(function (x,y)
@@ -260,7 +278,8 @@ Elm.Utils.Inputs.make = function (elm)
                                                                                          _J.toList([a,
                                                                                                     b,
                                                                                                     c,
-                                                                                                    d])));
+                                                                                                    d,
+                                                                                                    f])));
                                                                         var border = 10;
                                                                         return A2(Graphics.Element.flow,
                                                                                   Graphics.Element.down,
@@ -273,14 +292,17 @@ Elm.Utils.Inputs.make = function (elm)
                                                                                                                                                                     _J.toList([a,
                                                                                                                                                                                b,
                                                                                                                                                                                c,
-                                                                                                                                                                               d]))))]));
+                                                                                                                                                                               d,
+                                                                                                                                                                               f]))))]));
                                                                       }();
                                                              });
                                            return A2(Signal._op["~"],
                                                      A2(Signal._op["~"],
                                                         A2(Signal._op["~"],
-                                                           A2(Signal._op["<~"],arranged,isbn),
-                                                           price),
+                                                           A2(Signal._op["~"],
+                                                              A2(Signal._op["<~"],arranged,isbn),
+                                                              price),
+                                                           expire),
                                                         btngroup),
                                                      adDisplay);
                                          }();
@@ -606,35 +628,71 @@ Elm.Utils.Validation.make = function (elm)
                               var String = Elm.String.make(elm);
                               var Char = Elm.Char.make(elm);
                               var _op = {};
-                              var validate = F2(function (x,isIsbn)
+                              var validate = F2(function (str,inputType)
                                                 {
                                                   return function ()
                                                          {
-                                                           switch (isIsbn)
+                                                           switch (inputType)
                                                            {case
-                                                            false :
+                                                            "expire" :
                                                               return function ()
                                                                      {
-                                                                       var _case1 = String.toFloat(x);
-                                                                       switch (_case1.ctor)
+                                                                       var defaultTime = "60";
+                                                                       return function ()
+                                                                              {
+                                                                                var _case1 = String.toInt(str);
+                                                                                switch (_case1.ctor)
+                                                                                {case
+                                                                                 "Just" :
+                                                                                   return Prelude.show(_case1._0);
+                                                                                 case
+                                                                                 "Nothing" :
+                                                                                   return defaultTime;}
+                                                                                _E.Case($moduleName,
+                                                                                        "between lines 20 and 22");
+                                                                              }();
+                                                                     }();
+                                                            case
+                                                            "isbn" :
+                                                              return function ()
+                                                                     {
+                                                                       var isbnDigits = A2(String.filter,
+                                                                                           Char.isDigit,
+                                                                                           str);
+                                                                       return function ()
+                                                                              {
+                                                                                var _case3 = String.length(isbnDigits);
+                                                                                switch (_case3)
+                                                                                {case
+                                                                                 9 :
+                                                                                   return _L.append(isbnDigits,
+                                                                                                    "X");
+                                                                                 case
+                                                                                 10 :
+                                                                                   return isbnDigits;
+                                                                                 case
+                                                                                 13 :
+                                                                                   return isbnDigits;}
+                                                                                return "";
+                                                                              }();
+                                                                     }();
+                                                            case
+                                                            "price" :
+                                                              return function ()
+                                                                     {
+                                                                       var _case4 = String.toFloat(str);
+                                                                       switch (_case4.ctor)
                                                                        {case
                                                                         "Just" :
-                                                                          return Prelude.show(_case1._0);
+                                                                          return Prelude.show(_case4._0);
                                                                         case
                                                                         "Nothing" :
                                                                           return "";}
                                                                        _E.Case($moduleName,
-                                                                               "between lines 11 and 13");
-                                                                     }();
-                                                            case
-                                                            true :
-                                                              return A2(String.all,
-                                                                        Char.isDigit,
-                                                                        x) && (_N.eq(String.length(x),
-                                                                                     10) || _N.eq(String.length(x),
-                                                                                                  13)) ? x : "";}
+                                                                               "between lines 16 and 19");
+                                                                     }();}
                                                            _E.Case($moduleName,
-                                                                   "between lines 8 and 13");
+                                                                   "between lines 6 and 22");
                                                          }();
                                                 });
                               var btnClicked = function (btnPress)
