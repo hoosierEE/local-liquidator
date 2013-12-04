@@ -6,7 +6,7 @@
         <title>
             MakeAd
         </title>
-        <script type="text/javascript" src="/vendor/elm-runtime.js">
+        <script type="text/javascript" src="/elm-runtime.js">
             
         </script>
         <script type="text/javascript">
@@ -627,6 +627,7 @@ Elm.Utils.Validation.make = function (elm)
                               Graphics.Collage = Elm.Graphics.Collage.make(elm);
                               var String = Elm.String.make(elm);
                               var Char = Elm.Char.make(elm);
+                              var Maybe = Elm.Maybe.make(elm);
                               var _op = {};
                               var validate = F2(function (str,inputType)
                                                 {
@@ -649,7 +650,7 @@ Elm.Utils.Validation.make = function (elm)
                                                                                  "Nothing" :
                                                                                    return defaultTime;}
                                                                                 _E.Case($moduleName,
-                                                                                        "between lines 20 and 22");
+                                                                                        "between lines 23 and 25");
                                                                               }();
                                                                      }();
                                                             case
@@ -661,38 +662,49 @@ Elm.Utils.Validation.make = function (elm)
                                                                                            str);
                                                                        return function ()
                                                                               {
-                                                                                var _case3 = String.length(isbnDigits);
-                                                                                switch (_case3)
+                                                                                var _case3 = Maybe.Just(String.length(isbnDigits));
+                                                                                switch (_case3.ctor)
                                                                                 {case
-                                                                                 9 :
-                                                                                   return _L.append(isbnDigits,
-                                                                                                    "X");
+                                                                                 "Just" :
+                                                                                   return function ()
+                                                                                          {
+                                                                                            switch (_case3._0)
+                                                                                            {case
+                                                                                             9 :
+                                                                                               return _L.append(isbnDigits,
+                                                                                                                "X");
+                                                                                             case
+                                                                                             10 :
+                                                                                               return isbnDigits;
+                                                                                             case
+                                                                                             13 :
+                                                                                               return isbnDigits;}
+                                                                                            return "";
+                                                                                          }();
                                                                                  case
-                                                                                 10 :
-                                                                                   return isbnDigits;
-                                                                                 case
-                                                                                 13 :
-                                                                                   return isbnDigits;}
-                                                                                return "";
+                                                                                 "Nothing" :
+                                                                                   return "";}
+                                                                                _E.Case($moduleName,
+                                                                                        "between lines 12 and 19");
                                                                               }();
                                                                      }();
                                                             case
                                                             "price" :
                                                               return function ()
                                                                      {
-                                                                       var _case4 = String.toFloat(str);
-                                                                       switch (_case4.ctor)
+                                                                       var _case6 = String.toFloat(str);
+                                                                       switch (_case6.ctor)
                                                                        {case
                                                                         "Just" :
-                                                                          return Prelude.show(_case4._0);
+                                                                          return Prelude.show(_case6._0);
                                                                         case
                                                                         "Nothing" :
                                                                           return "";}
                                                                        _E.Case($moduleName,
-                                                                               "between lines 16 and 19");
+                                                                               "between lines 19 and 22");
                                                                      }();}
                                                            _E.Case($moduleName,
-                                                                   "between lines 6 and 22");
+                                                                   "between lines 7 and 25");
                                                          }();
                                                 });
                               var btnClicked = function (btnPress)

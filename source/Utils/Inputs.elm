@@ -5,11 +5,6 @@ import Utils.HttpFunctions (prettyPrint, sendReq)
 import Utils.Validation (validate, btnClicked)
 import Utils.Header (helloUser)
 
--- Logic
-validIsbn    = (\n->validate n "isbn"   ) <~ isbnSignal
-validPrice   = (\n->validate n "price"  ) <~ priceSignal
-validExpTime = (\n-> validate n "expire") <~ expTimeSignal
-
 isbnRequestString =
   let ajax s = case s of
     "" -> "null"
@@ -39,6 +34,11 @@ adRequestString =
 (buy   , buyEvent     ) = Input.button "Buy"
 (sell  , sellEvent    ) = Input.button "Sell"
                           
+-- Input Validation Logic
+validIsbn    = (\n->validate n "isbn"  ) <~ isbnSignal
+validPrice   = (\n->validate n "price" ) <~ priceSignal
+validExpTime = (\n->validate n "expire") <~ expTimeSignal
+
 -- View
 controls =
   let
