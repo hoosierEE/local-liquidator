@@ -3,15 +3,14 @@ module Components.UserInput  where
 import Graphics.Input as Input
 import Utils.Valid as Valid
 import Utils.Layout as Layout
-import Utils.Helpers as Helpers
 
 -- Inputs
 (isbnField  , isbnSignal  ) = Input.field "ISBN Number"
 (priceField , priceSignal ) = Input.field "Price"
 (expireField, expireSignal) = Input.field "Expire (Minutes)"
-buyBtn          = link "/Utils/Confirmation.html" <| Helpers.buttonGen "buy"
-sellBtn         = link "/Utils/Confirmation.html" <| Helpers.buttonGen "sell" 
-buySell         = Helpers.butn
+buyBtn          = link "/Utils/Confirmation.html" <| Layout.buttonGen "buy"
+sellBtn         = link "/Utils/Confirmation.html" <| Layout.buttonGen "sell" 
+buySell         = Layout.butn
 
 -- Outputs
 validSigRecord  = { isbn="", price="", expire="", butn="" }
@@ -33,10 +32,8 @@ adMaker         =
   let
     ins         = combine [ isbnField, priceField, expireField ]
     btns        = constant <| flow right [buyBtn, sellBtn]
-    hr          = spacer Layout.makerWidth 2 |> color darkOrange 
-    heads str   = constant <| flow down [ Helpers.headerGen 200 28 darkOrange str, hr ] 
-    inputHeader = heads "Create Ad"
-    outHeader   = heads "Preview"
+    inputHeader = Layout.heads "Create Ad"
+    outHeader   = Layout.heads "Preview"
     inputArea   = tableS <~ ins
     previewArea = tableS <~ preview
   in flombine [ inputHeader, inputArea, btns, outHeader, previewArea ]

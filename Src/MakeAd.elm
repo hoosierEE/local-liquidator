@@ -1,12 +1,13 @@
 module MakeAd where
 
-import Http
 import Components.UserInput as Inputs
 import Components.LivePreview as Pre
+import Utils.Rest as Convert
 
-display a b = flow right [ a, asText b ]
 
-isbnPreview = Http.sendGet (dropRepeats <| Pre.isbnUrl <~ (.isbn Inputs.presentRec))
+display maker preview = flow right [ maker, asText preview ]
+
+isbnPreview = Convert.prettyPrint <~ (Convert.singleGet <| Pre.isbnUrl <~ (.isbn Inputs.presentRec))
 
 main = display <~ Inputs.adMaker ~ isbnPreview
 
