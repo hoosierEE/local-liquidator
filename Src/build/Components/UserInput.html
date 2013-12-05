@@ -1,0 +1,345 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            UserInput
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.Components = Elm.Components || {};
+Elm.Components.UserInput = Elm.Components.UserInput || {};
+Elm.Components.UserInput.make = function (elm)
+                                {
+                                  elm.Components = elm.Components || {};
+                                  elm.Components.UserInput = elm.Components.UserInput || {};
+                                  if (elm.Components.UserInput.values)
+                                  return elm.Components.UserInput.values;
+                                  var N = Elm.Native,
+                                      _N = N.Utils.make(elm),
+                                      _L = N.List.make(elm),
+                                      _E = N.Error.make(elm),
+                                      _J = N.JavaScript.make(elm),
+                                      $moduleName = "Components.UserInput";
+                                  var Text = Elm.Text.make(elm);
+                                  var Text = Elm.Text.make(elm);
+                                  var Basics = Elm.Basics.make(elm);
+                                  var Signal = Elm.Signal.make(elm);
+                                  var List = Elm.List.make(elm);
+                                  var Maybe = Elm.Maybe.make(elm);
+                                  var Time = Elm.Time.make(elm);
+                                  var Prelude = Elm.Prelude.make(elm);
+                                  var Graphics = Graphics || {};
+                                  Graphics.Element = Elm.Graphics.Element.make(elm);
+                                  var Color = Elm.Color.make(elm);
+                                  var Graphics = Graphics || {};
+                                  Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                                  var Graphics = Graphics || {};
+                                  Graphics.Input = Elm.Graphics.Input.make(elm);
+                                  var Utils = Utils || {};
+                                  Utils.Valid = Elm.Utils.Valid.make(elm);
+                                  var _op = {};
+                                  var makerWidth = 200;
+                                  var headerGen = F3(function (w,h,c)
+                                                     {
+                                                       return function ($)
+                                                              {
+                                                                return Graphics.Element.width(w)(Text.centered(Text.color(c)(Text.height(h)(Text.toText($)))));
+                                                              };
+                                                     });
+                                  var halfWidth = makerWidth / 2 | 0;
+                                  var flombine = function (n)
+                                                 {
+                                                   return A2(Signal._op["<~"],
+                                                             Graphics.Element.flow(Graphics.Element.down),
+                                                             Signal.combine(n));
+                                                 };
+                                  var buySell = Graphics.Input.customButtons("");
+                                  var btn = function (str)
+                                            {
+                                              return function ()
+                                                     {
+                                                       var box = F2(function (c1,c2)
+                                                                    {
+                                                                      return function ()
+                                                                             {
+                                                                               var word = A4(headerGen,
+                                                                                             100,
+                                                                                             20,
+                                                                                             Color.darkRed,
+                                                                                             str);
+                                                                               var grad = A3(Color.linear,
+                                                                                             {ctor: "_Tuple2", _0: 0, _1: 29},
+                                                                                             {ctor: "_Tuple2", _0: 0, _1: -29},
+                                                                                             _J.toList([{ctor: "_Tuple2", _0: 0, _1: c1},
+                                                                                                        {ctor: "_Tuple2", _0: 1, _1: c2}]));
+                                                                               return A3(Graphics.Collage.collage,
+                                                                                         100,
+                                                                                         38,
+                                                                                         _J.toList([A2(Graphics.Collage.gradient,
+                                                                                                       grad,
+                                                                                                       A2(Graphics.Collage.rect,
+                                                                                                          98,
+                                                                                                          36)),
+                                                                                                    Graphics.Collage.toForm(word)]));
+                                                                             }();
+                                                                    });
+                                                       return A4(buySell.customButton,
+                                                                 str,
+                                                                 A2(box,
+                                                                    Color.white,
+                                                                    Color.lightOrange),
+                                                                 A2(box,
+                                                                    Color.lightYellow,
+                                                                    Color.darkOrange),
+                                                                 A2(box,
+                                                                    Color.red,
+                                                                    Color.lightOrange));
+                                                     }();
+                                            };
+                                  var buyBtn = Graphics.Element.link("/")(btn("buy"));
+                                  var sellBtn = Graphics.Element.link("/")(btn("sell"));
+                                  var borderWidth = List.maximum(_J.toList([makerWidth / 20 | 0,
+                                                                            10]));
+                                  var leftWidth = (makerWidth / 3 | 0) - (borderWidth / 2 | 0);
+                                  var padding = function ()
+                                                {
+                                                  var p = borderWidth;
+                                                  return A2(Graphics.Element.spacer,p,p);
+                                                }();
+                                  var rightWidth = makerWidth - leftWidth - borderWidth;
+                                  var table = F2(function (a,b)
+                                                 {
+                                                   return function ()
+                                                          {
+                                                            var row = function (arg0)
+                                                                      {
+                                                                        return function ()
+                                                                               {
+                                                                                 switch (arg0.ctor)
+                                                                                 {case
+                                                                                  "_Tuple2" :
+                                                                                    return A2(Graphics.Element.flow,
+                                                                                              Graphics.Element.right,
+                                                                                              _J.toList([arg0._0,
+                                                                                                         padding,
+                                                                                                         arg0._1]));}
+                                                                                 _E.Case($moduleName,
+                                                                                         "on line 60, column 27 to 65");
+                                                                               }();
+                                                                      };
+                                                            var rightSide = A2(List.map,
+                                                                               function (n)
+                                                                               {
+                                                                                 return A3(Graphics.Element.container,
+                                                                                           rightWidth,
+                                                                                           38,
+                                                                                           Graphics.Element.midLeft)(A2(Graphics.Element.width,
+                                                                                                                        rightWidth - 2,
+                                                                                                                        n));
+                                                                               },
+                                                                               b);
+                                                            var leftSide = A2(List.map,
+                                                                              function (n)
+                                                                              {
+                                                                                return A3(Graphics.Element.container,
+                                                                                          leftWidth,
+                                                                                          38,
+                                                                                          Graphics.Element.midRight)(Text.plainText(n));
+                                                                              },
+                                                                              a);
+                                                            return Graphics.Element.color(A4(Color.rgba,
+                                                                                             255,
+                                                                                             199,
+                                                                                             0,
+                                                                                             0.2))(Graphics.Element.flow(Graphics.Element.down)(List.map(row)(A2(List.zip,
+                                                                                                                                                                 leftSide,
+                                                                                                                                                                 rightSide))));
+                                                          }();
+                                                 });
+                                  var tableS = function (z)
+                                               {
+                                                 return function ()
+                                                        {
+                                                          var inputTitles = _J.toList(["Isbn",
+                                                                                       "Price",
+                                                                                       "Minutes"]);
+                                                          return A2(table,inputTitles,z);
+                                                        }();
+                                               };
+                                  var $ = Graphics.Input.field("Price"),
+                                      priceField = $._0,
+                                      priceSignal = $._1;
+                                  var $ = Graphics.Input.field("ISBN Number"),
+                                      isbnField = $._0,
+                                      isbnSignal = $._1;
+                                  var $ = Graphics.Input.field("Expire (Minutes)"),
+                                      expireField = $._0,
+                                      expireSignal = $._1;
+                                  var validSignals = _J.toList([A2(Signal._op["<~"],
+                                                                   Utils.Valid.isbn,
+                                                                   isbnSignal),
+                                                                A2(Signal._op["<~"],
+                                                                   Utils.Valid.price,
+                                                                   priceSignal),
+                                                                A2(Signal._op["<~"],
+                                                                   Utils.Valid.expire,
+                                                                   expireSignal),
+                                                                A2(Signal._op["<~"],
+                                                                   Utils.Valid.butn,
+                                                                   buySell.events)]);
+                                  var preview = Signal.combine(A2(List.map,
+                                                                  function (n)
+                                                                  {
+                                                                    return A2(Signal.lift,
+                                                                              Text.plainText,
+                                                                              n);
+                                                                  },
+                                                                  validSignals));
+                                  var adMaker = function ()
+                                                {
+                                                  var previewArea = A2(Signal._op["<~"],
+                                                                       tableS,
+                                                                       preview);
+                                                  var ins = Signal.combine(_J.toList([isbnField,
+                                                                                      priceField,
+                                                                                      expireField]));
+                                                  var inputArea = A2(Signal._op["<~"],tableS,ins);
+                                                  var hr = Graphics.Element.color(Color.darkOrange)(A2(Graphics.Element.spacer,
+                                                                                                       makerWidth,
+                                                                                                       2));
+                                                  var heads = function (str)
+                                                              {
+                                                                return Signal.constant(A2(Graphics.Element.flow,
+                                                                                          Graphics.Element.down,
+                                                                                          _J.toList([A4(headerGen,
+                                                                                                        200,
+                                                                                                        28,
+                                                                                                        Color.darkOrange,
+                                                                                                        str),
+                                                                                                     hr])));
+                                                              };
+                                                  var inputHeader = heads("Create Ad");
+                                                  var outHeader = heads("Preview");
+                                                  var btns = Signal.constant(A2(Graphics.Element.flow,
+                                                                                Graphics.Element.right,
+                                                                                _J.toList([buyBtn,
+                                                                                           sellBtn])));
+                                                  return flombine(_J.toList([inputHeader,
+                                                                             inputArea,
+                                                                             btns,
+                                                                             outHeader,
+                                                                             previewArea]));
+                                                }();
+                                  elm.Components.UserInput.values = {_op: _op, adMaker: adMaker, validSignals: validSignals};
+                                  return elm.Components.UserInput.values;
+                                };Elm.Utils = Elm.Utils || {};
+Elm.Utils.Valid = Elm.Utils.Valid || {};
+Elm.Utils.Valid.make = function (elm)
+                       {
+                         elm.Utils = elm.Utils || {};
+                         elm.Utils.Valid = elm.Utils.Valid || {};
+                         if (elm.Utils.Valid.values)
+                         return elm.Utils.Valid.values;
+                         var N = Elm.Native,
+                             _N = N.Utils.make(elm),
+                             _L = N.List.make(elm),
+                             _E = N.Error.make(elm),
+                             _J = N.JavaScript.make(elm),
+                             $moduleName = "Utils.Valid";
+                         var Text = Elm.Text.make(elm);
+                         var Text = Elm.Text.make(elm);
+                         var Basics = Elm.Basics.make(elm);
+                         var Signal = Elm.Signal.make(elm);
+                         var List = Elm.List.make(elm);
+                         var Maybe = Elm.Maybe.make(elm);
+                         var Time = Elm.Time.make(elm);
+                         var Prelude = Elm.Prelude.make(elm);
+                         var Graphics = Graphics || {};
+                         Graphics.Element = Elm.Graphics.Element.make(elm);
+                         var Color = Elm.Color.make(elm);
+                         var Graphics = Graphics || {};
+                         Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                         var String = Elm.String.make(elm);
+                         var Char = Elm.Char.make(elm);
+                         var Maybe = Elm.Maybe.make(elm);
+                         var _op = {};
+                         var price = function (str)
+                                     {
+                                       return function ()
+                                              {
+                                                var _case0 = String.toFloat(str);
+                                                switch (_case0.ctor)
+                                                {case
+                                                 "Just" :
+                                                   return function ()
+                                                          {
+                                                            var currency = function (s)
+                                                                           {
+                                                                             return Basics.toFloat(Basics.round(s * 100)) / 100;
+                                                                           };
+                                                            return Prelude.show(currency(_case0._0));
+                                                          }();
+                                                 case
+                                                 "Nothing" :
+                                                   return "0";}
+                                                _E.Case($moduleName,"between lines 15 and 18");
+                                              }();
+                                     };
+                         var isbn = function (str)
+                                    {
+                                      return function ()
+                                             {
+                                               var isbnDigits = A2(String.filter,Char.isDigit,str);
+                                               var len = String.length(isbnDigits);
+                                               return _N.eq(len,9) ? _L.append(isbnDigits,
+                                                                               "X") : _N.eq(len,
+                                                                                            10) || _N.eq(len,
+                                                                                                         13) ? isbnDigits : "";
+                                             }();
+                                    };
+                         var expire = function (str)
+                                      {
+                                        return function ()
+                                               {
+                                                 var maxTime = "10080";
+                                                 var defaultTime = "60";
+                                                 return function ()
+                                                        {
+                                                          var _case2 = String.toInt(str);
+                                                          switch (_case2.ctor)
+                                                          {case
+                                                           "Just" :
+                                                             return _N.cmp(_case2._0,
+                                                                           0) > -1 && _N.cmp(_case2._0,
+                                                                                             10080) < 1 ? Prelude.show(_case2._0) : _N.cmp(_case2._0,
+                                                                                                                                           10080) > 0 ? maxTime : defaultTime;
+                                                           case
+                                                           "Nothing" :
+                                                             return defaultTime;}
+                                                          _E.Case($moduleName,
+                                                                  "between lines 24 and 29");
+                                                        }();
+                                               }();
+                                      };
+                         var butn = function (btnName)
+                                    {
+                                      return btnName;
+                                    };
+                         elm.Utils.Valid.values = {_op: _op, isbn: isbn, price: price, expire: expire, butn: butn};
+                         return elm.Utils.Valid.values;
+                       };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.Components.UserInput)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>
