@@ -1,6 +1,26 @@
 module Utils.Helpers where
 
 import Graphics.Input as Input
+import Http
+
+scriptSrc : Signal String
+scriptSrc = constant "/php/getUser.php"
+
+helloUser : Signal String
+helloUser = prettyPrint <~ sendReq scriptSrc "post"
+
+sendReq : Signal String -> String -> Signal (Http.Response String)
+sendReq str method = case method of
+  "get"  -> Http.sendGet str
+  "post" -> Http.send    <| (\r -> Http.post r "" ) <~ str
+
+prettyPrint : Http.Response String -> String 
+prettyPrint res = case res of
+  Http.Waiting     -> ""
+  Http.Failure _ _ -> "" -- for debugging
+  Http.Success a   -> a 
+
+
 
 butn = Input.customButtons ""
 

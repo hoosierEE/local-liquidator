@@ -1,4 +1,4 @@
-module Components.UserInput (adMaker, validSignals) where
+module Components.UserInput  where
 
 import Graphics.Input as Input
 import Utils.Valid as Valid
@@ -13,9 +13,15 @@ buyBtn          = link "/Utils/Confirmation.html" <| Helpers.buttonGen "buy"
 sellBtn         = link "/Utils/Confirmation.html" <| Helpers.buttonGen "sell" 
 buySell         = Helpers.butn
 
-
-
 -- Outputs
+validSigRecord  = { isbn="", price="", expire="", butn="" }
+whatsNew rec    = { rec | isbn   <- (lift Valid.isbn   isbnSignal)
+                        , price  <- (lift Valid.price  priceSignal)
+                        , expire <- (lift Valid.expire expireSignal)
+                        , butn   <- (lift Valid.butn   buySell.events) }
+
+presentRec      = whatsNew validSigRecord
+
 validSignals    = [ (Valid.isbn   <~ isbnSignal)
                   , (Valid.price  <~ priceSignal)
                   , (Valid.expire <~ expireSignal) 

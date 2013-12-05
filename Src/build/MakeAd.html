@@ -6,7 +6,7 @@
         <title>
             MakeAd
         </title>
-        <script type="text/javascript" src="/elm-runtime.js">
+        <script type="text/javascript" src="/vendor/elm-runtime.js">
             
         </script>
         <script type="text/javascript">
@@ -35,15 +35,18 @@ Elm.MakeAd.make = function (elm)
                     var Color = Elm.Color.make(elm);
                     var Graphics = Graphics || {};
                     Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                    var Http = Elm.Http.make(elm);
                     var Components = Components || {};
                     Components.UserInput = Elm.Components.UserInput.make(elm);
                     var Components = Components || {};
                     Components.LivePreview = Elm.Components.LivePreview.make(elm);
                     var _op = {};
-                    var wholeList = Signal.combine(Components.UserInput.validSignals);
-                    var isbnPreview = A2(Signal._op["<~"],
-                                         Components.LivePreview.isbnUrl,
-                                         List.head(Components.UserInput.validSignals));
+                    var isbnPreview = Http.sendGet(Signal.dropRepeats(A2(Signal._op["<~"],
+                                                                         Components.LivePreview.isbnUrl,
+                                                                         function (_)
+                                                                         {
+                                                                           return _.isbn;
+                                                                         }(Components.UserInput.presentRec))));
                     var display = F2(function (a,b)
                                      {
                                        return A2(Graphics.Element.flow,
@@ -52,8 +55,8 @@ Elm.MakeAd.make = function (elm)
                                      });
                     var main = A2(Signal._op["~"],
                                   A2(Signal._op["<~"],display,Components.UserInput.adMaker),
-                                  wholeList);
-                    elm.MakeAd.values = {_op: _op, isbnPreview: isbnPreview, main: main, display: display, wholeList: wholeList};
+                                  isbnPreview);
+                    elm.MakeAd.values = {_op: _op, display: display, isbnPreview: isbnPreview, main: main};
                     return elm.MakeAd.values;
                   };Elm.Components = Elm.Components || {};
 Elm.Components.LivePreview = Elm.Components.LivePreview || {};
@@ -86,28 +89,6 @@ Elm.Components.LivePreview.make = function (elm)
                                     Utils.Layout = Elm.Utils.Layout.make(elm);
                                     var Http = Elm.Http.make(elm);
                                     var _op = {};
-                                    var sendReq = F2(function (str,method)
-                                                     {
-                                                       return function ()
-                                                              {
-                                                                switch (method)
-                                                                {case
-                                                                 "get" :
-                                                                   return Http.sendGet(str);
-                                                                 case
-                                                                 "post" :
-                                                                   return Http.send(A2(Signal._op["<~"],
-                                                                                       function (r)
-                                                                                       {
-                                                                                         return A2(Http.post,
-                                                                                                   r,
-                                                                                                   "");
-                                                                                       },
-                                                                                       str));}
-                                                                _E.Case($moduleName,
-                                                                        "between lines 26 and 28");
-                                                              }();
-                                                     });
                                     var prettyPrint = function (res)
                                                       {
                                                         return function ()
@@ -123,7 +104,7 @@ Elm.Components.LivePreview.make = function (elm)
                                                                   "Waiting" :
                                                                     return "";}
                                                                  _E.Case($moduleName,
-                                                                         "between lines 31 and 46");
+                                                                         "between lines 30 and 33");
                                                                }();
                                                       };
                                     var isbnUrl = function (isbn)
@@ -163,7 +144,7 @@ Elm.Components.LivePreview.make = function (elm)
                                                                                                                                                                                                                                                                                                                   a.lon))))))))))))))))))))))));
                                                          }();
                                                 };
-                                    elm.Components.LivePreview.values = {_op: _op, isbnUrl: isbnUrl, adUrl: adUrl, sendReq: sendReq, prettyPrint: prettyPrint};
+                                    elm.Components.LivePreview.values = {_op: _op, isbnUrl: isbnUrl, adUrl: adUrl, prettyPrint: prettyPrint};
                                     return elm.Components.LivePreview.values;
                                   };Elm.Components = Elm.Components || {};
 Elm.Components.UserInput = Elm.Components.UserInput || {};
@@ -201,6 +182,7 @@ Elm.Components.UserInput.make = function (elm)
                                   var Utils = Utils || {};
                                   Utils.Helpers = Elm.Utils.Helpers.make(elm);
                                   var _op = {};
+                                  var validSigRecord = {_: {}, butn: "", expire: "", isbn: "", price: ""};
                                   var tableS = function ()
                                                {
                                                  var inputTitles = _J.toList(["Isbn",
@@ -281,7 +263,28 @@ Elm.Components.UserInput.make = function (elm)
                                                                              outHeader,
                                                                              previewArea]));
                                                 }();
-                                  elm.Components.UserInput.values = {_op: _op, adMaker: adMaker, validSignals: validSignals};
+                                  var whatsNew = function (rec)
+                                                 {
+                                                   return _N.replace([["isbn",
+                                                                       A2(Signal.lift,
+                                                                          Utils.Valid.isbn,
+                                                                          isbnSignal)],
+                                                                      ["price",
+                                                                       A2(Signal.lift,
+                                                                          Utils.Valid.price,
+                                                                          priceSignal)],
+                                                                      ["expire",
+                                                                       A2(Signal.lift,
+                                                                          Utils.Valid.expire,
+                                                                          expireSignal)],
+                                                                      ["butn",
+                                                                       A2(Signal.lift,
+                                                                          Utils.Valid.butn,
+                                                                          buySell.events)]],
+                                                                     rec);
+                                                 };
+                                  var presentRec = whatsNew(validSigRecord);
+                                  elm.Components.UserInput.values = {_op: _op, isbnField: isbnField, isbnSignal: isbnSignal, priceField: priceField, priceSignal: priceSignal, expireField: expireField, expireSignal: expireSignal, buyBtn: buyBtn, sellBtn: sellBtn, buySell: buySell, validSigRecord: validSigRecord, whatsNew: whatsNew, presentRec: presentRec, validSignals: validSignals, preview: preview, adMaker: adMaker, flombine: flombine, tableS: tableS};
                                   return elm.Components.UserInput.values;
                                 };Elm.Utils = Elm.Utils || {};
 Elm.Utils.Helpers = Elm.Utils.Helpers || {};
@@ -312,7 +315,52 @@ Elm.Utils.Helpers.make = function (elm)
                            Graphics.Collage = Elm.Graphics.Collage.make(elm);
                            var Graphics = Graphics || {};
                            Graphics.Input = Elm.Graphics.Input.make(elm);
+                           var Http = Elm.Http.make(elm);
                            var _op = {};
+                           var sendReq = F2(function (str,method)
+                                            {
+                                              return function ()
+                                                     {
+                                                       switch (method)
+                                                       {case
+                                                        "get" :
+                                                          return Http.sendGet(str);
+                                                        case
+                                                        "post" :
+                                                          return Http.send(A2(Signal._op["<~"],
+                                                                              function (r)
+                                                                              {
+                                                                                return A2(Http.post,
+                                                                                          r,
+                                                                                          "");
+                                                                              },
+                                                                              str));}
+                                                       _E.Case($moduleName,
+                                                               "between lines 13 and 15");
+                                                     }();
+                                            });
+                           var scriptSrc = Signal.constant("/php/getUser.php");
+                           var prettyPrint = function (res)
+                                             {
+                                               return function ()
+                                                      {
+                                                        switch (res.ctor)
+                                                        {case
+                                                         "Failure" :
+                                                           return "";
+                                                         case
+                                                         "Success" :
+                                                           return res._0;
+                                                         case
+                                                         "Waiting" :
+                                                           return "";}
+                                                        _E.Case($moduleName,
+                                                                "between lines 18 and 21");
+                                                      }();
+                                             };
+                           var helloUser = A2(Signal._op["<~"],
+                                              prettyPrint,
+                                              A2(sendReq,scriptSrc,"post"));
                            var headerGen = F3(function (w,h,c)
                                               {
                                                 return function ($)
@@ -359,7 +407,7 @@ Elm.Utils.Helpers.make = function (elm)
                                                                    Color.lightOrange));
                                                     }();
                                            };
-                           elm.Utils.Helpers.values = {_op: _op, butn: butn, buttonGen: buttonGen, headerGen: headerGen};
+                           elm.Utils.Helpers.values = {_op: _op, scriptSrc: scriptSrc, helloUser: helloUser, sendReq: sendReq, prettyPrint: prettyPrint, butn: butn, buttonGen: buttonGen, headerGen: headerGen};
                            return elm.Utils.Helpers.values;
                          };Elm.Utils = Elm.Utils || {};
 Elm.Utils.Layout = Elm.Utils.Layout || {};
