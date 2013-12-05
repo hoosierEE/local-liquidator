@@ -42,6 +42,6 @@ adMaker         =
   in flombine [ inputHeader, inputArea, btns, outHeader, previewArea ]
 
     
--- Helpers
+-- Basic Helpers
 flombine        = (\n-> flow down <~ combine n)
 tableS          = let inputTitles = [ "Isbn", "Price ($)", "Minutes" ] in Layout.table inputTitles

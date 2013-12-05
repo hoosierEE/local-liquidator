@@ -7,12 +7,10 @@ scriptSrc : Signal String
 scriptSrc = constant "/php/getUser.php"
 
 helloUser : Signal String
-helloUser = prettyPrint <~ sendReq scriptSrc "post"
+helloUser = prettyPrint <~ sendReq scriptSrc
 
-sendReq : Signal String -> String -> Signal (Http.Response String)
-sendReq str method = case method of
-  "get"  -> Http.sendGet str
-  "post" -> Http.send    <| (\r -> Http.post r "" ) <~ str
+sendReq : Signal String -> Signal (Http.Response String)
+sendReq str = Http.send <| (\r -> Http.post r "" ) <~ str
 
 prettyPrint : Http.Response String -> String 
 prettyPrint res = case res of
@@ -32,7 +30,7 @@ buttonGen str =
         grad  = linear (0,29) (0,-29) [ (0,c1),(1,c2) ]
       in collage 100 38 [ gradient grad (rect 98 36), toForm word ]
   in butn.customButton str (box white lightOrange)
-                              (box lightYellow darkOrange)
+                              (box white darkOrange)
                               (box red lightOrange)
 
 headerGen w h c = width w . centered . Text.color c . Text.height h . toText
