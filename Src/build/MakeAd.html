@@ -61,10 +61,12 @@ Elm.MakeAd.make = function (elm)
                                                                    switch (r.ctor)
                                                                    {case
                                                                     "Just" :
-                                                                      return r._0.valid;
+                                                                      return _J.toList([r._0.valid,
+                                                                                        r._0.description,
+                                                                                        r._0.imageURL]);
                                                                     case
                                                                     "Nothing" :
-                                                                      return "";}
+                                                                      return _J.toList([""]);}
                                                                    _E.Case($moduleName,
                                                                            "between lines 12 and 15");
                                                                  }();

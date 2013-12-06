@@ -10,8 +10,8 @@ isbnPreview = Rest.stringToRecord <~ (Rest.prettyPrint <~ (Rest.singleGet <| Pre
 
 recordExtractor = 
   let vinyl r = case r of
-    Nothing -> ""
-    Just a  -> a.valid
+    Nothing -> [""]
+    Just a  -> [a.valid, a.description, a.imageURL]
   in vinyl <~ isbnPreview
 
 main = display <~ Inputs.adMaker ~ recordExtractor -- isbnPreview
