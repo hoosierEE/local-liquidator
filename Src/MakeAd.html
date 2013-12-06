@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Embedding Elm</title>
+  <script src="/vendor/elm-runtime.js"></script>
+  <script src="build/MakeAd.js"></script>
+  <script src="build/Header.js"></script>
+  <style>
+    body {
+      background-color: lightBlue;
+      font-family: "Lucida Grande","Trebuchet MS","Bitstream Vera Sans",Verdana,Helvetica,sans-serif;
+      font-size: 14px;
+    }
+    #elm-MakeAd {
+      width:  100%;
+      background-color: white;
+    }
+    #elm-Header {
+      width:  100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="elm-Header"></div>
+  <div id="elm-MakeAd"></div>
+</body>
+
+<script type="text/javascript">
+  // Show the stamp module in the "elm-stamps" div.
+  var makeAdDiv = document.getElementById('elm-MakeAd');
+  var makeAd = Elm.embed(Elm.MakeAd, makeAdDiv);
+</script>
+
+</html>
