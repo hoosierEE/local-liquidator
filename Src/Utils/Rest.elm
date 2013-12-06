@@ -26,3 +26,20 @@ prettyPrint res = case res of
 stringToRecord str = case Json.fromString str of
   Just jsonValue -> Just (JS.toRecord (Json.toJSObject jsonValue))
   Nothing -> Nothing
+
+-- URL string -> List of Record accessors -> Signal [String]
+stringy : Signal String -> [(a -> String)]-> Signal [String]
+stringy req accs = 
+  let
+    recordToString response =
+      case response of
+        Http.Success str -> disassemble str
+        Http.Waiting     -> ["waiting"]
+        Http.Failure _ _ -> [""]
+    disassemble str = map (partOf str) accs
+    partOf str portion =
+      let stringToRecord str = case Json.fromString str of
+        Just jsonValue -> Just (JS.toRecord (Json.toJSObject jsonValue))
+        Nothing -> Nothing
+      in maybe "" portion (stringToRecord str)
+  in recordToString <~ (Http.sendGet req)

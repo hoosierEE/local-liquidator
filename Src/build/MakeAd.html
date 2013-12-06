@@ -52,6 +52,25 @@ Elm.MakeAd.make = function (elm)
                                                                     {
                                                                       return _.isbn;
                                                                     }(Components.UserInput.presentRec)))));
+                    var recordExtractor = function ()
+                                          {
+                                            var vinyl = function (r)
+                                                        {
+                                                          return function ()
+                                                                 {
+                                                                   switch (r.ctor)
+                                                                   {case
+                                                                    "Just" :
+                                                                      return r._0.valid;
+                                                                    case
+                                                                    "Nothing" :
+                                                                      return "";}
+                                                                   _E.Case($moduleName,
+                                                                           "between lines 12 and 15");
+                                                                 }();
+                                                        };
+                                            return A2(Signal._op["<~"],vinyl,isbnPreview);
+                                          }();
                     var display = F2(function (maker,preview)
                                      {
                                        return A2(Graphics.Element.flow,
@@ -60,8 +79,8 @@ Elm.MakeAd.make = function (elm)
                                      });
                     var main = A2(Signal._op["~"],
                                   A2(Signal._op["<~"],display,Components.UserInput.adMaker),
-                                  isbnPreview);
-                    elm.MakeAd.values = {_op: _op, display: display, isbnPreview: isbnPreview, main: main};
+                                  recordExtractor);
+                    elm.MakeAd.values = {_op: _op, display: display, isbnPreview: isbnPreview, recordExtractor: recordExtractor, main: main};
                     return elm.MakeAd.values;
                   };Elm.Components = Elm.Components || {};
 Elm.Components.LivePreview = Elm.Components.LivePreview || {};
@@ -430,15 +449,74 @@ Elm.Utils.Rest.make = function (elm)
                         var Json = Elm.Json.make(elm);
                         var Maybe = Elm.Maybe.make(elm);
                         var _op = {};
+                        var stringy = F2(function (req,accs)
+                                         {
+                                           return function ()
+                                                  {
+                                                    var partOf = F2(function (str,portion)
+                                                                    {
+                                                                      return function ()
+                                                                             {
+                                                                               var stringToRecord = function (str)
+                                                                                                    {
+                                                                                                      return function ()
+                                                                                                             {
+                                                                                                               var _case0 = Json.fromString(str);
+                                                                                                               switch (_case0.ctor)
+                                                                                                               {case
+                                                                                                                "Just" :
+                                                                                                                  return Maybe.Just(JavaScript.Experimental.toRecord(Json.toJSObject(_case0._0)));
+                                                                                                                case
+                                                                                                                "Nothing" :
+                                                                                                                  return Maybe.Nothing;}
+                                                                                                               _E.Case($moduleName,
+                                                                                                                       "between lines 41 and 44");
+                                                                                                             }();
+                                                                                                    };
+                                                                               return A3(Maybe.maybe,
+                                                                                         "",
+                                                                                         portion,
+                                                                                         stringToRecord(str));
+                                                                             }();
+                                                                    });
+                                                    var disassemble = function (str)
+                                                                      {
+                                                                        return A2(List.map,
+                                                                                  partOf(str),
+                                                                                  accs);
+                                                                      };
+                                                    var recordToString = function (response)
+                                                                         {
+                                                                           return function ()
+                                                                                  {
+                                                                                    switch (response.ctor)
+                                                                                    {case
+                                                                                     "Failure" :
+                                                                                       return _J.toList([""]);
+                                                                                     case
+                                                                                     "Success" :
+                                                                                       return disassemble(response._0);
+                                                                                     case
+                                                                                     "Waiting" :
+                                                                                       return _J.toList(["waiting"]);}
+                                                                                    _E.Case($moduleName,
+                                                                                            "between lines 35 and 39");
+                                                                                  }();
+                                                                         };
+                                                    return A2(Signal._op["<~"],
+                                                              recordToString,
+                                                              Http.sendGet(req));
+                                                  }();
+                                         });
                         var stringToRecord = function (str)
                                              {
                                                return function ()
                                                       {
-                                                        var _case0 = Json.fromString(str);
-                                                        switch (_case0.ctor)
+                                                        var _case6 = Json.fromString(str);
+                                                        switch (_case6.ctor)
                                                         {case
                                                          "Just" :
-                                                           return Maybe.Just(JavaScript.Experimental.toRecord(Json.toJSObject(_case0._0)));
+                                                           return Maybe.Just(JavaScript.Experimental.toRecord(Json.toJSObject(_case6._0)));
                                                          case
                                                          "Nothing" :
                                                            return Maybe.Nothing;}
@@ -480,7 +558,7 @@ Elm.Utils.Rest.make = function (elm)
                         var helloUser = A2(Signal._op["<~"],
                                            prettyPrint,
                                            sendReq(scriptSrc));
-                        elm.Utils.Rest.values = {_op: _op, singleGet: singleGet, sendReq: sendReq, scriptSrc: scriptSrc, helloUser: helloUser, prettyPrint: prettyPrint, stringToRecord: stringToRecord};
+                        elm.Utils.Rest.values = {_op: _op, singleGet: singleGet, sendReq: sendReq, scriptSrc: scriptSrc, helloUser: helloUser, prettyPrint: prettyPrint, stringToRecord: stringToRecord, stringy: stringy};
                         return elm.Utils.Rest.values;
                       };Elm.Utils = Elm.Utils || {};
 Elm.Utils.Valid = Elm.Utils.Valid || {};
