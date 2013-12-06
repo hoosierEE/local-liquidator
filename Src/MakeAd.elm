@@ -1,8 +1,10 @@
 module MakeAd where
 
+import Window
 import Components.UserInput   as Inputs
 import Components.LivePreview as Pre
 import Utils.Rest             as Rest
+import Utils.Layout           as Layout
 
 isbnPreview = Rest.stringToRecord <~ (Rest.prettyPrint <~ (Rest.singleGet <| Pre.isbnUrl <~ (.isbn Inputs.presentRec)))
 
@@ -39,5 +41,12 @@ recordExtractor =
     Just a  -> a.imageURL
   in unrec <~ isbnPreview
 
-display maker preview = flow right [ maker, image 300 400 preview ]
-main = display <~ Inputs.adMaker ~ recordExtractor -- isbnPreview
+display w maker preview =
+  let previewTitle  = Layout.headerGen 300 28 darkOrange "Cover Preview"
+      underLine     = spacer 300 2 |> color darkOrange
+      previewSide a = flow down [ previewTitle, underLine, a ]
+      h             = 400 + (sum <| map heightOf [ previewTitle, underLine ])
+      bumper        = spacer 10 10
+  in container w h middle <| flow right [ maker, bumper, previewSide <| image 300 400 preview ] 
+
+main = display <~ Window.width ~ Inputs.adMaker ~ recordExtractor -- isbnPreview

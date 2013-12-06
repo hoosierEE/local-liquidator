@@ -35,12 +35,15 @@ Elm.MakeAd.make = function (elm)
                     var Color = Elm.Color.make(elm);
                     var Graphics = Graphics || {};
                     Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                    var Window = Elm.Window.make(elm);
                     var Components = Components || {};
                     Components.UserInput = Elm.Components.UserInput.make(elm);
                     var Components = Components || {};
                     Components.LivePreview = Elm.Components.LivePreview.make(elm);
                     var Utils = Utils || {};
                     Utils.Rest = Elm.Utils.Rest.make(elm);
+                    var Utils = Utils || {};
+                    Utils.Layout = Elm.Utils.Layout.make(elm);
                     var _op = {};
                     var storeAdRecord = {_: {}, adType: "", condition: "", description: "", expTime: "", imageUrl: "", isbn10: "", isbn13: "", lat: "", lon: "", price: "", title: "", user: ""};
                     var isbnPreview = A2(Signal._op["<~"],
@@ -67,23 +70,53 @@ Elm.MakeAd.make = function (elm)
                                                                     "Nothing" :
                                                                       return "";}
                                                                    _E.Case($moduleName,
-                                                                           "between lines 37 and 40");
+                                                                           "between lines 39 and 42");
                                                                  }();
                                                         };
                                             return A2(Signal._op["<~"],unrec,isbnPreview);
                                           }();
-                    var display = F2(function (maker,preview)
+                    var display = F3(function (w,maker,preview)
                                      {
-                                       return A2(Graphics.Element.flow,
-                                                 Graphics.Element.right,
-                                                 _J.toList([maker,
-                                                            A3(Graphics.Element.image,
-                                                               300,
-                                                               400,
-                                                               preview)]));
+                                       return function ()
+                                              {
+                                                var underLine = Graphics.Element.color(Color.darkOrange)(A2(Graphics.Element.spacer,
+                                                                                                            300,
+                                                                                                            2));
+                                                var previewTitle = A4(Utils.Layout.headerGen,
+                                                                      300,
+                                                                      28,
+                                                                      Color.darkOrange,
+                                                                      "Cover Preview");
+                                                var previewSide = function (a)
+                                                                  {
+                                                                    return A2(Graphics.Element.flow,
+                                                                              Graphics.Element.down,
+                                                                              _J.toList([previewTitle,
+                                                                                         underLine,
+                                                                                         a]));
+                                                                  };
+                                                var h = 400 + List.sum(A2(List.map,
+                                                                          Graphics.Element.heightOf,
+                                                                          _J.toList([previewTitle,
+                                                                                     underLine])));
+                                                var bumper = A2(Graphics.Element.spacer,10,10);
+                                                return A3(Graphics.Element.container,
+                                                          w,
+                                                          h,
+                                                          Graphics.Element.middle)(A2(Graphics.Element.flow,
+                                                                                      Graphics.Element.right,
+                                                                                      _J.toList([maker,
+                                                                                                 bumper,
+                                                                                                 previewSide(A3(Graphics.Element.image,
+                                                                                                                300,
+                                                                                                                400,
+                                                                                                                preview))])));
+                                              }();
                                      });
                     var main = A2(Signal._op["~"],
-                                  A2(Signal._op["<~"],display,Components.UserInput.adMaker),
+                                  A2(Signal._op["~"],
+                                     A2(Signal._op["<~"],display,Window.width),
+                                     Components.UserInput.adMaker),
                                   recordExtractor);
                     var adUrl = function (a)
                                 {
@@ -308,6 +341,7 @@ Elm.Utils.Layout.make = function (elm)
                           var Graphics = Graphics || {};
                           Graphics.Input = Elm.Graphics.Input.make(elm);
                           var _op = {};
+                          var rowHeight = 38;
                           var makerWidth = 280;
                           var hr = Graphics.Element.color(Color.darkOrange)(A2(Graphics.Element.spacer,
                                                                                makerWidth,
@@ -387,7 +421,7 @@ Elm.Utils.Layout.make = function (elm)
                                                                                                  padding,
                                                                                                  arg0._1]));}
                                                                          _E.Case($moduleName,
-                                                                                 "on line 22, column 27 to 65");
+                                                                                 "on line 23, column 27 to 65");
                                                                        }();
                                                               };
                                                     var rightSide = A2(List.map,
@@ -395,7 +429,7 @@ Elm.Utils.Layout.make = function (elm)
                                                                        {
                                                                          return A3(Graphics.Element.container,
                                                                                    rightWidth,
-                                                                                   38,
+                                                                                   rowHeight,
                                                                                    Graphics.Element.midLeft)(A2(Graphics.Element.width,
                                                                                                                 rightWidth - 2,
                                                                                                                 n));
@@ -406,7 +440,7 @@ Elm.Utils.Layout.make = function (elm)
                                                                       {
                                                                         return A3(Graphics.Element.container,
                                                                                   leftWidth,
-                                                                                  38,
+                                                                                  rowHeight,
                                                                                   Graphics.Element.midRight)(Text.plainText(n));
                                                                       },
                                                                       a);
@@ -419,7 +453,7 @@ Elm.Utils.Layout.make = function (elm)
                                                                                                                                                          rightSide))));
                                                   }();
                                          });
-                          elm.Utils.Layout.values = {_op: _op, makerWidth: makerWidth, halfWidth: halfWidth, leftWidth: leftWidth, rightWidth: rightWidth, borderWidth: borderWidth, padding: padding, hr: hr, heads: heads, table: table, headerGen: headerGen, butn: butn, buttonGen: buttonGen};
+                          elm.Utils.Layout.values = {_op: _op, makerWidth: makerWidth, halfWidth: halfWidth, leftWidth: leftWidth, rightWidth: rightWidth, borderWidth: borderWidth, rowHeight: rowHeight, padding: padding, hr: hr, heads: heads, table: table, headerGen: headerGen, butn: butn, buttonGen: buttonGen};
                           return elm.Utils.Layout.values;
                         };Elm.Utils = Elm.Utils || {};
 Elm.Utils.Rest = Elm.Utils.Rest || {};

@@ -8,6 +8,7 @@ halfWidth       = makerWidth `div` 2
 leftWidth       = makerWidth `div` 3 - borderWidth `div` 2
 rightWidth      = makerWidth - leftWidth - borderWidth
 borderWidth     = maximum [makerWidth `div` 20, 10]
+rowHeight       = 38
 
 -- Elements
 padding         = spacer borderWidth borderWidth 
@@ -17,8 +18,8 @@ heads str       = constant <| flow down [ headerGen makerWidth 28 darkOrange str
 -- Arrangement
 table a b       =
   let
-    leftSide            = map (\n-> container leftWidth 38 midRight <| plainText n) a
-    rightSide           = map (\n-> container rightWidth 38 midLeft <| width (rightWidth - 2) n) b
+    leftSide            = map (\n-> container leftWidth rowHeight midRight <| plainText n) a
+    rightSide           = map (\n-> container rightWidth rowHeight midLeft <| width (rightWidth - 2) n) b
     row (title,content) = flow right [ title, padding, content ]
   in color (rgba 255 199 0 0.2) <| flow down <| map row <| zip leftSide rightSide
 
