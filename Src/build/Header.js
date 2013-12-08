@@ -1,16 +1,4 @@
-<!DOCTYPE HTML>
-
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>
-            Header
-        </title>
-        <script type="text/javascript" src="/elm-runtime.js">
-            
-        </script>
-        <script type="text/javascript">
-            Elm.Header = Elm.Header || {};
+Elm.Header = Elm.Header || {};
 Elm.Header.make = function (elm)
                   {
                     elm.Header = elm.Header || {};
@@ -192,7 +180,7 @@ Elm.Utils.Layout.make = function (elm)
                                                                            {
                                                                              var word = Graphics.Element.width(halfWidth)(Text.centered(Text.color(Color.darkRed)(Text.height(20)(Text.toText(str)))));
                                                                              var grad = A3(Color.linear,
-                                                                                           {ctor: "_Tuple2", _0: 0, _1: 10},
+                                                                                           {ctor: "_Tuple2", _0: 0, _1: 29},
                                                                                            {ctor: "_Tuple2", _0: 0, _1: -29},
                                                                                            _J.toList([{ctor: "_Tuple2", _0: 0, _1: c1},
                                                                                                       {ctor: "_Tuple2", _0: 1, _1: c2}]));
@@ -412,14 +400,3 @@ Elm.Utils.Rest.make = function (elm)
                         elm.Utils.Rest.values = {_op: _op, singleGet: singleGet, sendReq: sendReq, scriptSrc: scriptSrc, helloUser: helloUser, prettyPrint: prettyPrint, stringToRecord: stringToRecord, stringy: stringy};
                         return elm.Utils.Rest.values;
                       };
-        </script>
-    </head>
-    <body>
-        <script type="text/javascript">
-            Elm.fullscreen(Elm.Header)
-        </script>
-        <noscript>
-            
-        </noscript>
-    </body>
-</html>

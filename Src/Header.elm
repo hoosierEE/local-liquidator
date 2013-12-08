@@ -6,7 +6,7 @@ import Utils.Rest as Rest
 
 title w msg = let
     h = toFloat <| max 30 (w `div` 20)
-    hdr = Layout.headerGen w h darkOrange "local-liquidator" 
+    hdr = Layout.headerGen w h darkOrange "local-liquidator"
     underLine = spacer w 2 |> color darkOrange
     scene = layers [flow down [ hdr, navRow w, underLine ], msg ]
   in scene
@@ -14,9 +14,9 @@ title w msg = let
 welcomeMessage = let
     txt = Layout.headerGen 100 18 darkOrange 
     msg rsp = case rsp of
-      "" -> txt "~"
+      "" -> txt ""
       "Guest" -> txt "Hi Guest, log in to do stuff"
-      _  -> txt <| "Welcome " ++ rsp
+      _  -> txt <| "welcome " ++ rsp
   in msg <~ Rest.helloUser
 
 navigation = [ ("/MakeAd.html"       , "Create Ad")

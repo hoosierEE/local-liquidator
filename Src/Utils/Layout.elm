@@ -31,7 +31,7 @@ butn = customButtons ""
 buttonGen str = let
     box c1 c2 = let
         word     = width halfWidth . centered . Text.color darkRed . Text.height 20 . toText <| str
-        grad     = linear (0,29) (0,-29) [ (0,c1),(1,c2) ]
+        grad     = linear (0,20) (0,-29) [ (0,c1),(1,c2) ]
         emptyBtn = gradient grad <| rect (toFloat halfWidth - 2) 36
     in collage halfWidth 38 [ emptyBtn, toForm word ]
   in butn.customButton str (box white lightOrange)
