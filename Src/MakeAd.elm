@@ -29,8 +29,8 @@ adUrl =
             ++ "&Condition="   ++ condition   
             ++ "&Price="       ++ price       
             ++ "&Adtype="      ++ adType      
-            ++ "&Lat="         ++ lat         
-            ++ "&Lon="         ++ lon         
+            ++ "&Lat="         ++ "39.7685" -- lat         
+            ++ "&Lon="         ++ "-86.15179" -- lon         
   in (Rest.singleGet <| keepWhen sendable "" <|
         (scriptPath <~ Rest.helloUser ~ (extractor .title) ~ (extractor .isbn)
         ~ (extractor .isbn13) ~ (extractor .imageURL) ~ (.expire Inputs.presentRec)

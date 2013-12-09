@@ -54,10 +54,10 @@ Elm.Header.make = function (elm)
                                                                 switch (rsp)
                                                                 {case
                                                                  "" :
-                                                                   return txt("");
+                                                                   return txt("~");
                                                                  case
                                                                  "guest" :
-                                                                   return txt("hi guest, please login");}
+                                                                   return txt("please login");}
                                                                 return txt(_L.append("welcome ",
                                                                                      rsp));
                                                               }();
@@ -65,7 +65,7 @@ Elm.Header.make = function (elm)
                                            return A2(Signal._op["<~"],msg,Utils.Rest.helloUser);
                                          }();
                     var navigation = _J.toList([{ctor: "_Tuple2", _0: "/MakeAd.html", _1: "Create Ad"},
-                                                {ctor: "_Tuple2", _0: "/php/newGetUserAds.php", _1: "My Ads"},
+                                                {ctor: "_Tuple2", _0: "/php/findUserPosition.html", _1: "My Ads"},
                                                 {ctor: "_Tuple2", _0: "/About.html", _1: "About"},
                                                 {ctor: "_Tuple2", _0: "/php/php_cas.php", _1: "Login"},
                                                 {ctor: "_Tuple2", _0: "/php/cas_logout.php", _1: "Logout"}]);
@@ -80,7 +80,7 @@ Elm.Header.make = function (elm)
                                                                    "_Tuple2" :
                                                                      return Graphics.Element.link(arg0._0)(Utils.Layout.buttonGen(arg0._1));}
                                                                   _E.Case($moduleName,
-                                                                          "on line 29, column 30 to 64");
+                                                                          "on line 28, column 30 to 64");
                                                                 }();
                                                        };
                                        return A2(List.map,navButton,navigation);
@@ -106,19 +106,20 @@ Elm.Header.make = function (elm)
                                               var underLine = Graphics.Element.color(Color.darkOrange)(A2(Graphics.Element.spacer,
                                                                                                           w,
                                                                                                           2));
-                                              var h = Basics.toFloat(A2(Basics.max,30,w / 20 | 0));
-                                              var hdr = Graphics.Element.link("/welcome.html")(A4(Utils.Layout.headerGen,
-                                                                                                  w,
-                                                                                                  h,
-                                                                                                  Color.darkOrange,
-                                                                                                  "local-liquidator"));
-                                              var scene = A2(Graphics.Element.flow,
-                                                             Graphics.Element.down,
-                                                             _J.toList([hdr,
-                                                                        msg,
-                                                                        navRow(w),
-                                                                        underLine]));
-                                              return scene;
+                                              var h = Basics.toFloat(A2(Basics.max,
+                                                                        30,
+                                                                        Basics.round(Basics.toFloat(w) / 20)));
+                                              var hdr = Graphics.Element.link("/")(A4(Utils.Layout.headerGen,
+                                                                                      w,
+                                                                                      h,
+                                                                                      Color.darkOrange,
+                                                                                      "local-liquidator"));
+                                              return Graphics.Element.layers(_J.toList([msg,
+                                                                                        A2(Graphics.Element.flow,
+                                                                                           Graphics.Element.down,
+                                                                                           _J.toList([hdr,
+                                                                                                      navRow(w),
+                                                                                                      underLine]))]));
                                             }();
                                    });
                     var main = A2(Signal._op["~"],
