@@ -26,44 +26,54 @@ Elm.MakeAd.make = function (elm)
                     var Window = Elm.Window.make(elm);
                     var Components = Components || {};
                     Components.UserInput = Elm.Components.UserInput.make(elm);
-                    var Components = Components || {};
-                    Components.LivePreview = Elm.Components.LivePreview.make(elm);
                     var Utils = Utils || {};
                     Utils.Rest = Elm.Utils.Rest.make(elm);
                     var Utils = Utils || {};
                     Utils.Layout = Elm.Utils.Layout.make(elm);
                     var _op = {};
-                    var storeAdRecord = {_: {}, adType: "", condition: "", description: "", expTime: "", imageUrl: "", isbn10: "", isbn13: "", lat: "", lon: "", price: "", title: "", user: ""};
+                    var user = Utils.Rest.helloUser;
+                    var theButton = function (_)
+                                    {
+                                      return _.butn;
+                                    }(Components.UserInput.presentRec);
+                    var userPlusButtons = _J.toList([theButton,user]);
+                    var isbnUrl = function (s)
+                                  {
+                                    return _L.append("/php/checkISBN.php?isbn=",s);
+                                  };
                     var isbnPreview = A2(Signal._op["<~"],
                                          Utils.Rest.stringToRecord,
                                          A2(Signal._op["<~"],
                                             Utils.Rest.prettyPrint,
                                             Utils.Rest.singleGet(A2(Signal._op["<~"],
-                                                                    Components.LivePreview.isbnUrl,
+                                                                    isbnUrl,
                                                                     function (_)
                                                                     {
                                                                       return _.isbn;
                                                                     }(Components.UserInput.presentRec)))));
-                    var recordExtractor = function ()
+                    var recordExtractor = function (fld)
                                           {
-                                            var unrec = function (r)
-                                                        {
-                                                          return function ()
+                                            return function ()
+                                                   {
+                                                     var unrec = function (r)
                                                                  {
-                                                                   switch (r.ctor)
-                                                                   {case
-                                                                    "Just" :
-                                                                      return r._0.imageURL;
-                                                                    case
-                                                                    "Nothing" :
-                                                                      return "";}
-                                                                   _E.Case($moduleName,
-                                                                           "between lines 39 and 42");
-                                                                 }();
-                                                        };
-                                            return A2(Signal._op["<~"],unrec,isbnPreview);
-                                          }();
-                    var display = F3(function (w,maker,preview)
+                                                                   return function ()
+                                                                          {
+                                                                            switch (r.ctor)
+                                                                            {case
+                                                                             "Just" :
+                                                                               return fld(r._0);
+                                                                             case
+                                                                             "Nothing" :
+                                                                               return "";}
+                                                                            _E.Case($moduleName,
+                                                                                    "between lines 34 and 37");
+                                                                          }();
+                                                                 };
+                                                     return A2(Signal._op["<~"],unrec,isbnPreview);
+                                                   }();
+                                          };
+                    var display = F4(function (w,maker,preview,btn)
                                      {
                                        return function ()
                                               {
@@ -81,31 +91,37 @@ Elm.MakeAd.make = function (elm)
                                                                               Graphics.Element.down,
                                                                               _J.toList([previewTitle,
                                                                                          underLine,
-                                                                                         a]));
+                                                                                         a,
+                                                                                         Text.asText(btn)]));
                                                                   };
-                                                var h = 400 + List.sum(A2(List.map,
-                                                                          Graphics.Element.heightOf,
-                                                                          _J.toList([previewTitle,
-                                                                                     underLine])));
                                                 var bumper = A2(Graphics.Element.spacer,10,10);
+                                                var stuffing = _J.toList([maker,
+                                                                          bumper,
+                                                                          previewSide(A3(Graphics.Element.image,
+                                                                                         300,
+                                                                                         400,
+                                                                                         preview))]);
+                                                var h = List.maximum(A2(List.map,
+                                                                        Graphics.Element.heightOf,
+                                                                        stuffing));
                                                 return A3(Graphics.Element.container,
                                                           w,
                                                           h,
                                                           Graphics.Element.middle)(A2(Graphics.Element.flow,
                                                                                       Graphics.Element.right,
-                                                                                      _J.toList([maker,
-                                                                                                 bumper,
-                                                                                                 previewSide(A3(Graphics.Element.image,
-                                                                                                                300,
-                                                                                                                400,
-                                                                                                                preview))])));
+                                                                                      stuffing));
                                               }();
                                      });
                     var main = A2(Signal._op["~"],
                                   A2(Signal._op["~"],
-                                     A2(Signal._op["<~"],display,Window.width),
-                                     Components.UserInput.adMaker),
-                                  recordExtractor);
+                                     A2(Signal._op["~"],
+                                        A2(Signal._op["<~"],display,Window.width),
+                                        Components.UserInput.adMaker),
+                                     recordExtractor(function (_)
+                                                     {
+                                                       return _.imageUrl;
+                                                     })),
+                                  Signal.combine(userPlusButtons));
                     var adUrl = function (a)
                                 {
                                   return function ()
@@ -138,44 +154,9 @@ Elm.MakeAd.make = function (elm)
                                                                                                                                                                                                                                                                                                   a.lon))))))))))))))))))))))));
                                          }();
                                 };
-                    elm.MakeAd.values = {_op: _op, isbnPreview: isbnPreview, storeAdRecord: storeAdRecord, adUrl: adUrl, recordExtractor: recordExtractor, display: display, main: main};
+                    elm.MakeAd.values = {_op: _op, isbnUrl: isbnUrl, theButton: theButton, user: user, userPlusButtons: userPlusButtons, isbnPreview: isbnPreview, adUrl: adUrl, recordExtractor: recordExtractor, display: display, main: main};
                     return elm.MakeAd.values;
                   };Elm.Components = Elm.Components || {};
-Elm.Components.LivePreview = Elm.Components.LivePreview || {};
-Elm.Components.LivePreview.make = function (elm)
-                                  {
-                                    elm.Components = elm.Components || {};
-                                    elm.Components.LivePreview = elm.Components.LivePreview || {};
-                                    if (elm.Components.LivePreview.values)
-                                    return elm.Components.LivePreview.values;
-                                    var N = Elm.Native,
-                                        _N = N.Utils.make(elm),
-                                        _L = N.List.make(elm),
-                                        _E = N.Error.make(elm),
-                                        _J = N.JavaScript.make(elm),
-                                        $moduleName = "Components.LivePreview";
-                                    var Text = Elm.Text.make(elm);
-                                    var Text = Elm.Text.make(elm);
-                                    var Basics = Elm.Basics.make(elm);
-                                    var Signal = Elm.Signal.make(elm);
-                                    var List = Elm.List.make(elm);
-                                    var Maybe = Elm.Maybe.make(elm);
-                                    var Time = Elm.Time.make(elm);
-                                    var Prelude = Elm.Prelude.make(elm);
-                                    var Graphics = Graphics || {};
-                                    Graphics.Element = Elm.Graphics.Element.make(elm);
-                                    var Color = Elm.Color.make(elm);
-                                    var Graphics = Graphics || {};
-                                    Graphics.Collage = Elm.Graphics.Collage.make(elm);
-                                    var _op = {};
-                                    var isbnUrl = function (isbn)
-                                                  {
-                                                    return _L.append("/php/checkISBN.php?isbn=",
-                                                                     isbn);
-                                                  };
-                                    elm.Components.LivePreview.values = {_op: _op, isbnUrl: isbnUrl};
-                                    return elm.Components.LivePreview.values;
-                                  };Elm.Components = Elm.Components || {};
 Elm.Components.UserInput = Elm.Components.UserInput || {};
 Elm.Components.UserInput.make = function (elm)
                                 {
@@ -365,7 +346,7 @@ Elm.Utils.Layout.make = function (elm)
                                                                            {
                                                                              var word = Graphics.Element.width(halfWidth)(Text.centered(Text.color(Color.darkRed)(Text.height(20)(Text.toText(str)))));
                                                                              var grad = A3(Color.linear,
-                                                                                           {ctor: "_Tuple2", _0: 0, _1: 29},
+                                                                                           {ctor: "_Tuple2", _0: 0, _1: 20},
                                                                                            {ctor: "_Tuple2", _0: 0, _1: -29},
                                                                                            _J.toList([{ctor: "_Tuple2", _0: 0, _1: c1},
                                                                                                       {ctor: "_Tuple2", _0: 1, _1: c2}]));

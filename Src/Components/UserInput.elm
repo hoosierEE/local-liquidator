@@ -18,16 +18,15 @@ whatsNew rec    = { rec | isbn   <- (lift Valid.isbn   isbnSignal)
                         , price  <- (lift Valid.price  priceSignal)
                         , expire <- (lift Valid.expire expireSignal)
                         , butn   <- (lift Valid.butn   buySell.events) }
-
 presentRec      = whatsNew validSigRecord
 
 validSignals    = [ (Valid.isbn   <~ isbnSignal)
                   , (Valid.price  <~ priceSignal)
                   , (Valid.expire <~ expireSignal) 
                   , (Valid.butn   <~ buySell.events) ]
-preview         = combine <| map (\n->lift plainText n) validSignals
 
 -- Display
+preview         = combine <| map (\n->lift plainText n) validSignals
 adMaker         =
   let
     ins         = combine [ isbnField, priceField, expireField ]
@@ -37,7 +36,6 @@ adMaker         =
     inputArea   = tableS <~ ins
     previewArea = tableS <~ preview
   in flombine [ inputHeader, inputArea, btns, outHeader, previewArea ]
-
     
 -- Basic Helpers
 flombine        = (\n-> flow down <~ combine n)

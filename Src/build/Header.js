@@ -44,8 +44,8 @@ Elm.Header.make = function (elm)
                                                                  "" :
                                                                    return txt("");
                                                                  case
-                                                                 "Guest" :
-                                                                   return txt("Hi Guest, log in to do stuff");}
+                                                                 "guest" :
+                                                                   return txt("hi guest, please login");}
                                                                 return txt(_L.append("welcome ",
                                                                                      rsp));
                                                               }();
@@ -53,7 +53,7 @@ Elm.Header.make = function (elm)
                                            return A2(Signal._op["<~"],msg,Utils.Rest.helloUser);
                                          }();
                     var navigation = _J.toList([{ctor: "_Tuple2", _0: "/MakeAd.html", _1: "Create Ad"},
-                                                {ctor: "_Tuple2", _0: "/MyAds.html", _1: "My Ads"},
+                                                {ctor: "_Tuple2", _0: "/php/newGetUserAds.php", _1: "My Ads"},
                                                 {ctor: "_Tuple2", _0: "/About.html", _1: "About"},
                                                 {ctor: "_Tuple2", _0: "/php/php_cas.php", _1: "Login"},
                                                 {ctor: "_Tuple2", _0: "/php/cas_logout.php", _1: "Logout"}]);
@@ -95,11 +95,11 @@ Elm.Header.make = function (elm)
                                                                                                           w,
                                                                                                           2));
                                               var h = Basics.toFloat(A2(Basics.max,30,w / 20 | 0));
-                                              var hdr = A4(Utils.Layout.headerGen,
-                                                           w,
-                                                           h,
-                                                           Color.darkOrange,
-                                                           "local-liquidator");
+                                              var hdr = Graphics.Element.link("/")(A4(Utils.Layout.headerGen,
+                                                                                      w,
+                                                                                      h,
+                                                                                      Color.darkOrange,
+                                                                                      "local-liquidator"));
                                               var scene = Graphics.Element.layers(_J.toList([A2(Graphics.Element.flow,
                                                                                                 Graphics.Element.down,
                                                                                                 _J.toList([hdr,
@@ -180,7 +180,7 @@ Elm.Utils.Layout.make = function (elm)
                                                                            {
                                                                              var word = Graphics.Element.width(halfWidth)(Text.centered(Text.color(Color.darkRed)(Text.height(20)(Text.toText(str)))));
                                                                              var grad = A3(Color.linear,
-                                                                                           {ctor: "_Tuple2", _0: 0, _1: 29},
+                                                                                           {ctor: "_Tuple2", _0: 0, _1: 20},
                                                                                            {ctor: "_Tuple2", _0: 0, _1: -29},
                                                                                            _J.toList([{ctor: "_Tuple2", _0: 0, _1: c1},
                                                                                                       {ctor: "_Tuple2", _0: 1, _1: c2}]));
