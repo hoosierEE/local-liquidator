@@ -1,4 +1,4 @@
-module Components.UserInput  where
+module Utils.UserInput  where
 
 import Graphics.Input as Input
 import Utils.Valid as Valid

@@ -1,7 +1,7 @@
 module MakeAd where
 
 import Window
-import Components.UserInput   as Inputs
+import Utils.UserInput   as Inputs
 import Utils.Rest             as Rest
 import Utils.Layout           as Layout
 
@@ -46,10 +46,10 @@ extractor fld =
 imager =
   let unrec r = case r of
     Nothing -> ""
-    Just a  -> a.imageURL
+    Just a  -> .imageURL a
   in unrec <~ isbnPreview
 
-display w maker preview dbg1 =
+display w maker preview =
   let previewTitle  = Layout.headerGen 300 28 darkOrange "Cover Preview"
       underLine     = spacer 300 2 |> color darkOrange
       previewSide a = flow down [ previewTitle, underLine, a ]
@@ -58,5 +58,5 @@ display w maker preview dbg1 =
       h             = maximum <| map heightOf stuffing
   in container w h middle <| flow right stuffing
 
-main = display <~ Window.width ~ Inputs.adMaker ~ imager ~ imager
+main = display <~ Window.width ~ Inputs.adMaker ~ imager
 

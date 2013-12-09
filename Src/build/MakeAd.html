@@ -36,8 +36,8 @@ Elm.MakeAd.make = function (elm)
                     var Graphics = Graphics || {};
                     Graphics.Collage = Elm.Graphics.Collage.make(elm);
                     var Window = Elm.Window.make(elm);
-                    var Components = Components || {};
-                    Components.UserInput = Elm.Components.UserInput.make(elm);
+                    var Utils = Utils || {};
+                    Utils.UserInput = Elm.Utils.UserInput.make(elm);
                     var Utils = Utils || {};
                     Utils.Rest = Elm.Utils.Rest.make(elm);
                     var Utils = Utils || {};
@@ -61,7 +61,7 @@ Elm.MakeAd.make = function (elm)
                                                function (_)
                                                {
                                                  return _.butn;
-                                               }(Components.UserInput.presentRec));
+                                               }(Utils.UserInput.presentRec));
                                    }();
                     var isbnUrl = function (s)
                                   {
@@ -76,7 +76,7 @@ Elm.MakeAd.make = function (elm)
                                                                     function (_)
                                                                     {
                                                                       return _.isbn;
-                                                                    }(Components.UserInput.presentRec)))));
+                                                                    }(Utils.UserInput.presentRec)))));
                     var imager = function ()
                                  {
                                    var unrec = function (r)
@@ -86,7 +86,10 @@ Elm.MakeAd.make = function (elm)
                                                           switch (r.ctor)
                                                           {case
                                                            "Just" :
-                                                             return r._0.imageURL;
+                                                             return function (_)
+                                                                    {
+                                                                      return _.imageURL;
+                                                                    }(r._0);
                                                            case
                                                            "Nothing" :
                                                              return "";}
@@ -118,7 +121,7 @@ Elm.MakeAd.make = function (elm)
                                                return A2(Signal._op["<~"],unrec,isbnPreview);
                                              }();
                                     };
-                    var display = F4(function (w,maker,preview,dbg1)
+                    var display = F3(function (w,maker,preview)
                                      {
                                        return function ()
                                               {
@@ -158,10 +161,8 @@ Elm.MakeAd.make = function (elm)
                                      });
                     var main = A2(Signal._op["~"],
                                   A2(Signal._op["~"],
-                                     A2(Signal._op["~"],
-                                        A2(Signal._op["<~"],display,Window.width),
-                                        Components.UserInput.adMaker),
-                                     imager),
+                                     A2(Signal._op["<~"],display,Window.width),
+                                     Utils.UserInput.adMaker),
                                   imager);
                     var adUrl = function ()
                                 {
@@ -260,7 +261,7 @@ Elm.MakeAd.make = function (elm)
                                                                                           function (_)
                                                                                           {
                                                                                             return _.expire;
-                                                                                          }(Components.UserInput.presentRec)),
+                                                                                          }(Utils.UserInput.presentRec)),
                                                                                        extractor(function (_)
                                                                                                  {
                                                                                                    return _.description;
@@ -272,11 +273,11 @@ Elm.MakeAd.make = function (elm)
                                                                                  function (_)
                                                                                  {
                                                                                    return _.price;
-                                                                                 }(Components.UserInput.presentRec)),
+                                                                                 }(Utils.UserInput.presentRec)),
                                                                               function (_)
                                                                               {
                                                                                 return _.butn;
-                                                                              }(Components.UserInput.presentRec)),
+                                                                              }(Utils.UserInput.presentRec)),
                                                                            extractor(function (_)
                                                                                      {
                                                                                        return _.lat;
@@ -288,131 +289,129 @@ Elm.MakeAd.make = function (elm)
                                 }();
                     elm.MakeAd.values = {_op: _op, isbnUrl: isbnUrl, isbnPreview: isbnPreview, sendable: sendable, adUrl: adUrl, extractor: extractor, imager: imager, display: display, main: main};
                     return elm.MakeAd.values;
-                  };Elm.Components = Elm.Components || {};
-Elm.Components.UserInput = Elm.Components.UserInput || {};
-Elm.Components.UserInput.make = function (elm)
-                                {
-                                  elm.Components = elm.Components || {};
-                                  elm.Components.UserInput = elm.Components.UserInput || {};
-                                  if (elm.Components.UserInput.values)
-                                  return elm.Components.UserInput.values;
-                                  var N = Elm.Native,
-                                      _N = N.Utils.make(elm),
-                                      _L = N.List.make(elm),
-                                      _E = N.Error.make(elm),
-                                      _J = N.JavaScript.make(elm),
-                                      $moduleName = "Components.UserInput";
-                                  var Text = Elm.Text.make(elm);
-                                  var Text = Elm.Text.make(elm);
-                                  var Basics = Elm.Basics.make(elm);
-                                  var Signal = Elm.Signal.make(elm);
-                                  var List = Elm.List.make(elm);
-                                  var Maybe = Elm.Maybe.make(elm);
-                                  var Time = Elm.Time.make(elm);
-                                  var Prelude = Elm.Prelude.make(elm);
-                                  var Graphics = Graphics || {};
-                                  Graphics.Element = Elm.Graphics.Element.make(elm);
-                                  var Color = Elm.Color.make(elm);
-                                  var Graphics = Graphics || {};
-                                  Graphics.Collage = Elm.Graphics.Collage.make(elm);
-                                  var Graphics = Graphics || {};
-                                  Graphics.Input = Elm.Graphics.Input.make(elm);
-                                  var Utils = Utils || {};
-                                  Utils.Valid = Elm.Utils.Valid.make(elm);
-                                  var Utils = Utils || {};
-                                  Utils.Layout = Elm.Utils.Layout.make(elm);
-                                  var _op = {};
-                                  var validSigRecord = {_: {}, butn: "", expire: "", isbn: "", price: ""};
-                                  var tableS = function ()
-                                               {
-                                                 var inputTitles = _J.toList(["Isbn",
-                                                                              "Price ($)",
-                                                                              "Minutes"]);
-                                                 return Utils.Layout.table(inputTitles);
-                                               }();
-                                  var sellBtn = Graphics.Element.link("/Utils/Confirmation.html")(Utils.Layout.buttonGen("sell"));
-                                  var flombine = function (n)
-                                                 {
-                                                   return A2(Signal._op["<~"],
-                                                             Graphics.Element.flow(Graphics.Element.down),
-                                                             Signal.combine(n));
-                                                 };
-                                  var buySell = Utils.Layout.butn;
-                                  var buyBtn = Utils.Layout.buttonGen("buy");
-                                  var $ = Graphics.Input.field("Price"),
-                                      priceField = $._0,
-                                      priceSignal = $._1;
-                                  var $ = Graphics.Input.field("ISBN Number"),
-                                      isbnField = $._0,
-                                      isbnSignal = $._1;
-                                  var $ = Graphics.Input.field("Expire (Minutes)"),
-                                      expireField = $._0,
-                                      expireSignal = $._1;
-                                  var validSignals = _J.toList([A2(Signal._op["<~"],
-                                                                   Utils.Valid.isbn,
-                                                                   isbnSignal),
-                                                                A2(Signal._op["<~"],
-                                                                   Utils.Valid.price,
-                                                                   priceSignal),
-                                                                A2(Signal._op["<~"],
-                                                                   Utils.Valid.expire,
-                                                                   expireSignal),
-                                                                A2(Signal._op["<~"],
-                                                                   Utils.Valid.butn,
-                                                                   buySell.events)]);
-                                  var preview = Signal.combine(A2(List.map,
-                                                                  function (n)
-                                                                  {
-                                                                    return A2(Signal.lift,
-                                                                              Text.plainText,
-                                                                              n);
-                                                                  },
-                                                                  validSignals));
-                                  var adMaker = function ()
-                                                {
-                                                  var previewArea = A2(Signal._op["<~"],
-                                                                       tableS,
-                                                                       preview);
-                                                  var outHeader = Utils.Layout.heads("Preview");
-                                                  var ins = Signal.combine(_J.toList([isbnField,
-                                                                                      priceField,
-                                                                                      expireField]));
-                                                  var inputHeader = Utils.Layout.heads("Create Ad");
-                                                  var inputArea = A2(Signal._op["<~"],tableS,ins);
-                                                  var btns = Signal.constant(A2(Graphics.Element.flow,
-                                                                                Graphics.Element.right,
-                                                                                _J.toList([buyBtn,
-                                                                                           sellBtn])));
-                                                  return flombine(_J.toList([inputHeader,
-                                                                             inputArea,
-                                                                             btns,
-                                                                             outHeader,
-                                                                             previewArea]));
-                                                }();
-                                  var whatsNew = function (rec)
-                                                 {
-                                                   return _N.replace([["isbn",
-                                                                       A2(Signal.lift,
-                                                                          Utils.Valid.isbn,
-                                                                          isbnSignal)],
-                                                                      ["price",
-                                                                       A2(Signal.lift,
-                                                                          Utils.Valid.price,
-                                                                          priceSignal)],
-                                                                      ["expire",
-                                                                       A2(Signal.lift,
-                                                                          Utils.Valid.expire,
-                                                                          expireSignal)],
-                                                                      ["butn",
-                                                                       A2(Signal.lift,
-                                                                          Utils.Valid.butn,
-                                                                          buySell.events)]],
-                                                                     rec);
-                                                 };
-                                  var presentRec = whatsNew(validSigRecord);
-                                  elm.Components.UserInput.values = {_op: _op, isbnField: isbnField, isbnSignal: isbnSignal, priceField: priceField, priceSignal: priceSignal, expireField: expireField, expireSignal: expireSignal, buyBtn: buyBtn, sellBtn: sellBtn, buySell: buySell, validSigRecord: validSigRecord, whatsNew: whatsNew, presentRec: presentRec, validSignals: validSignals, preview: preview, adMaker: adMaker, flombine: flombine, tableS: tableS};
-                                  return elm.Components.UserInput.values;
-                                };Elm.Utils = Elm.Utils || {};
+                  };Elm.Utils = Elm.Utils || {};
+Elm.Utils.UserInput = Elm.Utils.UserInput || {};
+Elm.Utils.UserInput.make = function (elm)
+                           {
+                             elm.Utils = elm.Utils || {};
+                             elm.Utils.UserInput = elm.Utils.UserInput || {};
+                             if (elm.Utils.UserInput.values)
+                             return elm.Utils.UserInput.values;
+                             var N = Elm.Native,
+                                 _N = N.Utils.make(elm),
+                                 _L = N.List.make(elm),
+                                 _E = N.Error.make(elm),
+                                 _J = N.JavaScript.make(elm),
+                                 $moduleName = "Utils.UserInput";
+                             var Text = Elm.Text.make(elm);
+                             var Text = Elm.Text.make(elm);
+                             var Basics = Elm.Basics.make(elm);
+                             var Signal = Elm.Signal.make(elm);
+                             var List = Elm.List.make(elm);
+                             var Maybe = Elm.Maybe.make(elm);
+                             var Time = Elm.Time.make(elm);
+                             var Prelude = Elm.Prelude.make(elm);
+                             var Graphics = Graphics || {};
+                             Graphics.Element = Elm.Graphics.Element.make(elm);
+                             var Color = Elm.Color.make(elm);
+                             var Graphics = Graphics || {};
+                             Graphics.Collage = Elm.Graphics.Collage.make(elm);
+                             var Graphics = Graphics || {};
+                             Graphics.Input = Elm.Graphics.Input.make(elm);
+                             var Utils = Utils || {};
+                             Utils.Valid = Elm.Utils.Valid.make(elm);
+                             var Utils = Utils || {};
+                             Utils.Layout = Elm.Utils.Layout.make(elm);
+                             var _op = {};
+                             var validSigRecord = {_: {}, butn: "", expire: "", isbn: "", price: ""};
+                             var tableS = function ()
+                                          {
+                                            var inputTitles = _J.toList(["Isbn",
+                                                                         "Price ($)",
+                                                                         "Minutes"]);
+                                            return Utils.Layout.table(inputTitles);
+                                          }();
+                             var sellBtn = Graphics.Element.link("/Utils/Confirmation.html")(Utils.Layout.buttonGen("sell"));
+                             var flombine = function (n)
+                                            {
+                                              return A2(Signal._op["<~"],
+                                                        Graphics.Element.flow(Graphics.Element.down),
+                                                        Signal.combine(n));
+                                            };
+                             var buySell = Utils.Layout.butn;
+                             var buyBtn = Utils.Layout.buttonGen("buy");
+                             var $ = Graphics.Input.field("Price"),
+                                 priceField = $._0,
+                                 priceSignal = $._1;
+                             var $ = Graphics.Input.field("ISBN Number"),
+                                 isbnField = $._0,
+                                 isbnSignal = $._1;
+                             var $ = Graphics.Input.field("Expire (Minutes)"),
+                                 expireField = $._0,
+                                 expireSignal = $._1;
+                             var validSignals = _J.toList([A2(Signal._op["<~"],
+                                                              Utils.Valid.isbn,
+                                                              isbnSignal),
+                                                           A2(Signal._op["<~"],
+                                                              Utils.Valid.price,
+                                                              priceSignal),
+                                                           A2(Signal._op["<~"],
+                                                              Utils.Valid.expire,
+                                                              expireSignal),
+                                                           A2(Signal._op["<~"],
+                                                              Utils.Valid.butn,
+                                                              buySell.events)]);
+                             var preview = Signal.combine(A2(List.map,
+                                                             function (n)
+                                                             {
+                                                               return A2(Signal.lift,
+                                                                         Text.plainText,
+                                                                         n);
+                                                             },
+                                                             validSignals));
+                             var adMaker = function ()
+                                           {
+                                             var previewArea = A2(Signal._op["<~"],tableS,preview);
+                                             var outHeader = Utils.Layout.heads("Preview");
+                                             var ins = Signal.combine(_J.toList([isbnField,
+                                                                                 priceField,
+                                                                                 expireField]));
+                                             var inputHeader = Utils.Layout.heads("Create Ad");
+                                             var inputArea = A2(Signal._op["<~"],tableS,ins);
+                                             var btns = Signal.constant(A2(Graphics.Element.flow,
+                                                                           Graphics.Element.right,
+                                                                           _J.toList([buyBtn,
+                                                                                      sellBtn])));
+                                             return flombine(_J.toList([inputHeader,
+                                                                        inputArea,
+                                                                        btns,
+                                                                        outHeader,
+                                                                        previewArea]));
+                                           }();
+                             var whatsNew = function (rec)
+                                            {
+                                              return _N.replace([["isbn",
+                                                                  A2(Signal.lift,
+                                                                     Utils.Valid.isbn,
+                                                                     isbnSignal)],
+                                                                 ["price",
+                                                                  A2(Signal.lift,
+                                                                     Utils.Valid.price,
+                                                                     priceSignal)],
+                                                                 ["expire",
+                                                                  A2(Signal.lift,
+                                                                     Utils.Valid.expire,
+                                                                     expireSignal)],
+                                                                 ["butn",
+                                                                  A2(Signal.lift,
+                                                                     Utils.Valid.butn,
+                                                                     buySell.events)]],
+                                                                rec);
+                                            };
+                             var presentRec = whatsNew(validSigRecord);
+                             elm.Utils.UserInput.values = {_op: _op, isbnField: isbnField, isbnSignal: isbnSignal, priceField: priceField, priceSignal: priceSignal, expireField: expireField, expireSignal: expireSignal, buyBtn: buyBtn, sellBtn: sellBtn, buySell: buySell, validSigRecord: validSigRecord, whatsNew: whatsNew, presentRec: presentRec, validSignals: validSignals, preview: preview, adMaker: adMaker, flombine: flombine, tableS: tableS};
+                             return elm.Utils.UserInput.values;
+                           };Elm.Utils = Elm.Utils || {};
 Elm.Utils.Layout = Elm.Utils.Layout || {};
 Elm.Utils.Layout.make = function (elm)
                         {
