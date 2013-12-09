@@ -205,7 +205,7 @@ Elm.MakeAd.make = function (elm)
                                                                                                                                                                                                                                                                                        _L.append("&Description=",
                                                                                                                                                                                                                                                                                                  _L.append(description,
                                                                                                                                                                                                                                                                                                            _L.append("&Condition=",
-                                                                                                                                                                                                                                                                                                                     _L.append(condition,
+                                                                                                                                                                                                                                                                                                                     _L.append("average",
                                                                                                                                                                                                                                                                                                                                _L.append("&Price=",
                                                                                                                                                                                                                                                                                                                                          _L.append(price,
                                                                                                                                                                                                                                                                                                                                                    _L.append("&Adtype=",
@@ -331,7 +331,7 @@ Elm.Utils.UserInput.make = function (elm)
                                                                          "Minutes"]);
                                             return Utils.Layout.table(inputTitles);
                                           }();
-                             var sellBtn = Graphics.Element.link("/Utils/Confirmation.html")(Utils.Layout.buttonGen("sell"));
+                             var sellBtn = Utils.Layout.buttonGen("sell");
                              var flombine = function (n)
                                             {
                                               return A2(Signal._op["<~"],

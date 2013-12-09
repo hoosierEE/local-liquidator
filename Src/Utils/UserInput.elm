@@ -9,7 +9,7 @@ import Utils.Layout as Layout
 (priceField , priceSignal ) = Input.field "Price"
 (expireField, expireSignal) = Input.field "Expire (Minutes)"
 buyBtn          = Layout.buttonGen "buy"
-sellBtn         = link "/Utils/Confirmation.html" <| Layout.buttonGen "sell" 
+sellBtn         = Layout.buttonGen "sell" 
 buySell         = Layout.butn
 
 -- Outputs

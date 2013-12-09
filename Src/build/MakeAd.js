@@ -319,7 +319,7 @@ Elm.Utils.UserInput.make = function (elm)
                                                                          "Minutes"]);
                                             return Utils.Layout.table(inputTitles);
                                           }();
-                             var sellBtn = Graphics.Element.link("/Utils/Confirmation.html")(Utils.Layout.buttonGen("sell"));
+                             var sellBtn = Utils.Layout.buttonGen("sell");
                              var flombine = function (n)
                                             {
                                               return A2(Signal._op["<~"],

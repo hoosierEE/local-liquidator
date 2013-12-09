@@ -6,8 +6,8 @@ import Utils.Layout as Layout
 prettyHeader w = Layout.headerGen w 29 darkOrange
 
 md (w,h) = let
-    w' = round <| toFloat w * 0.8
-    h' = h + heightOf md1 + heightOf md2 + heightOf pics
+    w' = maximum [(round <| toFloat w * 0.8), 400]
+    h' = heightOf elements
     heading1 = prettyHeader w' "The Textbook Solution"
     heading2 = prettyHeader w' "How It Works"
     heading3 = prettyHeader w' "Where is the ISBN?"
@@ -44,14 +44,14 @@ Your books ISBN number is commonly be found on the back of the book above the ba
       imageWidth = (w' `div` 3) - 10
       imageHeight = round <| toFloat imageWidth * 3 / 4
     in flow right <| map (\n-> fittedImage imageWidth imageHeight n) ["/images/cover.JPG", "/images/backCover.JPG", "/images/closeUp.JPG"]
-  
-  in container w h' midTop <| flow down <| map (\n-> width w' n)
-      [ heading1
-      , md1
-      , heading2
-      , md2
-      , heading3
-      , pics ]
+    elements = flow down <| map (\n-> width w' n)
+          [ heading1
+          , md1
+          , heading2
+          , md2
+          , heading3
+          , pics ]
+  in container w h' midTop elements
 
 
 main = flow down <~ combine [ md <~ Window.dimensions ]

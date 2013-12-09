@@ -1,4 +1,16 @@
-Elm.About = Elm.About || {};
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            About
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.About = Elm.About || {};
 Elm.About.make = function (elm)
                  {
                    elm.About = elm.About || {};
@@ -242,3 +254,14 @@ Elm.Utils.Layout.make = function (elm)
                           elm.Utils.Layout.values = {_op: _op, makerWidth: makerWidth, halfWidth: halfWidth, leftWidth: leftWidth, rightWidth: rightWidth, borderWidth: borderWidth, rowHeight: rowHeight, inputColor: inputColor, padding: padding, hr: hr, heads: heads, table: table, headerGen: headerGen, butn: butn, buttonGen: buttonGen};
                           return elm.Utils.Layout.values;
                         };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.About)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>
