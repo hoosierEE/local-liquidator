@@ -31,7 +31,7 @@ adUrl =
             ++ "&Adtype="      ++ adType      
             ++ "&Lat="         ++ lat         
             ++ "&Lon="         ++ lon         
-  in sampleOn (.butn Inputs.presentRec) (Rest.singleGet <| keepWhen sendable "" <|
+  in (Rest.singleGet <| keepWhen sendable "" <|
         (scriptPath <~ Rest.helloUser ~ (extractor .title) ~ (extractor .isbn10)
         ~ (extractor .isbn13) ~ (extractor .imageUrl) ~ (.expire Inputs.presentRec)
         ~ (extractor .description) ~ (extractor .condition) ~ (.price Inputs.presentRec)
@@ -48,14 +48,14 @@ extractor fld =
     Just a  -> fld a
   in unrec <~ isbnPreview
 
-display w maker preview =
+display w maker preview dbg1 =
   let previewTitle  = Layout.headerGen 300 28 darkOrange "Cover Preview"
       underLine     = spacer 300 2 |> color darkOrange
-      previewSide a = flow down [ previewTitle, underLine, a ]
+      previewSide a = flow down [ asText dbg1, previewTitle, underLine, a ]
       bumper        = spacer 10 10
       stuffing      = [ maker, bumper, previewSide <| image 300 400 preview ] 
       h             = maximum <| map heightOf stuffing
   in container w h middle <| flow right stuffing
 
-main = display <~ Window.width ~ Inputs.adMaker ~ imager
+main = display <~ Window.width ~ Inputs.adMaker ~ imager ~ imager
 
