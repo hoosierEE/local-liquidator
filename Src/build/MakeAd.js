@@ -74,7 +74,7 @@ Elm.MakeAd.make = function (elm)
                                                           switch (r.ctor)
                                                           {case
                                                            "Just" :
-                                                             return r._0.imageUrl;
+                                                             return r._0.imageURL;
                                                            case
                                                            "Nothing" :
                                                              return "";}
