@@ -102,10 +102,7 @@ Elm.Header.make = function (elm)
                                                                                                   "local-liquidator"));
                                               var scene = A2(Graphics.Element.flow,
                                                              Graphics.Element.down,
-                                                             _J.toList([hdr,
-                                                                        msg,
-                                                                        navRow(w),
-                                                                        underLine]));
+                                                             _J.toList([hdr,navRow(w),underLine]));
                                               return scene;
                                             }();
                                    });
