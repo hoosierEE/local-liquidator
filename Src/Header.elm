@@ -6,7 +6,7 @@ import Utils.Rest as Rest
 
 title w msg = let
     h = toFloat <| max 30 (w `div` 20)
-    hdr = link "/" <| Layout.headerGen w h darkOrange "local-liquidator"
+    hdr = link "/" <| Layout.headerGen w h darkOrange " local-liquidator "
     underLine = spacer w 2 |> color darkOrange
     scene = layers [flow down [ hdr, navRow w, underLine ], msg ]
   in scene

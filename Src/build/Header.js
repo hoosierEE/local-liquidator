@@ -99,7 +99,7 @@ Elm.Header.make = function (elm)
                                                                                       w,
                                                                                       h,
                                                                                       Color.darkOrange,
-                                                                                      "local-liquidator"));
+                                                                                      " local-liquidator "));
                                               var scene = Graphics.Element.layers(_J.toList([A2(Graphics.Element.flow,
                                                                                                 Graphics.Element.down,
                                                                                                 _J.toList([hdr,
