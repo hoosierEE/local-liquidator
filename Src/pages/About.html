@@ -4,8 +4,8 @@
   <head>
     <title>About</title>
     <script src="/vendor/elm-runtime.js"></script>
-    <script src="/build/Header.js"></script>
     <script src="/build/About.js"></script>
+    <script src="/build/Header.js"></script>
     <style>
       html, body {
         margin: 0 auto;
@@ -24,9 +24,11 @@
 
   <script type="text/javascript">
     /* do this for each Elm module */
+
     // Show the Header module in elm-Header div
     var headerDiv = document.getElementById('elm-Header');
     var header    = Elm.embed(Elm.Header, headerDiv);
+    
     var aboutDiv  = document.getElementById('elm-About');
     var about     = Elm.embed(Elm.About, aboutDiv);
   </script>

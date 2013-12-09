@@ -86,7 +86,7 @@ Elm.MakeAd.make = function (elm)
                                                           switch (r.ctor)
                                                           {case
                                                            "Just" :
-                                                             return r._0.imageUrl;
+                                                             return r._0.imageURL;
                                                            case
                                                            "Nothing" :
                                                              return "";}
@@ -134,8 +134,7 @@ Elm.MakeAd.make = function (elm)
                                                                   {
                                                                     return A2(Graphics.Element.flow,
                                                                               Graphics.Element.down,
-                                                                              _J.toList([Text.asText(dbg1),
-                                                                                         previewTitle,
+                                                                              _J.toList([previewTitle,
                                                                                          underLine,
                                                                                          a]));
                                                                   };

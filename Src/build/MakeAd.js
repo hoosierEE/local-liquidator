@@ -122,8 +122,7 @@ Elm.MakeAd.make = function (elm)
                                                                   {
                                                                     return A2(Graphics.Element.flow,
                                                                               Graphics.Element.down,
-                                                                              _J.toList([Text.asText(dbg1),
-                                                                                         previewTitle,
+                                                                              _J.toList([previewTitle,
                                                                                          underLine,
                                                                                          a]));
                                                                   };
