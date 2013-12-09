@@ -101,13 +101,11 @@ Elm.Header.make = function (elm)
                                                                                                   Color.darkOrange,
                                                                                                   "local-liquidator"));
                                               var scene = A2(Graphics.Element.flow,
-                                                             Graphics.Element.inward,
-                                                             _J.toList([A2(Graphics.Element.flow,
-                                                                           Graphics.Element.down,
-                                                                           _J.toList([hdr,
-                                                                                      navRow(w),
-                                                                                      underLine])),
-                                                                        msg]));
+                                                             Graphics.Element.down,
+                                                             _J.toList([hdr,
+                                                                        msg,
+                                                                        navRow(w),
+                                                                        underLine]));
                                               return scene;
                                             }();
                                    });
