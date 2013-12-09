@@ -95,11 +95,11 @@ Elm.Header.make = function (elm)
                                                                                                           w,
                                                                                                           2));
                                               var h = Basics.toFloat(A2(Basics.max,30,w / 20 | 0));
-                                              var hdr = Graphics.Element.link("/")(A4(Utils.Layout.headerGen,
-                                                                                      w,
-                                                                                      h,
-                                                                                      Color.darkOrange,
-                                                                                      " local-liquidator "));
+                                              var hdr = Graphics.Element.link("/welcome.html")(A4(Utils.Layout.headerGen,
+                                                                                                  w,
+                                                                                                  h,
+                                                                                                  Color.darkOrange,
+                                                                                                  "local-liquidator"));
                                               var scene = Graphics.Element.layers(_J.toList([A2(Graphics.Element.flow,
                                                                                                 Graphics.Element.down,
                                                                                                 _J.toList([hdr,
