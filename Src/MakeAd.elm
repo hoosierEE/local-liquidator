@@ -5,20 +5,20 @@ import Components.UserInput   as Inputs
 import Utils.Rest             as Rest
 import Utils.Layout           as Layout
 
-isbnUrl : String -> String
 isbnUrl s = "/php/checkISBN.php?isbn=" ++ s
-
--- theButton = (.butn Inputs.presentRec)
--- user = Rest.helloUser
--- userPlusButtons = { adType = theButton
--- , user = user }
 
 isbnPreview = Rest.stringToRecord <~ (Rest.prettyPrint <~ (Rest.singleGet <| isbnUrl <~ (.isbn Inputs.presentRec)))
 
--- ajaxRecord = { 
-
+sendable =
+  let vbtn a = 
+    case a of
+      "" -> False
+      _  -> True
+  in vbtn <~ (.butn Inputs.presentRec)
+  
 adUrl =
-  let scriptPath user title isbn10 isbn13 imageUrl expTime description condition price adType lat lon =
+  let
+    scriptPath user title isbn10 isbn13 imageUrl expTime description condition price adType lat lon =
       "/php/storeAd.php?user=" ++ user        
             ++ "&Title="       ++ title       
             ++ "&ISBN10="      ++ isbn10      
@@ -31,11 +31,17 @@ adUrl =
             ++ "&Adtype="      ++ adType      
             ++ "&Lat="         ++ lat         
             ++ "&Lon="         ++ lon         
-  in Rest.singleGet <| sampleOn (.butn Inputs.presentRec) (scriptPath <~ Rest.helloUser ~ (extractor .title) ~ (extractor .isbn10)
-               ~ (extractor .isbn13) ~ (extractor .imageUrl) ~ (.expire Inputs.presentRec)
-               ~ (extractor .description) ~ (extractor .condition) ~ (.price Inputs.presentRec)
-               ~ (.butn Inputs.presentRec) ~ (extractor .lat) ~ (extractor .lon))
-              
+  in sampleOn (.butn Inputs.presentRec) (Rest.singleGet <| keepWhen sendable "" <|
+        (scriptPath <~ Rest.helloUser ~ (extractor .title) ~ (extractor .isbn10)
+        ~ (extractor .isbn13) ~ (extractor .imageUrl) ~ (.expire Inputs.presentRec)
+        ~ (extractor .description) ~ (extractor .condition) ~ (.price Inputs.presentRec)
+        ~ (.butn Inputs.presentRec) ~ (extractor .lat) ~ (extractor .lon)))
+imager =
+  let unrec r = case r of
+    Nothing -> ""
+    Just a  -> a.imageUrl
+  in unrec <~ isbnPreview
+
 extractor fld = 
   let unrec r = case r of
     Nothing -> ""
@@ -51,4 +57,5 @@ display w maker preview =
       h             = maximum <| map heightOf stuffing
   in container w h middle <| flow right stuffing
 
-main = display <~ Window.width ~ Inputs.adMaker ~ (extractor .imageUrl)
+main = display <~ Window.width ~ Inputs.adMaker ~ imager
+

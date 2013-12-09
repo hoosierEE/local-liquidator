@@ -43,6 +43,26 @@ Elm.MakeAd.make = function (elm)
                     var Utils = Utils || {};
                     Utils.Layout = Elm.Utils.Layout.make(elm);
                     var _op = {};
+                    var sendable = function ()
+                                   {
+                                     var vbtn = function (a)
+                                                {
+                                                  return function ()
+                                                         {
+                                                           switch (a)
+                                                           {case
+                                                            "" :
+                                                              return false;}
+                                                           return true;
+                                                         }();
+                                                };
+                                     return A2(Signal._op["<~"],
+                                               vbtn,
+                                               function (_)
+                                               {
+                                                 return _.butn;
+                                               }(Components.UserInput.presentRec));
+                                   }();
                     var isbnUrl = function (s)
                                   {
                                     return _L.append("/php/checkISBN.php?isbn=",s);
@@ -57,6 +77,25 @@ Elm.MakeAd.make = function (elm)
                                                                     {
                                                                       return _.isbn;
                                                                     }(Components.UserInput.presentRec)))));
+                    var imager = function ()
+                                 {
+                                   var unrec = function (r)
+                                               {
+                                                 return function ()
+                                                        {
+                                                          switch (r.ctor)
+                                                          {case
+                                                           "Just" :
+                                                             return r._0.imageUrl;
+                                                           case
+                                                           "Nothing" :
+                                                             return "";}
+                                                          _E.Case($moduleName,
+                                                                  "between lines 40 and 43");
+                                                        }();
+                                               };
+                                   return A2(Signal._op["<~"],unrec,isbnPreview);
+                                 }();
                     var extractor = function (fld)
                                     {
                                       return function ()
@@ -73,7 +112,7 @@ Elm.MakeAd.make = function (elm)
                                                                        "Nothing" :
                                                                          return "";}
                                                                       _E.Case($moduleName,
-                                                                              "between lines 40 and 43");
+                                                                              "between lines 46 and 49");
                                                                     }();
                                                            };
                                                return A2(Signal._op["<~"],unrec,isbnPreview);
@@ -121,10 +160,7 @@ Elm.MakeAd.make = function (elm)
                                   A2(Signal._op["~"],
                                      A2(Signal._op["<~"],display,Window.width),
                                      Components.UserInput.adMaker),
-                                  extractor(function (_)
-                                            {
-                                              return _.imageUrl;
-                                            }));
+                                  imager);
                     var adUrl = function ()
                                 {
                                   var scriptPath = function (user)
@@ -187,71 +223,73 @@ Elm.MakeAd.make = function (elm)
                                                                      };
                                                             };
                                                    };
-                                  return Utils.Rest.singleGet(A2(Signal.sampleOn,
-                                                                 function (_)
-                                                                 {
-                                                                   return _.butn;
-                                                                 }(Components.UserInput.presentRec),
-                                                                 A2(Signal._op["~"],
-                                                                    A2(Signal._op["~"],
-                                                                       A2(Signal._op["~"],
-                                                                          A2(Signal._op["~"],
-                                                                             A2(Signal._op["~"],
-                                                                                A2(Signal._op["~"],
-                                                                                   A2(Signal._op["~"],
-                                                                                      A2(Signal._op["~"],
-                                                                                         A2(Signal._op["~"],
-                                                                                            A2(Signal._op["~"],
-                                                                                               A2(Signal._op["~"],
-                                                                                                  A2(Signal._op["<~"],
-                                                                                                     scriptPath,
-                                                                                                     Utils.Rest.helloUser),
-                                                                                                  extractor(function (_)
-                                                                                                            {
-                                                                                                              return _.title;
-                                                                                                            })),
-                                                                                               extractor(function (_)
-                                                                                                         {
-                                                                                                           return _.isbn10;
-                                                                                                         })),
-                                                                                            extractor(function (_)
-                                                                                                      {
-                                                                                                        return _.isbn13;
-                                                                                                      })),
-                                                                                         extractor(function (_)
-                                                                                                   {
-                                                                                                     return _.imageUrl;
-                                                                                                   })),
-                                                                                      function (_)
-                                                                                      {
-                                                                                        return _.expire;
-                                                                                      }(Components.UserInput.presentRec)),
-                                                                                   extractor(function (_)
+                                  return A2(Signal.sampleOn,
+                                            function (_)
+                                            {
+                                              return _.butn;
+                                            }(Components.UserInput.presentRec),
+                                            Utils.Rest.singleGet(A2(Signal.keepWhen,
+                                                                    sendable,
+                                                                    "")(A2(Signal._op["~"],
+                                                                           A2(Signal._op["~"],
+                                                                              A2(Signal._op["~"],
+                                                                                 A2(Signal._op["~"],
+                                                                                    A2(Signal._op["~"],
+                                                                                       A2(Signal._op["~"],
+                                                                                          A2(Signal._op["~"],
+                                                                                             A2(Signal._op["~"],
+                                                                                                A2(Signal._op["~"],
+                                                                                                   A2(Signal._op["~"],
+                                                                                                      A2(Signal._op["~"],
+                                                                                                         A2(Signal._op["<~"],
+                                                                                                            scriptPath,
+                                                                                                            Utils.Rest.helloUser),
+                                                                                                         extractor(function (_)
+                                                                                                                   {
+                                                                                                                     return _.title;
+                                                                                                                   })),
+                                                                                                      extractor(function (_)
+                                                                                                                {
+                                                                                                                  return _.isbn10;
+                                                                                                                })),
+                                                                                                   extractor(function (_)
+                                                                                                             {
+                                                                                                               return _.isbn13;
+                                                                                                             })),
+                                                                                                extractor(function (_)
+                                                                                                          {
+                                                                                                            return _.imageUrl;
+                                                                                                          })),
+                                                                                             function (_)
                                                                                              {
-                                                                                               return _.description;
-                                                                                             })),
-                                                                                extractor(function (_)
-                                                                                          {
-                                                                                            return _.condition;
-                                                                                          })),
-                                                                             function (_)
-                                                                             {
-                                                                               return _.price;
-                                                                             }(Components.UserInput.presentRec)),
-                                                                          function (_)
-                                                                          {
-                                                                            return _.butn;
-                                                                          }(Components.UserInput.presentRec)),
-                                                                       extractor(function (_)
+                                                                                               return _.expire;
+                                                                                             }(Components.UserInput.presentRec)),
+                                                                                          extractor(function (_)
+                                                                                                    {
+                                                                                                      return _.description;
+                                                                                                    })),
+                                                                                       extractor(function (_)
+                                                                                                 {
+                                                                                                   return _.condition;
+                                                                                                 })),
+                                                                                    function (_)
+                                                                                    {
+                                                                                      return _.price;
+                                                                                    }(Components.UserInput.presentRec)),
+                                                                                 function (_)
                                                                                  {
-                                                                                   return _.lat;
-                                                                                 })),
-                                                                    extractor(function (_)
-                                                                              {
-                                                                                return _.lon;
-                                                                              }))));
+                                                                                   return _.butn;
+                                                                                 }(Components.UserInput.presentRec)),
+                                                                              extractor(function (_)
+                                                                                        {
+                                                                                          return _.lat;
+                                                                                        })),
+                                                                           extractor(function (_)
+                                                                                     {
+                                                                                       return _.lon;
+                                                                                     })))));
                                 }();
-                    elm.MakeAd.values = {_op: _op, isbnUrl: isbnUrl, isbnPreview: isbnPreview, adUrl: adUrl, extractor: extractor, display: display, main: main};
+                    elm.MakeAd.values = {_op: _op, isbnUrl: isbnUrl, isbnPreview: isbnPreview, sendable: sendable, adUrl: adUrl, imager: imager, extractor: extractor, display: display, main: main};
                     return elm.MakeAd.values;
                   };Elm.Components = Elm.Components || {};
 Elm.Components.UserInput = Elm.Components.UserInput || {};
@@ -303,7 +341,7 @@ Elm.Components.UserInput.make = function (elm)
                                                              Signal.combine(n));
                                                  };
                                   var buySell = Utils.Layout.butn;
-                                  var buyBtn = Graphics.Element.link("/Utils/Confirmation.html")(Utils.Layout.buttonGen("buy"));
+                                  var buyBtn = Utils.Layout.buttonGen("buy");
                                   var $ = Graphics.Input.field("Price"),
                                       priceField = $._0,
                                       priceSignal = $._1;

@@ -2,3 +2,4 @@
 *.elmi
 *.o
 cache
+php
