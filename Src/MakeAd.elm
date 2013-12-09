@@ -39,7 +39,7 @@ adUrl =
 imager =
   let unrec r = case r of
     Nothing -> ""
-    Just a  -> a.imageUrl
+    Just a  -> a.imageURL
   in unrec <~ isbnPreview
 
 extractor fld = 
