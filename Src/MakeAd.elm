@@ -32,20 +32,21 @@ adUrl =
             ++ "&Lat="         ++ lat         
             ++ "&Lon="         ++ lon         
   in (Rest.singleGet <| keepWhen sendable "" <|
-        (scriptPath <~ Rest.helloUser ~ (extractor .title) ~ (extractor .isbn10)
-        ~ (extractor .isbn13) ~ (extractor .imageUrl) ~ (.expire Inputs.presentRec)
+        (scriptPath <~ Rest.helloUser ~ (extractor .title) ~ (extractor .isbn)
+        ~ (extractor .isbn13) ~ (extractor .imageURL) ~ (.expire Inputs.presentRec)
         ~ (extractor .description) ~ (extractor .condition) ~ (.price Inputs.presentRec)
         ~ (.butn Inputs.presentRec) ~ (extractor .lat) ~ (extractor .lon)))
-imager =
-  let unrec r = case r of
-    Nothing -> ""
-    Just a  -> a.imageURL
-  in unrec <~ isbnPreview
 
 extractor fld = 
   let unrec r = case r of
     Nothing -> ""
     Just a  -> fld a
+  in unrec <~ isbnPreview
+
+imager =
+  let unrec r = case r of
+    Nothing -> ""
+    Just a  -> a.imageURL
   in unrec <~ isbnPreview
 
 display w maker preview dbg1 =

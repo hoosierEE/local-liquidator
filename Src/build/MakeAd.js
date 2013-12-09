@@ -79,7 +79,7 @@ Elm.MakeAd.make = function (elm)
                                                            "Nothing" :
                                                              return "";}
                                                           _E.Case($moduleName,
-                                                                  "between lines 40 and 43");
+                                                                  "between lines 47 and 50");
                                                         }();
                                                };
                                    return A2(Signal._op["<~"],unrec,isbnPreview);
@@ -100,7 +100,7 @@ Elm.MakeAd.make = function (elm)
                                                                        "Nothing" :
                                                                          return "";}
                                                                       _E.Case($moduleName,
-                                                                              "between lines 46 and 49");
+                                                                              "between lines 41 and 44");
                                                                     }();
                                                            };
                                                return A2(Signal._op["<~"],unrec,isbnPreview);
@@ -235,7 +235,7 @@ Elm.MakeAd.make = function (elm)
                                                                                                                 })),
                                                                                                    extractor(function (_)
                                                                                                              {
-                                                                                                               return _.isbn10;
+                                                                                                               return _.isbn;
                                                                                                              })),
                                                                                                 extractor(function (_)
                                                                                                           {
@@ -243,7 +243,7 @@ Elm.MakeAd.make = function (elm)
                                                                                                           })),
                                                                                              extractor(function (_)
                                                                                                        {
-                                                                                                         return _.imageUrl;
+                                                                                                         return _.imageURL;
                                                                                                        })),
                                                                                           function (_)
                                                                                           {
@@ -274,7 +274,7 @@ Elm.MakeAd.make = function (elm)
                                                                                     return _.lon;
                                                                                   }))));
                                 }();
-                    elm.MakeAd.values = {_op: _op, isbnUrl: isbnUrl, isbnPreview: isbnPreview, sendable: sendable, adUrl: adUrl, imager: imager, extractor: extractor, display: display, main: main};
+                    elm.MakeAd.values = {_op: _op, isbnUrl: isbnUrl, isbnPreview: isbnPreview, sendable: sendable, adUrl: adUrl, extractor: extractor, imager: imager, display: display, main: main};
                     return elm.MakeAd.values;
                   };Elm.Components = Elm.Components || {};
 Elm.Components.UserInput = Elm.Components.UserInput || {};
