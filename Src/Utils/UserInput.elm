@@ -16,7 +16,7 @@ foreign import jsevent "longitude" (JS.fromFloat -80.7)
 (priceField , priceSignal ) = Input.field "Price"
 (expireField, expireSignal) = Input.field "Expire (Minutes)"
 buyBtn          = Layout.buttonGen "buy"
-sellBtn         = Layout.buttonGen "sell" 
+sellBtn         = Layout.buttonGen "sell"
 buySell         = Layout.butn
 
 -- Outputs
