@@ -23,16 +23,35 @@
   </body>
 
   <script type="text/javascript">
-    // Show the Header module in elm-Header div
+    // Show the Header module in the elm-Header div
     var headerDiv = document.getElementById('elm-Header');
     var header = Elm.embed(Elm.Header, headerDiv);
 
-    // Show the MakeAd module in elm-Header div
+    // Show the MakeAd module in the elm-Header div
     var makeAdDiv = document.getElementById('elm-MakeAd');
     var makeAd = Elm.embed(Elm.MakeAd, makeAdDiv);
 
-    makeAd.send('latitude', 39.9);
-    makeAd.send('longitude', -89.7);
+    /* Elm code which will use these event streams as Signals:
+        --Interface with external JavaScript (geolocation)
+        foreign import jsevent "latitude" (JS.fromFloat 38.8)
+          lats : Signal JS.JSNumber
+        foreign import jsevent "longitude" (JS.fromFloat -80.7)
+        lons : Signal JS.JSNumber
+     */
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    }
+    else {
+      document.write("Geolocation is not supported by this browser.");
+    }
+
+    function showPosition(position) {
+      // This is how we send JS events to Elm:
+      // Note: the event is what matters; the "random coord" is unused
+      makeAd.send('latitude', position.coords.latitude);    //random Northern Hemisphere coord
+      makeAd.send('longitude', position.coords.longitude);  //random Western Hemisphere coord
+    }
   </script>
 
 </html>
