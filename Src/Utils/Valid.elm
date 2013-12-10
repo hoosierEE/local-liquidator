@@ -2,6 +2,7 @@ module Utils.Valid where
 import String
 import Char
 import Maybe
+import JavaScript as JS
 
 isbn : String -> String
 isbn str =
@@ -30,3 +31,6 @@ expire str =
 
 butn : String -> String
 butn btnName = btnName
+
+latLon : JS.JSNumber -> String
+latLon flt = show flt

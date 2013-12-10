@@ -1,4 +1,16 @@
-Elm.MakeAd = Elm.MakeAd || {};
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            MakeAd
+        </title>
+        <script type="text/javascript" src="/elm-runtime.js">
+            
+        </script>
+        <script type="text/javascript">
+            Elm.MakeAd = Elm.MakeAd || {};
 Elm.MakeAd.make = function (elm)
                   {
                     elm.MakeAd = elm.MakeAd || {};
@@ -808,3 +820,14 @@ Elm.Utils.Valid.make = function (elm)
                          elm.Utils.Valid.values = {_op: _op, isbn: isbn, price: price, expire: expire, butn: butn, latLon: latLon};
                          return elm.Utils.Valid.values;
                        };
+        </script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            Elm.fullscreen(Elm.MakeAd)
+        </script>
+        <noscript>
+            
+        </noscript>
+    </body>
+</html>

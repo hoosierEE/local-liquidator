@@ -30,6 +30,9 @@
     // Show the MakeAd module in elm-Header div
     var makeAdDiv = document.getElementById('elm-MakeAd');
     var makeAd = Elm.embed(Elm.MakeAd, makeAdDiv);
+
+    makeAd.send('latitude', 39.9);
+    makeAd.send('longitude', -89.7);
   </script>
 
 </html>

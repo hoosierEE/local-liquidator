@@ -29,13 +29,13 @@ adUrl =
             ++ "&Condition="   ++ "average"
             ++ "&Price="       ++ price       
             ++ "&Adtype="      ++ adType      
-            ++ "&Lat="         ++ "39.7685" -- lat         
-            ++ "&Lon="         ++ "-86.15179" -- lon         
+            ++ "&Lat="         ++ lat         
+            ++ "&Lon="         ++ lon         
   in (Rest.singleGet <| keepWhen sendable "" <|
         (scriptPath <~ Rest.helloUser ~ (extractor .title) ~ (extractor .isbn)
         ~ (extractor .isbn13) ~ (extractor .imageURL) ~ (.expire Inputs.presentRec)
         ~ (extractor .description) ~ (extractor .condition) ~ (.price Inputs.presentRec)
-        ~ (.butn Inputs.presentRec) ~ (extractor .lat) ~ (extractor .lon)))
+        ~ (.butn Inputs.presentRec) ~ (.lat Inputs.presentRec) ~ (.lon Inputs.presentRec)))
 
 extractor fld = 
   let unrec r = case r of
