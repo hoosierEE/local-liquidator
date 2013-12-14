@@ -65,28 +65,6 @@ Elm.MakeAd.make = function (elm)
                                                                     {
                                                                       return _.isbn;
                                                                     }(Utils.UserInput.presentRec)))));
-                    var imager = function ()
-                                 {
-                                   var unrec = function (r)
-                                               {
-                                                 return function ()
-                                                        {
-                                                          switch (r.ctor)
-                                                          {case
-                                                           "Just" :
-                                                             return function (_)
-                                                                    {
-                                                                      return _.imageURL;
-                                                                    }(r._0);
-                                                           case
-                                                           "Nothing" :
-                                                             return "";}
-                                                          _E.Case($moduleName,
-                                                                  "between lines 47 and 50");
-                                                        }();
-                                               };
-                                   return A2(Signal._op["<~"],unrec,isbnPreview);
-                                 }();
                     var extractor = function (fld)
                                     {
                                       return function ()
@@ -109,6 +87,10 @@ Elm.MakeAd.make = function (elm)
                                                return A2(Signal._op["<~"],unrec,isbnPreview);
                                              }();
                                     };
+                    var imager = extractor(function (_)
+                                           {
+                                             return _.imageURL;
+                                           });
                     var display = F3(function (w,maker,preview)
                                      {
                                        return function ()

@@ -43,11 +43,7 @@ extractor fld =
     Just a  -> fld a
   in unrec <~ isbnPreview
 
-imager =
-  let unrec r = case r of
-    Nothing -> ""
-    Just a  -> .imageURL a
-  in unrec <~ isbnPreview
+imager = extractor .imageURL
 
 display w maker preview =
   let previewTitle  = Layout.headerGen 300 28 darkOrange "Cover Preview"
